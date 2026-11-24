@@ -91,7 +91,7 @@ h1, h2, h3 { color: var(--text); font-weight: 800; letter-spacing: -0.02em; text
 .seg button { border: 0; background: transparent; color: var(--muted); font: 700 13px/1 var(--sans); padding: 8px 14px; border-radius: 999px; cursor: pointer; }
 .seg button[aria-pressed="true"].exp { background: var(--expense); color: #2A0606; }
 .seg button[aria-pressed="true"].inc { background: var(--income); color: #04261A; }
-.amount { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 8px 4px 14px; border-bottom: 1px solid var(--line); }
+.amount { display: flex; flex-direction: column; gap: 6px; padding: 6px 4px 12px; border-bottom: 1px solid var(--line); }
 .amount output { font: 700 52px/1 var(--mono); letter-spacing: -0.03em; color: var(--expense); transition: color .2s; }
 .amount output.inc { color: var(--income); }
 .amount .date { color: var(--muted); font-size: 13px; white-space: nowrap; }
@@ -283,7 +283,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
       </div>
       <div class="amount" id="amount-wrap">
         <output id="amount" aria-live="polite" aria-label="Amount">−$0</output>
-        <span class="date" id="today"></span>
+        <span class="date"><span>Sample entry</span> · <span id="today"></span></span>
       </div>
       <div class="chips" id="chips" role="group" aria-label="Category"></div>
       <div class="keys" id="keys">
@@ -309,13 +309,13 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
 
     <div class="card ledger" aria-labelledby="ledger-title">
       <div class="ledger-head">
-        <h2 id="ledger-title">This month</h2>
-        <span class="tag">Demo data</span>
+        <h2 id="ledger-title">Sample month</h2>
+        <span class="tag">Sample data</span>
       </div>
       <div class="net mono" id="net">+$1,505</div>
       <div class="split">
-        <div><div class="k">Income</div><div class="v inc mono" id="income">$2,792</div></div>
-        <div><div class="k">Expenses</div><div class="v exp mono" id="expense">$1,287</div></div>
+        <div><div class="k">Income · sample</div><div class="v inc mono" id="income">$2,792</div></div>
+        <div><div class="k">Expenses · sample</div><div class="v exp mono" id="expense">$1,287</div></div>
       </div>
       <ul class="entries" id="entries" aria-live="polite"></ul>
     </div>
@@ -457,10 +457,10 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
   const state = {
     type: 'expense', digits: '', cat: 'Food', income: 2792, expense: 1287,
     entries: [
-      { t: 'Pho Thin', c: 'Food', a: -9, when: 'Today · 12:15' },
-      { t: 'Grab to campus', c: 'Transport', a: -6, when: 'Today · 08:15' },
-      { t: 'Boba tea', c: 'Food', a: -6, when: 'Yesterday · 16:15' },
-      { t: 'Salary', c: 'Salary', a: 2400, when: '2 days ago · 09:15' },
+      { t: 'Pho Thin', c: 'Food', a: -9, when: 'sample' },
+      { t: 'Grab to campus', c: 'Transport', a: -6, when: 'sample' },
+      { t: 'Boba tea', c: 'Food', a: -6, when: 'sample' },
+      { t: 'Salary', c: 'Salary', a: 2400, when: 'sample' },
     ],
   };
 
