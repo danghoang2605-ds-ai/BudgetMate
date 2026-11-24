@@ -1,4 +1,17 @@
-# BudgetMate - Premium AI Financial Management Application
+# BudgetMate
+
+**Website:** https://danghoang2605-ds-ai.github.io/BudgetMate/ · **Download:** [latest APK](https://github.com/danghoang2605-ds-ai/BudgetMate/releases/latest/download/BudgetMate.apk) (Android 8.0+)
+
+<p>
+  <img src="docs/screenshots/home.png" width="160" alt="Home tab with keypad and monthly balance">
+  <img src="docs/screenshots/manage.png" width="160" alt="Manage tab with transactions by day">
+  <img src="docs/screenshots/stats.png" width="160" alt="Insights tab with weekly chart">
+  <img src="docs/screenshots/chat.png" width="160" alt="AI chat tab">
+  <img src="docs/screenshots/news.png" width="160" alt="Markets tab">
+</p>
+
+<sub>Screenshots are captured by CI on an Android 14 emulator with generated demo data (`scripts/capture-screenshots.sh`).</sub>
+
 
 BudgetMate is a native Android financial tracking application engineered with a high-end, dark-themed user interface (Deep Midnight Blue and Specular Metallic Gold). It blends double-entry ledger controls with real-time AI automation, camera OCR scanning, and live market telemetry.
 
@@ -72,6 +85,12 @@ app/src/main/java/com/example/savemoneytime/
 Tests run on the JVM: parser and CSV tests, plus Robolectric tests that exercise the real Room DAOs and the v1→v2 schema migration on SQLite. Room schemas are exported to `app/schemas/` so every future migration can be reviewed.
 
 CI builds the debug APK and runs the unit tests and proxy tests on every push (see `.github/workflows/android.yml`); the APK is attached to each run as an artifact.
+
+## Website and releases
+
+- `site/` is the landing page. `.github/workflows/pages.yml` builds it with WebP copies of the screenshots and deploys it to GitHub Pages on every push to `master`.
+- Push a tag such as `v1.1.0` and `.github/workflows/release.yml` builds the APK and publishes it as `BudgetMate.apk` on a GitHub Release; the website's download button always points at the latest one.
+- The public APK is signed with the debug key for sideloading. Use your own keystore before any store release.
 
 ## Roadmap
 

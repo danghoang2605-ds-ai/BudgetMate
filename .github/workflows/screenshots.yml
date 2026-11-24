@@ -8,6 +8,8 @@ on:
       - ".github/workflows/screenshots.yml"
       - "scripts/capture-screenshots.sh"
       - "app/src/debug/**"
+      - "app/src/main/res/**"
+      - "app/src/main/java/**"
 
 permissions:
   contents: write

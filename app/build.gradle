@@ -38,6 +38,9 @@ android {
 
     buildTypes {
         release {
+            // Public APKs on GitHub Releases are signed with the debug key so anyone can sideload
+            // them without a Play Store listing. Use a real keystore before publishing to a store.
+            signingConfig signingConfigs.debug
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
