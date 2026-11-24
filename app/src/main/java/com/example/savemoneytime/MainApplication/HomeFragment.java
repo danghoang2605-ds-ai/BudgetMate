@@ -141,6 +141,7 @@ public class HomeFragment extends Fragment {
             } else if (status.startsWith("❌") && getContext() != null) {
                 Toast.makeText(getContext(), status, Toast.LENGTH_LONG).show();
             }
+            viewModel.consumeSaveStatus();
         });
     }
 

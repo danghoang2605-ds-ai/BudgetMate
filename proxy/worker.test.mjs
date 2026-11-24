@@ -15,7 +15,7 @@ test("rejects bad payloads", () => {
   assert.ok(sanitize(null).error);
   assert.ok(sanitize({ messages: [] }).error);
   assert.ok(sanitize({ messages: [{ role: "assistant", content: "x" }] }).error);
-  assert.ok(sanitize({ messages: [{ role: "user", content: "x".repeat(5000) }] }).error);
+  assert.ok(sanitize({ messages: [{ role: "user", content: "x".repeat(13000) }] }).error);
 });
 
 test("requires the app token when configured", async () => {
@@ -42,4 +42,9 @@ test("forwards a clean request upstream", async () => {
 test("GET is rejected", async () => {
   const res = await worker.fetch(new Request("https://proxy.test"), {});
   assert.equal(res.status, 405);
+});
+
+test("a long receipt prompt fits", () => {
+  const receipt = { messages: [{ role: "system", content: "s".repeat(1100) }, { role: "user", content: "r".repeat(6400) }] };
+  assert.ok(sanitize(receipt).body);
 });

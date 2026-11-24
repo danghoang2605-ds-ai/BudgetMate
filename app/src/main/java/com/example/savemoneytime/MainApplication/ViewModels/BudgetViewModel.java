@@ -56,6 +56,9 @@ public class BudgetViewModel extends AndroidViewModel {
     public LiveData<String>                getSaveStatus()      { return saveStatusLive; }
     public LiveData<long[]>                getNetComparison()   { return netComparisonLive; }
 
+    /** LiveData replays its last value to new observers; clear it once handled so a toast shows once. */
+    public void consumeSaveStatus() { saveStatusLive.setValue(null); }
+
     public void saveExpense(ExpenseEntity expense) {
         repository.insertExpense(expense, new AppRepository.DataCallback<Void>() {
             @Override

@@ -1,5 +1,6 @@
 package com.example.savemoneytime.MainApplication.Adapters;
 
+import com.example.savemoneytime.util.Urls;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +88,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (iv == null) return;
         try {
             if (imgUrl != null && !imgUrl.isEmpty()) {
-                Glide.with(iv.getContext()).load(imgUrl).placeholder(R.drawable.ic_nav_news)
+                Glide.with(iv.getContext()).load(Urls.https(imgUrl)).placeholder(R.drawable.ic_nav_news)
                         .transition(DrawableTransitionOptions.withCrossFade(250)).centerCrop().into(iv);
             } else { iv.setImageResource(R.drawable.ic_nav_news); }
         } catch (Exception e) { iv.setImageResource(R.drawable.ic_nav_news); }

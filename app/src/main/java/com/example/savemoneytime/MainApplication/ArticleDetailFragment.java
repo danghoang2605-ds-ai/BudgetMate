@@ -1,5 +1,6 @@
 package com.example.savemoneytime.MainApplication;
 
+import com.example.savemoneytime.util.Urls;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -69,7 +70,7 @@ public class ArticleDetailFragment extends Fragment {
         setupButtons();
 
         if (!articleUrl.isEmpty()) {
-            webView.loadUrl(articleUrl);
+            webView.loadUrl(Urls.https(articleUrl));
         }
 
         return view;
@@ -87,7 +88,7 @@ public class ArticleDetailFragment extends Fragment {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                view.loadUrl(request.getUrl().toString());
+                view.loadUrl(Urls.https(request.getUrl().toString()));
                 return true;
             }
 
