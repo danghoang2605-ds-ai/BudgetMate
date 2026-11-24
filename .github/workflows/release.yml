@@ -18,7 +18,26 @@ jobs:
           distribution: temurin
           java-version: "17"
       - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew --no-daemon testReleaseUnitTest assembleRelease
+      - name: Private signing key (optional)
+        env:
+          KEYSTORE_B64: ${{ secrets.RELEASE_KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$KEYSTORE_B64" ]; then
+            echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/release.jks"
+            echo "RELEASE_KEYSTORE_FILE=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+          fi
+      - name: Build
+        # Repository secrets turn the online features on in the published APK. Without them the
+        # app still works offline: AI chat says it is not configured, news and stocks show samples.
+        env:
+          AI_PROXY_URL: ${{ secrets.AI_PROXY_URL }}
+          AI_APP_TOKEN: ${{ secrets.AI_APP_TOKEN }}
+          GNEWS_API_KEY: ${{ secrets.GNEWS_API_KEY }}
+          ALPHAVANTAGE_API_KEY: ${{ secrets.ALPHAVANTAGE_API_KEY }}
+          RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: ./gradlew --no-daemon testReleaseUnitTest assembleRelease
       - run: cp app/build/outputs/apk/release/app-release.apk BudgetMate.apk
       - name: Publish release
         env:

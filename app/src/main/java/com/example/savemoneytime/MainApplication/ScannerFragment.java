@@ -190,7 +190,11 @@ public class ScannerFragment extends Fragment {
                 });
     }
 
+    /** Totals sit near the end of a receipt; keep the tail so long receipts still fit the AI request. */
+    private static final int MAX_OCR_CHARS = 6000;
+
     private void sendToAI(String rawText) {
+        if (rawText.length() > MAX_OCR_CHARS) rawText = rawText.substring(rawText.length() - MAX_OCR_CHARS);
         String prompt = "Receipt scan text: \"" + rawText.replace("\"", "'") + "\"\n\n"
                 + "Extract the TOTAL amount from this receipt text.\n"
                 + "Return ONLY this JSON: "

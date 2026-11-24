@@ -74,10 +74,11 @@ h1, h2, h3 { color: var(--text); font-weight: 800; letter-spacing: -0.02em; text
 
 /* Hero: copy, keypad, ledger */
 .hero { padding: 40px 0 56px; }
-.hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) 440px minmax(0, 380px); gap: 32px; align-items: center; }
-.copy h1 { font-size: clamp(40px, 4.4vw, 60px); line-height: 1.02; letter-spacing: -0.035em; }
+.hero .wrap { display: grid; grid-template-columns: 460px minmax(0, 1fr); gap: 28px 32px; align-items: start; }
+.copy { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 12px 48px; align-items: end; }
+.copy h1 { font-size: clamp(40px, 4.4vw, 62px); line-height: 1.02; letter-spacing: -0.035em; }
 .copy h1 em { font-style: normal; color: var(--gold); }
-.lede { color: var(--muted); font-size: 18px; margin: 18px 0 28px; max-width: 34ch; }
+.lede { color: var(--muted); font-size: 18px; margin: 0 0 18px; max-width: 46ch; }
 .cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 .fine { color: var(--muted); font-size: 14px; margin-top: 14px; }
 
@@ -103,7 +104,7 @@ h1, h2, h3 { color: var(--text); font-weight: 800; letter-spacing: -0.02em; text
 .keys { display: grid; grid-template-columns: repeat(3, 1fr) 1.1fr; gap: 10px; }
 .key {
   height: 58px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface-2); color: var(--text);
-  font: 500 22px/1 var(--mono); cursor: pointer; box-shadow: 0 1px 0 rgba(255,255,255,.05) inset;
+  font: 500 22px/1 var(--mono); cursor: pointer; box-shadow: 0 1px 0 rgba(255,255,255,.10) inset, 0 2px 0 rgba(0,0,0,.35);
   transition: background-color .15s, transform .1s;
 }
 .key:hover { background: var(--surface-3); }
@@ -111,8 +112,9 @@ h1, h2, h3 { color: var(--text); font-weight: 800; letter-spacing: -0.02em; text
 .key.save {
   grid-column: 4; grid-row: 1 / span 4; height: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
   background-color: var(--gold); background-image: linear-gradient(180deg, var(--gold-hi), var(--gold)); color: var(--gold-ink); border-color: transparent;
-  font: 800 15px/1 var(--sans); letter-spacing: .04em;
+  font: 800 15px/1 var(--sans); letter-spacing: .12em;
 }
+.key svg { width: 24px; height: 24px; vertical-align: middle; }
 .key.save:hover { background: linear-gradient(180deg, #F3D885, #DDB943); }
 .key.save svg { width: 22px; height: 22px; }
 .hint { color: var(--muted); font-size: 13px; margin: 12px 2px 0; min-height: 1.4em; }
@@ -131,6 +133,8 @@ h1, h2, h3 { color: var(--text); font-weight: 800; letter-spacing: -0.02em; text
 .v.inc { color: var(--income); }
 .v.exp { color: var(--expense); }
 .entries { list-style: none; margin: 0; padding: 0; }
+.entries li.day { display: flex; justify-content: space-between; padding: 14px 0 4px; border-bottom: 0; font: 700 12px/1.2 var(--sans); letter-spacing: .06em; color: var(--muted); }
+.entries li.day span:last-child { font-family: var(--mono); letter-spacing: 0; }
 .entries li { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
 .entries li:last-child { border-bottom: 0; }
 .entries .t { grid-column: 1; color: var(--text); font-weight: 700; font-size: 15px; }
@@ -153,14 +157,15 @@ section.block { padding: 88px 0; border-top: 1px solid var(--line); }
 .provenance { margin-top: 22px; color: var(--muted); font-size: 14px; }
 
 /* Three ways to log */
-.ways { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; margin-top: 40px; }
-.way { grid-column: 1 / 5; padding: 28px; }
-.way:first-child { grid-row: 1; }
-.way:last-child { grid-row: 2; }
-.way.wide { grid-column: 5 / 13; grid-row: 1 / 3; display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 28px; align-items: center; }
+.ways { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px; margin-top: 40px; align-items: start; }
+.way-list { margin: 0; border-top: 1px solid var(--line-2); }
+.way-list > div { padding: 22px 0; border-bottom: 1px solid var(--line); }
+.way-list dt { color: var(--text); font-weight: 800; font-size: 22px; letter-spacing: -0.01em; }
+.way-list dd { margin: 6px 0 0; color: var(--muted); }
+.way.wide { padding: 28px; }
+.ways .note-ai { grid-column: 1 / -1; color: var(--muted); font-size: 14px; margin: 0; }
 .way h3 { font-size: 24px; margin: 0 0 8px; }
 .way p { margin: 0; color: var(--muted); }
-.way img { width: 100%; border-radius: 18px; border: 1px solid var(--line-2); }
 .parse { margin-top: 18px; }
 .parse label { display: block; font-size: 14px; color: var(--text-dim); margin-bottom: 6px; font-weight: 600; }
 .parse input { width: 100%; height: 46px; border-radius: 12px; border: 1px solid var(--line-2); background: var(--ink-deep); color: var(--text); font: 500 16px var(--mono); padding: 0 14px; }
@@ -168,8 +173,10 @@ section.block { padding: 88px 0; border-top: 1px solid var(--line); }
 .parse .note { font-size: 13px; color: var(--muted); margin-top: 8px; }
 
 /* Month view */
-.month { display: grid; grid-template-columns: 260px 260px minmax(0, 1fr); gap: 32px; align-items: start; margin-top: 40px; }
-.month img { width: 100%; border-radius: 22px; border: 1px solid var(--line-2); }
+.month { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr); gap: 32px; align-items: start; margin-top: 40px; }
+.month figure { margin: 0; }
+.month img { display: block; width: 100%; height: auto; border-radius: 18px; border: 1px solid var(--line-2); }
+.month figcaption { color: var(--muted); font-size: 14px; margin-top: 10px; }
 .facts { display: grid; gap: 0; margin: 0; }
 .facts div { padding: 18px 0; border-bottom: 1px solid var(--line); }
 .facts div:first-child { padding-top: 0; }
@@ -180,16 +187,14 @@ section.block { padding: 88px 0; border-top: 1px solid var(--line); }
 .privacy { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; align-items: start; }
 .rows { margin: 0; border-top: 1px solid var(--line-2); }
 .rows div { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--line); }
-.rows dt { font: 700 14px/1.6 var(--mono); color: var(--gold); }
+.rows dt { font: 700 16px/1.5 var(--sans); color: var(--gold); }
 .rows dd { margin: 0; }
 
 /* Build */
-.stack { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: 36px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
-.stack div { padding: 22px 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.stack div:nth-child(3n) { border-right: 0; }
-.stack div:nth-last-child(-n+3) { border-bottom: 0; }
-.stack b { display: block; color: var(--text); font-size: 16px; margin-bottom: 4px; }
-.stack span { color: var(--muted); font-size: 15px; }
+.build-rows { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; border-top: 1px solid var(--line-2); }
+.build-rows div { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.build-rows dt { color: var(--text); font-weight: 800; }
+.build-rows dd { margin: 0; color: var(--muted); }
 
 /* Closing */
 .closing { padding: 96px 0; border-top: 1px solid var(--line); background: var(--ink-deep); }
@@ -200,11 +205,12 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
 
 @media (max-width: 1180px) {
   .hero .wrap { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-  .copy { grid-column: 1 / -1; }
+  .copy { grid-template-columns: minmax(0, 1fr); }
   .lede { max-width: 52ch; }
+  .build-rows { grid-template-columns: 1fr; }
   .gallery { grid-template-columns: repeat(5, 240px); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 12px; }
   .gallery figure { scroll-snap-align: start; }
-  .way, .way.wide, .way:first-child, .way:last-child { grid-column: 1 / -1; grid-row: auto; }
+  .ways { grid-template-columns: minmax(0, 1fr); }
   .month { grid-template-columns: 1fr 1fr; }
   .month .facts { grid-column: 1 / -1; }
   .privacy { grid-template-columns: 1fr; gap: 28px; }
@@ -220,15 +226,15 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
   .key { height: 54px; }
   section.block { padding: 64px 0; }
   .gallery { grid-template-columns: repeat(5, 72vw); }
-  .way { padding: 22px; }
-  .way.wide { grid-template-columns: 1fr; }
-  .way.wide img { max-width: 240px; }
-  .month { grid-template-columns: 1fr 1fr; gap: 16px; }
-  .rows div { grid-template-columns: 1fr; gap: 4px; }
-  .stack { grid-template-columns: 1fr; }
-  .stack div { border-right: 0; border-bottom: 1px solid var(--line); }
-  .stack div:nth-last-child(-n+3) { border-bottom: 1px solid var(--line); }
-  .stack div:last-child { border-bottom: 0; }
+  .way.wide { padding: 22px; }
+  .month { grid-template-columns: 1fr; gap: 20px; }
+  .rows div, .build-rows div { grid-template-columns: 1fr; gap: 4px; }
+  .copy h1 { font-size: 38px; }
+  .lede { font-size: 16px; margin-bottom: 14px; }
+  .cta .btn { height: 44px; padding: 0 16px; }
+  .long { display: none; }
+  .hero .fine { display: none; }
+  .key { height: 50px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -259,7 +265,8 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
   <div class="wrap">
     <div class="copy">
       <h1 id="hero-title">Log a purchase in <em>three taps</em>.</h1>
-      <p class="lede">BudgetMate is a free Android budget tracker. Tap the amount, pick a category, save. Or tell the AI chat “Boba tea 6$”, or snap the receipt. Your data stays on your phone.</p>
+      <div>
+      <p class="lede">BudgetMate is a free Android budget tracker with no account and no cloud database. Try the keypad below.</p>
       <div class="cta">
         <a class="btn btn-gold download" href="https://github.com/danghoang2605-ds-ai/BudgetMate/releases/latest/download/BudgetMate.apk">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0 4.5-4.5M12 15l-4.5-4.5M5 20h14"/></svg>
@@ -267,10 +274,11 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
         </a>
         <a class="btn btn-ghost" href="https://github.com/danghoang2605-ds-ai/BudgetMate">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
-          Source on GitHub
+          <span><span class="long">Source on </span>GitHub</span>
         </a>
       </div>
-      <p class="fine">Android 8.0 or newer · about 25 MB · no account needed</p>
+      <p class="fine">Android 8.0 or newer · free · sideloaded from GitHub Releases</p>
+      </div>
     </div>
 
     <div class="card pad" id="pad" aria-labelledby="pad-title">
@@ -292,7 +300,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
         <button type="button" class="key" data-k="3">3</button>
         <button type="button" class="key save" id="save" aria-label="Save entry">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-          Save
+          SAVE
         </button>
         <button type="button" class="key" data-k="4">4</button>
         <button type="button" class="key" data-k="5">5</button>
@@ -302,7 +310,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
         <button type="button" class="key" data-k="9">9</button>
         <button type="button" class="key" data-k="00" aria-label="Add two zeros">00</button>
         <button type="button" class="key" data-k="0">0</button>
-        <button type="button" class="key" data-k="del" aria-label="Delete last digit">⌫</button>
+        <button type="button" class="key" data-k="del" aria-label="Delete last digit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5h11v14H9l-6-7 6-7Z"/><path d="m12.5 9.5 5 5m0-5-5 5"/></svg></button>
       </div>
       <p class="hint" id="hint">Try it: tap 1, 2, then Save. Your keyboard works too.</p>
     </div>
@@ -356,27 +364,21 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
   <div class="wrap">
     <h2 id="ways-title">Three ways to log, pick the fastest</h2>
     <div class="ways">
-      <article class="card way">
-        <h3>Keypad</h3>
-        <p>Amount, category, save. Whole dollars, a <span class="mono">00</span> key for round numbers, and a date picker for yesterday's lunch.</p>
-      </article>
+      <dl class="way-list">
+        <div><dt>Keypad</dt><dd>Amount, category, save. Whole dollars, a <span class="mono">00</span> key for round numbers, and a date picker for yesterday's lunch.</dd></div>
+        <div><dt>Snap the receipt</dt><dd>Point the camera at a bill. ML Kit reads the text on the phone, the AI finds the total, and you confirm before anything is saved.</dd></div>
+      </dl>
       <article class="card way wide">
-        <div>
-          <h3>Say it in a sentence</h3>
-          <p>Type what happened. The AI reads the amount, picks the category and saves it, or answers if you asked a question instead.</p>
-          <form class="parse" id="parse" onsubmit="return false">
-            <label for="sentence">Try a sentence</label>
-            <input id="sentence" value="Lunch with team 15$" autocomplete="off" spellcheck="false">
-            <output id="parsed" aria-live="polite"></output>
-            <p class="note">This page parses with a simple pattern in your browser. The app sends the sentence to an AI model and validates the reply before saving.</p>
-          </form>
-        </div>
-        <img src="screens/chat-360.webp" width="360" height="800" loading="lazy" alt="The AI chat screen inside the app.">
+        <h3>Say it in a sentence</h3>
+        <p>Type what happened. The AI reads the amount, picks the category and saves it, or answers if you asked a question instead.</p>
+        <form class="parse" id="parse" onsubmit="return false">
+          <label for="sentence">Try a sentence</label>
+          <input id="sentence" value="Lunch with team 15$" autocomplete="off" spellcheck="false">
+          <output id="parsed" aria-live="polite"></output>
+          <p class="note">This page parses with a simple pattern in your browser. The app sends the sentence to an AI model and validates the reply before saving.</p>
+        </form>
       </article>
-      <article class="card way">
-        <h3>Snap the receipt</h3>
-        <p>Point the camera at a bill. ML Kit reads the text on the phone, the AI finds the total, and you confirm before it is saved.</p>
-      </article>
+      <p class="note-ai">The sentence and receipt features need an AI connection. Builds on GitHub Releases include it when the maintainer has configured the proxy; otherwise the app says the AI is off and the keypad works as usual.</p>
     </div>
   </div>
 </section>
@@ -385,8 +387,8 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
   <div class="wrap">
     <h2 id="month-title">See the whole month at a glance</h2>
     <div class="month">
-      <img src="screens/stats-360.webp" srcset="screens/stats-360.webp 360w, screens/stats-720.webp 720w" sizes="260px" width="360" height="800" loading="lazy" alt="Insights tab with a weekly income versus expense chart.">
-      <img src="screens/manage-360.webp" srcset="screens/manage-360.webp 360w, screens/manage-720.webp 720w" sizes="260px" width="360" height="800" loading="lazy" alt="Manage tab with transactions grouped by day.">
+      <figure><img src="screens/stats-chart-720.webp" width="720" height="560" loading="lazy" alt="Detail of the Insights tab: weekly bars comparing income with expenses, with the totals on top of each bar."><figcaption>Insights: income against expenses, week by week.</figcaption></figure>
+      <figure><img src="screens/manage-days-720.webp" width="720" height="933" loading="lazy" alt="Detail of the Manage tab: the month's net flow with all-time income, expenses and net, then entries grouped by day with daily totals."><figcaption>Manage: all-time totals, then every entry by day.</figcaption></figure>
       <dl class="facts">
         <div><dt>Week, month, year</dt><dd>Grouped bars for income against expenses, a cash-flow line, and pie and radar charts by category.</dd></div>
         <div><dt>All-time totals</dt><dd>Lifetime income, expenses and net next to the month you are looking at, plus the change from last month.</dd></div>
@@ -399,11 +401,11 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
 <section class="block" id="privacy" aria-labelledby="privacy-title">
   <div class="wrap privacy">
     <div>
-      <h2 id="privacy-title">Your money data stays on your phone</h2>
-      <p class="intro">No sign-up and no cloud database. The only network calls are the ones you turn on.</p>
+      <h2 id="privacy-title">Your money data stays with you</h2>
+      <p class="intro">No sign-up and no BudgetMate server. The only network calls are the ones you turn on.</p>
     </div>
     <dl class="rows">
-      <div><dt>Storage</dt><dd>Transactions live in an on-device SQLite database (Room). Uninstalling the app removes them.</dd></div>
+      <div><dt>Storage</dt><dd>Transactions live in an on-device SQLite database (Room). Like most apps, they can be included in Android's own encrypted device backup to your Google account.</dd></div>
       <div><dt>AI</dt><dd>Optional. Requests go through a small proxy you deploy, so no AI key ships inside the app. Only the sentence or receipt text is sent.</dd></div>
       <div><dt>Network</dt><dd>HTTPS only. News and stock data load only when you add your own API keys; otherwise the app shows sample data.</dd></div>
     </dl>
@@ -414,14 +416,14 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
   <div class="wrap">
     <h2 id="build-title">How it's built</h2>
     <p class="intro">A native Java app by Dang Hoang. The code, tests and CI are open on GitHub.</p>
-    <div class="stack">
-      <div><b>Java + MVVM</b><span>Fragments, ViewModel and LiveData over a repository layer.</span></div>
-      <div><b>Room database</b><span>Versioned schema with explicit migrations, tested on SQLite with Robolectric.</span></div>
-      <div><b>Retrofit + OkHttp</b><span>News, stocks and the AI chat, with errors shown instead of swallowed.</span></div>
-      <div><b>ML Kit + CameraX</b><span>On-device text recognition for receipts.</span></div>
-      <div><b>MPAndroidChart</b><span>Bar, line, pie and radar charts tuned for a dark theme.</span></div>
-      <div><b>GitHub Actions</b><span>Unit tests, an APK on every push, and these screenshots from an emulator.</span></div>
-    </div>
+    <dl class="build-rows">
+      <div><dt>Java + MVVM</dt><dd>Fragments, ViewModel and LiveData over a repository layer.</dd></div>
+      <div><dt>Room database</dt><dd>Versioned schema with explicit migrations, tested on SQLite with Robolectric.</dd></div>
+      <div><dt>Retrofit + OkHttp</dt><dd>News, stocks and the AI chat, with errors shown instead of swallowed.</dd></div>
+      <div><dt>ML Kit + CameraX</dt><dd>On-device text recognition for receipts.</dd></div>
+      <div><dt>MPAndroidChart</dt><dd>Bar, line, pie and radar charts tuned for a dark theme.</dd></div>
+      <div><dt>GitHub Actions</dt><dd>Unit tests, an APK on every push, and these screenshots from an emulator.</dd></div>
+    </dl>
   </div>
 </section>
 
@@ -457,10 +459,10 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
   const state = {
     type: 'expense', digits: '', cat: 'Food', income: 2792, expense: 1287,
     entries: [
-      { t: 'Pho Thin', c: 'Food', a: -9, when: 'sample' },
-      { t: 'Grab to campus', c: 'Transport', a: -6, when: 'sample' },
-      { t: 'Boba tea', c: 'Food', a: -6, when: 'sample' },
-      { t: 'Salary', c: 'Salary', a: 2400, when: 'sample' },
+      { t: 'Pho Thin', c: 'Food', a: -9, day: 'Today', when: 'sample' },
+      { t: 'Grab to campus', c: 'Transport', a: -6, day: 'Today', when: 'sample' },
+      { t: 'Boba tea', c: 'Food', a: -6, day: 'Yesterday', when: 'sample' },
+      { t: 'Salary', c: 'Salary', a: 2400, day: 'Yesterday', when: 'sample' },
     ],
   };
 
@@ -490,7 +492,19 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
     $('expense').textContent = money(state.expense);
     const ul = $('entries');
     ul.replaceChildren();
-    state.entries.slice(0, 4).forEach((e, i) => {
+    const shown = state.entries.slice(0, 4);
+    let day = null;
+    shown.forEach((e, i) => {
+      if (e.day !== day) {
+        day = e.day;
+        const total = shown.filter((x) => x.day === day).reduce((sum, x) => sum + x.a, 0);
+        const h = document.createElement('li');
+        h.className = 'day';
+        const l = document.createElement('span'); l.textContent = day.toUpperCase();
+        const r = document.createElement('span'); r.textContent = (total < 0 ? '−' : '+') + money(total);
+        h.append(l, r);
+        ul.appendChild(h);
+      }
       const li = document.createElement('li');
       if (flashFirst && i === 0) li.className = 'new';
       const t = document.createElement('span'); t.className = 't'; t.textContent = e.t;
@@ -519,7 +533,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
     const signed = state.type === 'expense' ? -n : n;
     if (signed < 0) state.expense += n; else state.income += n;
     const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-    state.entries.unshift({ t: 'Your entry', c: state.cat, a: signed, when: 'Just now · ' + time });
+    state.entries.unshift({ t: 'Your entry', c: state.cat, a: signed, day: 'Today', when: 'Just now · ' + time });
     state.digits = '';
     renderAmount(); renderLedger(true);
     hint.textContent = `Saved ${state.type} of ${money(n)} in ${state.cat}. That is the whole flow in the app.`;

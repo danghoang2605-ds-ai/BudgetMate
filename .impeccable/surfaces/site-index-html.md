@@ -19,7 +19,7 @@ OWN-WORLD: The app's own world, inherited: midnight blue ground (#0A1128), raise
 
 STORY: The visitor taps an amount, picks a category and saves; the entry drops into a live ledger. Then sees the real app, its three ways to log, its month view, why data stays on the phone, how it is built, and downloads the APK.
 
-FIRST VIEWPORT: Top bar with app icon, name, section links and a gold Download APK button. Left: headline and one-line offer, then the keypad card at app scale (amount display, category chips, 3x4 keys, tall gold Save). Right: This month ledger card with totals and the latest entries, labelled Demo data. Download APK repeated under the headline.
+FIRST VIEWPORT: Top bar with app icon, name, section links and a gold Download APK button. A headline row across the page: headline on the left, the one-line offer and Download APK on the right. Below it, left: the keypad card at app scale (amount display, category chips, 3x4 keys, tall gold SAVE); right: the sample month ledger with totals and day-grouped entries, labelled Sample data. (Adapted after finish review: headline row across instead of a three-column hero, so the headline sets in two lines and the hero tops align.)
 
 FORM: Keypad-led interactive hero; dealt structure 5 (lead of 5, 6, 3); seed:22df1e205c4a71ca.
 

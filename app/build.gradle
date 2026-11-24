@@ -20,7 +20,11 @@ android {
             properties.load(rootProject.file("local.properties").newDataInputStream())
         }
         // Keys come from local.properties (never committed) or CI environment variables.
-        def key = { String prop, String env -> properties.getProperty(prop, System.getenv(env) ?: '') }
+        // A blank entry in local.properties (as in local.properties.example) falls back to the env var.
+        def key = { String prop, String env ->
+            def v = properties.getProperty(prop)
+            v?.trim() ? v.trim() : (System.getenv(env) ?: '')
+        }
         buildConfigField "String", "OPENROUTER_KEY", "\"${key('openrouter.api.key', 'OPENROUTER_API_KEY')}\""
         buildConfigField "String", "GNEWS_KEY", "\"${key('gnews.api.key', 'GNEWS_API_KEY')}\""
         buildConfigField "String", "ALPHAVANTAGE_KEY", "\"${key('alphavantage.api.key', 'ALPHAVANTAGE_API_KEY')}\""
@@ -36,11 +40,23 @@ android {
         }
     }
 
+    signingConfigs {
+        // GitHub Release APKs must be signed with the same key every time, or Android refuses to
+        // install an update over the previous version. Set RELEASE_KEYSTORE_* (e.g. from repo
+        // secrets) to use a private key; otherwise the committed keystore/sideload.jks is used.
+        // That key is public by design: fine for sideloaded portfolio builds, never for a store.
+        release {
+            def ks = System.getenv('RELEASE_KEYSTORE_FILE')
+            storeFile ks ? file(ks) : rootProject.file('keystore/sideload.jks')
+            storePassword System.getenv('RELEASE_KEYSTORE_PASSWORD') ?: 'budgetmate-sideload'
+            keyAlias System.getenv('RELEASE_KEY_ALIAS') ?: 'budgetmate'
+            keyPassword System.getenv('RELEASE_KEY_PASSWORD') ?: 'budgetmate-sideload'
+        }
+    }
+
     buildTypes {
         release {
-            // Public APKs on GitHub Releases are signed with the debug key so anyone can sideload
-            // them without a Play Store listing. Use a real keystore before publishing to a store.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

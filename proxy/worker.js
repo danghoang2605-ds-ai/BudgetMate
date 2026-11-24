@@ -11,7 +11,7 @@
 export const MODEL = "google/gemini-2.5-flash";
 export const MAX_TOKENS = 400;
 export const MAX_MESSAGES = 4;
-export const MAX_CHARS = 4000;
+export const MAX_CHARS = 12000; // system prompt (~1k) + receipt instructions + up to 6k of OCR text
 const UPSTREAM = "https://openrouter.ai/api/v1/chat/completions";
 
 /** Validates the app's payload and returns the body to send upstream, or an error string. */
