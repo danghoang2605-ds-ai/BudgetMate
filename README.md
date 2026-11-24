@@ -61,13 +61,17 @@ app/src/main/java/com/example/savemoneytime/
    gnews.api.key=...         # financial news
    alphavantage.api.key=...  # stock candles
    ```
+   For the AI features, prefer the bundled proxy: deploy [`proxy/`](proxy/README.md) to Cloudflare Workers (free tier) and set `ai.proxy.url` + `ai.app.token` instead of `openrouter.api.key`. A key compiled into an APK can always be extracted; the proxy keeps it server-side and caps what any request can cost.
+
    `local.properties` is git-ignored. Keys are injected into `BuildConfig` at build time; nothing is hard-coded in source. Every key is optional: without one, that screen shows sample data or a clear "not configured" message.
 3. Run the `app` configuration, or from a terminal:
    ```bash
    ./gradlew testDebugUnitTest assembleDebug
    ```
 
-CI builds the debug APK and runs the unit tests on every push (see `.github/workflows/android.yml`); the APK is attached to each run as an artifact.
+Tests run on the JVM: parser and CSV tests, plus Robolectric tests that exercise the real Room DAOs and the v1→v2 schema migration on SQLite. Room schemas are exported to `app/schemas/` so every future migration can be reviewed.
+
+CI builds the debug APK and runs the unit tests and proxy tests on every push (see `.github/workflows/android.yml`); the APK is attached to each run as an artifact.
 
 ## Roadmap
 

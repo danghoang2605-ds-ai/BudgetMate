@@ -24,6 +24,16 @@ android {
         buildConfigField "String", "OPENROUTER_KEY", "\"${key('openrouter.api.key', 'OPENROUTER_API_KEY')}\""
         buildConfigField "String", "GNEWS_KEY", "\"${key('gnews.api.key', 'GNEWS_API_KEY')}\""
         buildConfigField "String", "ALPHAVANTAGE_KEY", "\"${key('alphavantage.api.key', 'ALPHAVANTAGE_API_KEY')}\""
+        // Optional: route AI calls through your own proxy (see proxy/) so no AI key ships in the APK.
+        buildConfigField "String", "AI_PROXY_URL", "\"${key('ai.proxy.url', 'AI_PROXY_URL')}\""
+        buildConfigField "String", "AI_APP_TOKEN", "\"${key('ai.app.token', 'AI_APP_TOKEN')}\""
+
+        // Export Room schemas so every migration can be reviewed and tested.
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {
@@ -35,6 +45,11 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
     }
     buildFeatures {
         viewBinding true
@@ -84,6 +99,9 @@ dependencies {
 
     // Thử nghiệm
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.11.1'
+    testImplementation 'androidx.test:core:1.5.0'
+    testImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }

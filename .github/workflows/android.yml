@@ -18,12 +18,28 @@ jobs:
           java-version: "17"
       - uses: gradle/actions/setup-gradle@v4
       # API keys are optional for CI: the app falls back to sample data without them.
-      - name: Unit tests
+      - name: Unit tests (JVM + Robolectric Room tests)
         run: ./gradlew --no-daemon testDebugUnitTest
       - name: Build debug APK
         run: ./gradlew --no-daemon assembleDebug
+      - name: Room schema is committed
+        run: |
+          if [ -n "$(git status --porcelain app/schemas)" ]; then
+            for f in app/schemas/*/*.json; do echo "== $f"; cat "$f"; done
+            echo "::warning::Commit the exported Room schema in app/schemas"
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: budgetmate-debug-apk
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: warn
+
+  proxy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm test
+        working-directory: proxy

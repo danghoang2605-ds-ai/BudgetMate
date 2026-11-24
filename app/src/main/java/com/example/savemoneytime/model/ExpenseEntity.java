@@ -2,9 +2,11 @@ package com.example.savemoneytime.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "expenses")
+// Every screen filters or sorts by date, so index it (added in schema v2).
+@Entity(tableName = "expenses", indices = {@Index("date")})
 public class ExpenseEntity {
 
     @PrimaryKey(autoGenerate = true)

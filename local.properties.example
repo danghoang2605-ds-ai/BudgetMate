@@ -1,5 +1,9 @@
 # Copy to local.properties (git-ignored) and fill in your own keys.
 sdk.dir=/path/to/Android/sdk
+# AI: either your own proxy (recommended, see proxy/README.md) ...
+ai.proxy.url=
+ai.app.token=
+# ... or a direct OpenRouter key (it ends up inside the APK)
 openrouter.api.key=
 gnews.api.key=
 alphavantage.api.key=

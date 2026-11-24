@@ -11,8 +11,8 @@ import java.util.concurrent.Executors;
 
 @Database(
         entities  = { ExpenseEntity.class, RevenueEntity.class },
-        version   = 1,
-        exportSchema = false
+        version   = 2,
+        exportSchema = true
 )
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -33,7 +33,9 @@ public abstract class AppDatabase extends RoomDatabase {
                                     AppDatabase.class,
                                     "budgetmate.db"
                             )
-                            .fallbackToDestructiveMigration()
+                            // No destructive fallback: a missing migration must fail loudly
+                            // in development instead of silently deleting the user's data.
+                            .addMigrations(Migrations.ALL)
                             .build();
                 }
             }

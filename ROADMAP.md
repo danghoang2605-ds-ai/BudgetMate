@@ -16,17 +16,18 @@
 - [x] JVM unit tests and GitHub Actions build
 
 ## Phase 1: correctness and data safety
-- [ ] Replace `fallbackToDestructiveMigration()` with real Room migrations and `exportSchema = true` (today a schema change wipes the user's data)
+- [x] Replaced `fallbackToDestructiveMigration()` with explicit migrations (`Migrations.java`) and `exportSchema = true`; v2 adds date indexes
+- [x] Robolectric tests for the DAOs and the v1→v2 migration
 - [ ] Store amounts in cents (`long`) so $5.50 is not rounded to $6
 - [ ] Use LiveData/Flow queries from Room so screens update without manual `refreshDatabaseData()` calls
-- [ ] Move the AI key off the device: call OpenRouter through a small backend proxy so the key cannot be extracted from the APK
+- [x] Optional Cloudflare Worker proxy (`proxy/`) keeps the AI key off the device, pins the model and caps tokens; tested in CI
 
 ## Phase 2: code health
 - [ ] Rename package `com.example.savemoneytime` to `com.danghoang.budgetmate` (needed before a Play Store release)
 - [ ] Split `StatsFragment` (600 lines) into a chart builder per chart type
 - [ ] Replace `findViewById` with the already-enabled View Binding
 - [ ] Upgrade AGP 8.1 → 8.7+, Gradle 8.4 → 8.10+, target SDK 35
-- [ ] Robolectric tests for the DAOs and ViewModel
+- [ ] Robolectric tests for the ViewModel
 
 ## Phase 3: product
 - [ ] Monthly budgets per category with progress bars and alerts

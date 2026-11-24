@@ -16,7 +16,7 @@ import okhttp3.ResponseBody;
 public class GeminiService {
 
     private static final String API_KEY    = AppConfig.OPENROUTER_KEY;
-    private static final String BASE_URL   = "https://openrouter.ai/api/v1/chat/completions";
+    private static final String OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 
     private static final String MODEL_NAME = "google/gemini-2.5-flash";
 
@@ -43,8 +43,9 @@ public class GeminiService {
     }
 
     public void parseTransaction(String userInput, GeminiCallback callback) {
-        if (!AppConfig.has(API_KEY)) {
-            callback.onError("AI chat is not configured. Add openrouter.api.key to local.properties and rebuild.");
+        boolean viaProxy = AppConfig.has(AppConfig.AI_PROXY_URL);
+        if (!viaProxy && !AppConfig.has(API_KEY)) {
+            callback.onError("AI chat is not configured. Set ai.proxy.url (recommended) or openrouter.api.key in local.properties and rebuild.");
             return;
         }
         try {
@@ -71,14 +72,18 @@ public class GeminiService {
                     MediaType.parse("application/json; charset=utf-8")
             );
 
-            Request request = new Request.Builder()
-                    .url(BASE_URL)
-                    .addHeader("Authorization", "Bearer " + API_KEY)
+            Request.Builder builder = new Request.Builder()
                     .addHeader("Content-Type", "application/json")
-                    .addHeader("HTTP-Referer", "https://localhost")
                     .addHeader("X-Title", "BudgetMate AI")
-                    .post(body)
-                    .build();
+                    .post(body);
+            if (viaProxy) {
+                // The proxy holds the OpenRouter key; the app only proves it is the app.
+                builder.url(AppConfig.AI_PROXY_URL);
+                if (AppConfig.has(AppConfig.AI_APP_TOKEN)) builder.addHeader("X-App-Token", AppConfig.AI_APP_TOKEN);
+            } else {
+                builder.url(OPENROUTER_URL).addHeader("Authorization", "Bearer " + API_KEY);
+            }
+            Request request = builder.build();
 
             client.newCall(request).enqueue(new Callback() {
                 @Override
