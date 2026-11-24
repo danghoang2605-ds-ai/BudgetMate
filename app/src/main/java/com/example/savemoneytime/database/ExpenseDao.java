@@ -23,14 +23,14 @@ public interface ExpenseDao {
     List<ExpenseEntity> getAll();
 
     @Query("SELECT * FROM expenses " +
-            "WHERE strftime('%m', date/1000, 'unixepoch') = :month " +
-            "AND strftime('%Y', date/1000, 'unixepoch') = :year " +
+            "WHERE strftime('%m', date/1000, 'unixepoch', 'localtime') = :month " +
+            "AND strftime('%Y', date/1000, 'unixepoch', 'localtime') = :year " +
             "ORDER BY date DESC")
     List<ExpenseEntity> getByMonth(String month, String year);
 
     @Query("SELECT COALESCE(SUM(amount), 0) FROM expenses " +
-            "WHERE strftime('%m', date/1000, 'unixepoch') = :month " +
-            "AND strftime('%Y', date/1000, 'unixepoch') = :year")
+            "WHERE strftime('%m', date/1000, 'unixepoch', 'localtime') = :month " +
+            "AND strftime('%Y', date/1000, 'unixepoch', 'localtime') = :year")
     long getTotalByMonth(String month, String year);
 
     @Query("SELECT COALESCE(SUM(amount), 0) FROM expenses")

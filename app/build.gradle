@@ -15,12 +15,15 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        // 🔥 TỰ ĐỘNG ĐỌC KEY TỪ LOCAL.PROPERTIES KHÔNG ĐẨY LÊN GITHUB
         Properties properties = new Properties()
         if (rootProject.file("local.properties").exists()) {
             properties.load(rootProject.file("local.properties").newDataInputStream())
         }
-        buildConfigField "String", "OPENROUTER_KEY", "\"${properties.getProperty('openrouter.api.key', '')}\""
+        // Keys come from local.properties (never committed) or CI environment variables.
+        def key = { String prop, String env -> properties.getProperty(prop, System.getenv(env) ?: '') }
+        buildConfigField "String", "OPENROUTER_KEY", "\"${key('openrouter.api.key', 'OPENROUTER_API_KEY')}\""
+        buildConfigField "String", "GNEWS_KEY", "\"${key('gnews.api.key', 'GNEWS_API_KEY')}\""
+        buildConfigField "String", "ALPHAVANTAGE_KEY", "\"${key('alphavantage.api.key', 'ALPHAVANTAGE_API_KEY')}\""
     }
 
     buildTypes {
@@ -35,7 +38,7 @@ android {
     }
     buildFeatures {
         viewBinding true
-        buildConfig true // 🔥 BẮT BUỘC: Cho phép sinh lớp BuildConfig trong Java
+        buildConfig true
     }
 }
 

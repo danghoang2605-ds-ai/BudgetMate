@@ -1,5 +1,6 @@
 package com.example.savemoneytime.MainApplication.FragmentInFragment.FirstFrag;
 
+import com.example.savemoneytime.util.UiThread;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -169,7 +170,7 @@ public class ExpensesFragment extends Fragment {
         AppDatabase.dbExecutor.execute(() -> {
             db.expenseDao().insert(expense);
             if (getActivity() != null) {
-                getActivity().runOnUiThread(() -> {
+                UiThread.post(ExpensesFragment.this, () -> {
                     Toast.makeText(requireContext(), "✅ Expense saved!", Toast.LENGTH_SHORT).show();
                     resetForm();
                 });

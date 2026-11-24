@@ -1,5 +1,6 @@
 package com.example.savemoneytime.MainApplication;
 
+import com.example.savemoneytime.util.UiThread;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.example.savemoneytime.R;
+import com.example.savemoneytime.network.AppConfig;
 import com.example.savemoneytime.network.StockResponse;
 import com.example.savemoneytime.network.StockRetrofitClient;
 import com.github.mikephil.charting.charts.BarChart;
@@ -34,7 +36,7 @@ public class StockDetailFragment extends Fragment {
     private static final String ARG_PRICE  = "stock_price";
     private static final String ARG_CHANGE = "stock_change";
 
-    private static final String AV_API_KEY = "MEPVO0E9IMSB4VTA";
+    private static final String AV_API_KEY = AppConfig.ALPHAVANTAGE_KEY;
 
     private CombinedChart combinedChart;
     private BarChart volumeChart;
@@ -175,7 +177,7 @@ public class StockDetailFragment extends Fragment {
                         if (response.isSuccessful() && response.body() != null) {
                             List<com.example.savemoneytime.model.CandleData> candles = StockRetrofitClient.parseOHLC(response.body());
                             if (!candles.isEmpty() && getActivity() != null) {
-                                getActivity().runOnUiThread(() -> bindAdvancedCharts(candles));
+                                UiThread.post(StockDetailFragment.this, () -> bindAdvancedCharts(candles));
                                 return;
                             }
                         }

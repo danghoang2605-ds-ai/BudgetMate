@@ -36,27 +36,43 @@ app/src/main/java/com/example/savemoneytime/
 ├── model/                           # Primitive Schemas (TransactionItem, ExpenseEntity, RevenueEntity)
 └── network/                         # Remote API REST Integration (Gemini, NewsApi, StockApi Nodes)
 ```
-Tech Stack & Specifications
+## Tech stack
 
-• Language: Native Java (Android SDK)
-• Architecture Pattern: MVVM (Model-View-ViewModel)
-• Data Persistence: Room Library Architecture / SQLite
-• Network Tier: Retrofit 2 / OkHttp 3 Connection Interceptors
-• Visualization: Custom configurations on top of MPAndroidChart engine
-• Minimum SDK: API Level 26 (Android 8.0 Oreo)
-• Target SDK: API Level 34 (Android 14)
+| Area | Choice |
+|---|---|
+| Language | Java 8 (Android SDK) |
+| Architecture | MVVM: Fragment → ViewModel → Repository → Room DAO |
+| Persistence | Room / SQLite, local only |
+| Network | Retrofit 2, OkHttp 4, Gson |
+| AI | OpenRouter (`google/gemini-2.5-flash`) for chat logging and receipt parsing |
+| OCR | Google ML Kit Text Recognition + CameraX |
+| Charts | MPAndroidChart |
+| SDK | min 26 (Android 8.0), target 34 (Android 14) |
 
-Installation, Setup & Build Guides
+## Getting started
 
-Clone the Repository
-Command: git clone https://github.com/danghaihoangwork-beep/BudgetMate.git
+1. Clone and open in Android Studio (Hedgehog or newer, JDK 17):
+   ```bash
+   git clone https://github.com/danghoang2605-ds-ai/BudgetMate.git
+   ```
+2. Copy `local.properties.example` to `local.properties` and add your keys:
+   ```properties
+   openrouter.api.key=...    # AI chat + receipt scanner
+   gnews.api.key=...         # financial news
+   alphavantage.api.key=...  # stock candles
+   ```
+   `local.properties` is git-ignored. Keys are injected into `BuildConfig` at build time; nothing is hard-coded in source. Every key is optional: without one, that screen shows sample data or a clear "not configured" message.
+3. Run the `app` configuration, or from a terminal:
+   ```bash
+   ./gradlew testDebugUnitTest assembleDebug
+   ```
 
-Configure Environment Access Tokens
-Create a local.properties file in your root project directory and declare your functional API keys:
+CI builds the debug APK and runs the unit tests on every push (see `.github/workflows/android.yml`); the APK is attached to each run as an artifact.
 
-gemini.api.key
-news.api.key
-stock.api.key
+## Roadmap
 
-License & Attribution
-Distributed under private software development terms of ownership. Maintained by Dang Hoang (danghai.hoang.work@gmail.com).
+See [ROADMAP.md](ROADMAP.md).
+
+## License
+
+All rights reserved. Maintained by Dang Hoang.

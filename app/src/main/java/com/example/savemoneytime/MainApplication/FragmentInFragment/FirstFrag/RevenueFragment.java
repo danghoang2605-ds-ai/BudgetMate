@@ -1,5 +1,6 @@
 package com.example.savemoneytime.MainApplication.FragmentInFragment.FirstFrag;
 
+import com.example.savemoneytime.util.UiThread;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -164,7 +165,7 @@ public class RevenueFragment extends Fragment {
         AppDatabase.dbExecutor.execute(() -> {
             db.revenueDao().insert(revenue);
             if (getActivity() != null) {
-                getActivity().runOnUiThread(() -> {
+                UiThread.post(RevenueFragment.this, () -> {
                     Toast.makeText(requireContext(), "✅ Income saved!", Toast.LENGTH_SHORT).show();
                     resetForm();
                 });

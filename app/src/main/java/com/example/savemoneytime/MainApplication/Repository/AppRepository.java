@@ -145,6 +145,17 @@ public class AppRepository {
         });
     }
 
+    /** Lifetime totals as {income, expense}, computed with SUM() in SQLite. */
+    public void getAllTimeTotals(DataCallback<long[]> callback) {
+        executor.execute(() -> {
+            try {
+                callback.onSuccess(new long[]{ revenueDao.getTotalAll(), expenseDao.getTotalAll() });
+            } catch (Exception e) {
+                callback.onError(e.getMessage());
+            }
+        });
+    }
+
     // ── News API ──────────────────────────────────────────
     public void fetchNews(String query, String lang, int max, String apiKey, DataCallback<NewsResponse> callback) {
         NewsApiService service = RetrofitClient.getNewsService();

@@ -23,7 +23,7 @@ public class GeminiService {
     private final OkHttpClient client;
     private static GeminiService instance;
 
-    public static GeminiService getInstance() {
+    public static synchronized GeminiService getInstance() {
         if (instance == null) {
             instance = new GeminiService();
         }
@@ -43,6 +43,10 @@ public class GeminiService {
     }
 
     public void parseTransaction(String userInput, GeminiCallback callback) {
+        if (!AppConfig.has(API_KEY)) {
+            callback.onError("AI chat is not configured. Add openrouter.api.key to local.properties and rebuild.");
+            return;
+        }
         try {
             JsonObject payload = new JsonObject();
             payload.addProperty("model", MODEL_NAME);

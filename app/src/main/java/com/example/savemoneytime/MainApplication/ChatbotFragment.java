@@ -22,8 +22,7 @@ import com.example.savemoneytime.model.ChatMessage;
 import com.example.savemoneytime.model.ExpenseEntity;
 import com.example.savemoneytime.model.RevenueEntity;
 import com.example.savemoneytime.network.GeminiService;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.example.savemoneytime.util.AiReplyParser;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -47,7 +46,6 @@ public class ChatbotFragment extends Fragment {
 
         viewModel = new ViewModelProvider(requireActivity()).get(BudgetViewModel.class);
 
-        // 🔥 FIXED: Khớp nối chính xác 100% với các ID chuẩn của file XML hiện tại
         rvChatMessages    = view.findViewById(R.id.rv_chat_messages);
         edtChatInput      = view.findViewById(R.id.edt_chat_input);
         btnChatSend       = view.findViewById(R.id.btn_chat_send);
@@ -60,7 +58,7 @@ public class ChatbotFragment extends Fragment {
 
         messageList = new ArrayList<>();
 
-        messageList.add(new ChatMessage("👋 Hi! I'm your BudgetMate AI.\n\nJust tell me what you spent or earned in English, and I'll log it for you!\n\nTry: \"Boba tea 6$\" or \"Salary 200$\"", getBotSender()));
+        messageList.add(new ChatMessage("👋 Hi! I'm your BudgetMate AI.\n\nJust tell me what you spent or earned in English, and I'll log it for you!\n\nTry: \"Boba tea 6$\" or \"Salary 200$\"", ChatMessage.Sender.AI));
 
         adapter = new ChatAdapter(messageList);
         rvChatMessages.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -80,7 +78,6 @@ public class ChatbotFragment extends Fragment {
             }
         });
 
-        // 🔥 Khôi phục nguyên vẹn tính năng ấn nút Camera mở Scanner
         btnChatCameraScan.setOnClickListener(v -> {
             if (getActivity() instanceof MainActivity) {
                 ((MainActivity) getActivity()).openScannerFromChat();
@@ -94,100 +91,50 @@ public class ChatbotFragment extends Fragment {
     }
 
     private void performChatAction(String userInput) {
-        messageList.add(new ChatMessage(userInput, getUserSender()));
-        adapter.notifyItemInserted(messageList.size() - 1);
-        rvChatMessages.scrollToPosition(messageList.size() - 1);
+        addMessage(new ChatMessage(userInput, ChatMessage.Sender.USER));
 
         GeminiService.getInstance().parseTransaction(userInput, new GeminiService.GeminiCallback() {
             @Override
             public void onSuccess(String response) {
-                if (getActivity() == null) return;
-                getActivity().runOnUiThread(() -> handleAiResponse(response));
+                runOnUi(() -> handleAiResponse(response));
             }
 
             @Override
             public void onError(String error) {
-                if (getActivity() == null) return;
-                getActivity().runOnUiThread(() -> {
-                    messageList.add(new ChatMessage("⚠️ System error: " + error, getBotSender()));
-                    adapter.notifyItemInserted(messageList.size() - 1);
-                    rvChatMessages.scrollToPosition(messageList.size() - 1);
-                });
+                runOnUi(() -> addMessage(new ChatMessage("⚠️ " + error, ChatMessage.Sender.AI)));
             }
         });
     }
 
     private void handleAiResponse(String rawResponse) {
-        try {
-            String cleaned = rawResponse.replace("```json", "").replace("```", "").trim();
-            JsonObject json = JsonParser.parseString(cleaned).getAsJsonObject();
+        AiReplyParser.Result r = AiReplyParser.parse(rawResponse);
+        String reply;
+        long now = Calendar.getInstance().getTimeInMillis();
 
-            String aiReplyText;
-
-            if (json.has("intent") && "query".equals(json.get("intent").getAsString())) {
-                aiReplyText = json.get("message").getAsString();
-            }
-            else if (json.has("type")) {
-                String type     = json.get("type").getAsString();
-                long amount     = json.get("amount").getAsLong();
-                String category = json.get("category").getAsString();
-                String note     = json.has("note") ? json.get("note").getAsString() : "AI Log";
-
-                if ("EXPENSE".equals(type)) {
-                    ExpenseEntity expense = new ExpenseEntity(note, amount, category, Calendar.getInstance().getTimeInMillis(), "Logged by AI Chat");
-                    viewModel.saveExpense(expense);
-                    aiReplyText = "✅ Auto-logged Expense saved!\n\n🔹 Amount: $" + amount + "\n🔹 Category: " + category + "\n🔹 Note: " + note;
-                } else {
-                    RevenueEntity revenue = new RevenueEntity(note, amount, category, Calendar.getInstance().getTimeInMillis(), "Logged by AI Chat");
-                    viewModel.saveRevenue(revenue);
-                    aiReplyText = "✅ Auto-logged Income saved!\n\n🔸 Amount: $" + amount + "\n🔸 Category: " + category + "\n🔸 Note: " + note;
-                }
-            } else {
-                aiReplyText = cleaned;
-            }
-
-            messageList.add(new ChatMessage(aiReplyText, getBotSender()));
-            adapter.notifyItemInserted(messageList.size() - 1);
-            rvChatMessages.scrollToPosition(messageList.size() - 1);
-
-        } catch (Exception e) {
-            messageList.add(new ChatMessage("🤖 AI Response:\n" + rawResponse, getBotSender()));
-            adapter.notifyItemInserted(messageList.size() - 1);
-            rvChatMessages.scrollToPosition(messageList.size() - 1);
+        if (r.kind == AiReplyParser.Kind.EXPENSE) {
+            viewModel.saveExpense(new ExpenseEntity(r.note, r.amount, r.category, now, "Logged by AI Chat"));
+            reply = "✅ Expense saved\n\n🔹 Amount: $" + r.amount + "\n🔹 Category: " + r.category + "\n🔹 Note: " + r.note;
+        } else if (r.kind == AiReplyParser.Kind.REVENUE) {
+            viewModel.saveRevenue(new RevenueEntity(r.note, r.amount, r.category, now, "Logged by AI Chat"));
+            reply = "✅ Income saved\n\n🔸 Amount: $" + r.amount + "\n🔸 Category: " + r.category + "\n🔸 Note: " + r.note;
+        } else {
+            reply = r.message;
         }
+        addMessage(new ChatMessage(reply, ChatMessage.Sender.AI));
     }
 
-    // ── BỘ TỰ ĐỘNG DÒ TÌM HẰNG SỐ ĐỘNG (REFLECTION HELPERS) ĐỂ TRIỆT TIÊU LỖI COMPILE ──
-
-    private ChatMessage.Sender getBotSender() {
-        try {
-            for (java.lang.reflect.Field f : ChatMessage.Sender.class.getFields()) {
-                String name = f.getName().toUpperCase();
-                if (name.contains("AI") || name.contains("BOT") || name.contains("ASSISTANT") || name.contains("RECEIVED")) {
-                    return (ChatMessage.Sender) f.get(null);
-                }
-            }
-            if (ChatMessage.Sender.class.isEnum()) {
-                Object[] constants = ChatMessage.Sender.class.getEnumConstants();
-                if (constants != null && constants.length > 1) return (ChatMessage.Sender) constants[1];
-            }
-        } catch (Exception ignored) {}
-        return null;
+    private void addMessage(ChatMessage message) {
+        if (adapter == null || rvChatMessages == null) return;
+        messageList.add(message);
+        adapter.notifyItemInserted(messageList.size() - 1);
+        rvChatMessages.scrollToPosition(messageList.size() - 1);
     }
 
-    private ChatMessage.Sender getUserSender() {
-        try {
-            for (java.lang.reflect.Field f : ChatMessage.Sender.class.getFields()) {
-                String name = f.getName().toUpperCase();
-                if (name.contains("USER") || name.contains("ME") || name.contains("SENDER") || name.contains("SENT")) {
-                    return (ChatMessage.Sender) f.get(null);
-                }
-            }
-            if (ChatMessage.Sender.class.isEnum()) {
-                Object[] constants = ChatMessage.Sender.class.getEnumConstants();
-                if (constants != null && constants.length > 0) return (ChatMessage.Sender) constants[0];
-            }
-        } catch (Exception ignored) {}
-        return null;
+    /** Callbacks arrive on an OkHttp thread and may outlive the view; drop them if the view is gone. */
+    private void runOnUi(Runnable action) {
+        if (getActivity() == null) return;
+        requireActivity().runOnUiThread(() -> {
+            if (isAdded() && getView() != null) action.run();
+        });
     }
 }

@@ -126,8 +126,11 @@ public class HomeFragment extends Fragment {
         });
 
         viewModel.getSaveStatus().observe(getViewLifecycleOwner(), status -> {
-            if (status != null && status.startsWith("✅")) {
+            if (status == null) return;
+            if (status.startsWith("✅")) {
                 refreshDatabaseData();
+            } else if (status.startsWith("❌") && getContext() != null) {
+                Toast.makeText(getContext(), status, Toast.LENGTH_LONG).show();
             }
         });
     }

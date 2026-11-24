@@ -1,5 +1,6 @@
 package com.example.savemoneytime.MainApplication;
 
+import com.example.savemoneytime.util.UiThread;
 import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -202,7 +203,7 @@ public class ScannerFragment extends Fragment {
             @Override
             public void onSuccess(String response) {
                 if (getActivity() == null) return;
-                getActivity().runOnUiThread(() -> {
+                UiThread.post(ScannerFragment.this, () -> {
                     hideProcessing();
                     handleScanResult(response, rawText);
                 });
@@ -211,7 +212,7 @@ public class ScannerFragment extends Fragment {
             @Override
             public void onError(String error) {
                 if (getActivity() == null) return;
-                getActivity().runOnUiThread(() -> {
+                UiThread.post(ScannerFragment.this, () -> {
                     hideProcessing();
                     Toast.makeText(requireContext(), "AI unavailable. Try manual entry.", Toast.LENGTH_LONG).show();
                 });

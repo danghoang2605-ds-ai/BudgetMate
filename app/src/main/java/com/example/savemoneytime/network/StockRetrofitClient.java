@@ -14,7 +14,7 @@ public class StockRetrofitClient {
     private static final String BASE_URL = "https://www.alphavantage.co/";
     private static Retrofit instance;
 
-    public static Retrofit getInstance() {
+    public static synchronized Retrofit getInstance() {
         if (instance == null) {
             OkHttpClient client = new OkHttpClient.Builder()
                     .connectTimeout(20, TimeUnit.SECONDS)

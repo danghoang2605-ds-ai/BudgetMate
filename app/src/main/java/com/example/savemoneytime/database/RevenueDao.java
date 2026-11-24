@@ -23,14 +23,14 @@ public interface RevenueDao {
     List<RevenueEntity> getAll();
 
     @Query("SELECT * FROM revenues " +
-            "WHERE strftime('%m', date/1000, 'unixepoch') = :month " +
-            "AND strftime('%Y', date/1000, 'unixepoch') = :year " +
+            "WHERE strftime('%m', date/1000, 'unixepoch', 'localtime') = :month " +
+            "AND strftime('%Y', date/1000, 'unixepoch', 'localtime') = :year " +
             "ORDER BY date DESC")
     List<RevenueEntity> getByMonth(String month, String year);
 
     @Query("SELECT COALESCE(SUM(amount), 0) FROM revenues " +
-            "WHERE strftime('%m', date/1000, 'unixepoch') = :month " +
-            "AND strftime('%Y', date/1000, 'unixepoch') = :year")
+            "WHERE strftime('%m', date/1000, 'unixepoch', 'localtime') = :month " +
+            "AND strftime('%Y', date/1000, 'unixepoch', 'localtime') = :year")
     long getTotalByMonth(String month, String year);
 
     @Query("SELECT COALESCE(SUM(amount), 0) FROM revenues")

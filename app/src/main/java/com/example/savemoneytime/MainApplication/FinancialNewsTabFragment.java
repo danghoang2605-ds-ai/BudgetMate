@@ -16,13 +16,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.savemoneytime.MainApplication.Adapters.NewsAdapter;
 import com.example.savemoneytime.MainApplication.ViewModels.BudgetViewModel;
 import com.example.savemoneytime.R;
+import com.example.savemoneytime.network.AppConfig;
 import com.example.savemoneytime.network.NewsArticle;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FinancialNewsTabFragment extends Fragment {
 
-    private static final String GNEWS_API_KEY = "bf3abc779ced0262fe84fc18599353b0";
+    private static final String GNEWS_API_KEY = AppConfig.GNEWS_KEY;
 
     private BudgetViewModel    viewModel;
     private RecyclerView       rvNews;
@@ -52,8 +53,7 @@ public class FinancialNewsTabFragment extends Fragment {
             if (!isAdded() || url == null || url.isEmpty()) return;
             ArticleDetailFragment detail = ArticleDetailFragment.newInstance(url, title);
 
-            // 🔥 FIXED CHÍ MẠNG: Đổi getParentFragmentManager() thành requireActivity().getSupportFragmentManager()
-            // Ép hệ thống dùng Manager của Activity chính mới định vị được R.id.fragment_container tầng gốc!
+            // The container lives in the activity layout, so use the activity's fragment manager.
             requireActivity().getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                     .replace(R.id.fragment_container, detail)
@@ -74,7 +74,12 @@ public class FinancialNewsTabFragment extends Fragment {
 
         observeViewModel();
 
-        viewModel.loadNews(GNEWS_API_KEY);
+        if (AppConfig.has(GNEWS_API_KEY)) {
+            viewModel.loadNews(GNEWS_API_KEY);
+        } else {
+            loadMockNews(); // no key configured: show sample headlines instead of an error
+            if (swipeRefresh != null) swipeRefresh.setOnRefreshListener(() -> swipeRefresh.setRefreshing(false));
+        }
     }
 
     private void observeViewModel() {

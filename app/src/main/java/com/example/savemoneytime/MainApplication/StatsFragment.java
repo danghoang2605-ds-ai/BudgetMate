@@ -1,5 +1,7 @@
 package com.example.savemoneytime.MainApplication;
 
+import com.example.savemoneytime.util.Csv;
+import com.example.savemoneytime.util.UiThread;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
@@ -242,7 +244,7 @@ public class StatsFragment extends Fragment {
                 }
             }
             if (getActivity() != null) {
-                getActivity().runOnUiThread(() -> updateDashboardUI(currentExpenses, currentRevenues));
+                UiThread.post(StatsFragment.this, () -> updateDashboardUI(currentExpenses, currentRevenues));
             }
         });
     }
@@ -550,16 +552,18 @@ public class StatsFragment extends Fragment {
                 String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
 
                 File csvFile = new File(targetDir, "BudgetReport_" + timestamp + ".csv");
-                FileWriter writer = new FileWriter(csvFile);
-                writer.append("Type,Category,Amount,Date,Description\n");
-                for (RevenueEntity r : currentRevenues) {
-                    writer.append(String.format(Locale.US, "INCOME,%s,%d,%s,%s\n", r.getCategoryName(), r.getAmount(), new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(new Date(r.getDate())), r.getNote()));
+                SimpleDateFormat dayFmt = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                try (FileWriter writer = new FileWriter(csvFile)) {
+                    writer.append(Csv.row("Type", "Category", "Amount", "Date", "Description"));
+                    for (RevenueEntity r : currentRevenues) {
+                        writer.append(Csv.row("INCOME", r.getCategoryName(), String.valueOf(r.getAmount()),
+                                dayFmt.format(new Date(r.getDate())), r.getNote()));
+                    }
+                    for (ExpenseEntity e : currentExpenses) {
+                        writer.append(Csv.row("EXPENSE", e.getCategoryName(), String.valueOf(e.getAmount()),
+                                dayFmt.format(new Date(e.getDate())), e.getNote()));
+                    }
                 }
-                for (ExpenseEntity e : currentExpenses) {
-                    writer.append(String.format(Locale.US, "EXPENSE,%s,%d,%s,%s\n", e.getCategoryName(), e.getAmount(), new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(new Date(e.getDate())), e.getNote()));
-                }
-                writer.flush();
-                writer.close();
 
                 PdfDocument pdf = new PdfDocument();
                 PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(595, 842, 1).create();
@@ -591,15 +595,18 @@ public class StatsFragment extends Fragment {
 
                 pdf.finishPage(page);
                 File pdfFile = new File(targetDir, "BudgetReport_" + timestamp + ".pdf");
-                pdf.writeTo(new FileOutputStream(pdfFile));
-                pdf.close();
+                try (FileOutputStream out = new FileOutputStream(pdfFile)) {
+                    pdf.writeTo(out);
+                } finally {
+                    pdf.close();
+                }
 
                 if (getActivity() != null) {
-                    getActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "✅ Exported PDF & CSV successfully to Downloads!", Toast.LENGTH_LONG).show());
+                    UiThread.post(StatsFragment.this, () -> Toast.makeText(requireContext(), "✅ Exported PDF & CSV successfully to Downloads!", Toast.LENGTH_LONG).show());
                 }
             } catch (Exception e) {
                 if (getActivity() != null) {
-                    getActivity().runOnUiThread(() -> Toast.makeText(requireContext(), "❌ Export failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                    UiThread.post(StatsFragment.this, () -> Toast.makeText(requireContext(), "❌ Export failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
                 }
             }
         });

@@ -19,13 +19,13 @@ public class BudgetViewModel extends AndroidViewModel {
 
     private final AppRepository repository;
 
-    // Luồng dữ liệu theo tháng được chọn
+    // Data for the selected month
     private final MutableLiveData<Long>    totalIncomeLive  = new MutableLiveData<>(0L);
     private final MutableLiveData<Long>    totalExpenseLive = new MutableLiveData<>(0L);
     private final MutableLiveData<Long>    balanceLive      = new MutableLiveData<>(0L);
     private final MutableLiveData<List<TransactionItem>> transactionsLive = new MutableLiveData<>(new ArrayList<>());
 
-    // 🔥 LUỒNG DỮ LIỆU TỔNG TOÀN BỘ LỊCH SỬ (ALL-TIME DATABASE)
+    // Lifetime totals across all months
     private final MutableLiveData<Long>    allTimeIncomeLive  = new MutableLiveData<>(0L);
     private final MutableLiveData<Long>    allTimeExpenseLive = new MutableLiveData<>(0L);
 
@@ -44,7 +44,6 @@ public class BudgetViewModel extends AndroidViewModel {
     public LiveData<Long>                  getBalance()         { return balanceLive; }
     public LiveData<List<TransactionItem>> getTransactions()    { return transactionsLive; }
 
-    // Getter cho biến All-Time mới
     public LiveData<Long>                  getAllTimeIncome()   { return allTimeIncomeLive; }
     public LiveData<Long>                  getAllTimeExpense()  { return allTimeExpenseLive; }
 
@@ -53,20 +52,15 @@ public class BudgetViewModel extends AndroidViewModel {
     public LiveData<String>                getNewsError()       { return newsErrorLive; }
     public LiveData<String>                getSaveStatus()      { return saveStatusLive; }
 
-    public void loadBalance(String month, String year) {
-        repository.getTotalRevenueByMonth(month, year, new AppRepository.DataCallback<Long>() {
-            @Override public void onSuccess(Long income) {}
-            @Override public void onError(String message) {}
-        });
-    }
-
     public void saveExpense(ExpenseEntity expense) {
         repository.insertExpense(expense, new AppRepository.DataCallback<Void>() {
             @Override
             public void onSuccess(Void data) {
                 saveStatusLive.postValue("✅ Expense saved! " + System.currentTimeMillis());
             }
-            @Override public void onError(String message) {}
+            @Override public void onError(String message) {
+                saveStatusLive.postValue("❌ Could not save expense: " + message);
+            }
         });
     }
 
@@ -76,7 +70,9 @@ public class BudgetViewModel extends AndroidViewModel {
             public void onSuccess(Void data) {
                 saveStatusLive.postValue("✅ Income saved! " + System.currentTimeMillis());
             }
-            @Override public void onError(String message) {}
+            @Override public void onError(String message) {
+                saveStatusLive.postValue("❌ Could not save income: " + message);
+            }
         });
     }
 
@@ -116,28 +112,14 @@ public class BudgetViewModel extends AndroidViewModel {
         });
     }
 
-    // 🔥 HÀM TÍNH TOÁN ALL-TIME TỔNG TOÀN BỘ DATABASE NGẦM
+    // Lifetime totals. The old version queried getByMonth("", ""), which never matches a row,
+    // so the All-Time cards always showed 0.
     private void calculateAllTimeStats() {
-        // Gọi dữ liệu thô không điều kiện thời gian để tổng hợp số liệu tổng của toàn bộ vòng đời app
-        repository.getExpensesByMonth("", "", new AppRepository.DataCallback<List<ExpenseEntity>>() {
+        repository.getAllTimeTotals(new AppRepository.DataCallback<long[]>() {
             @Override
-            public void onSuccess(List<ExpenseEntity> allExpenses) {
-                repository.getRevenuesByMonth("", "", new AppRepository.DataCallback<List<RevenueEntity>>() {
-                    @Override
-                    public void onSuccess(List<RevenueEntity> allRevenues) {
-                        long totalExp = 0;
-                        long totalInc = 0;
-                        if (allExpenses != null) {
-                            for (ExpenseEntity e : allExpenses) totalExp += e.getAmount();
-                        }
-                        if (allRevenues != null) {
-                            for (RevenueEntity r : allRevenues) totalInc += r.getAmount();
-                        }
-                        allTimeExpenseLive.postValue(totalExp);
-                        allTimeIncomeLive.postValue(totalInc);
-                    }
-                    @Override public void onError(String msg) {}
-                });
+            public void onSuccess(long[] totals) {
+                allTimeIncomeLive.postValue(totals[0]);
+                allTimeExpenseLive.postValue(totals[1]);
             }
             @Override public void onError(String msg) {}
         });
@@ -173,7 +155,11 @@ public class BudgetViewModel extends AndroidViewModel {
                     newsLive.postValue(new ArrayList<>(response.getArticles()));
                 }
             }
-            @Override public void onError(String message) { newsLoadingLive.postValue(false); }
+            @Override public void onError(String message) {
+                newsLoadingLive.postValue(false);
+                // Without this the error observer never fired, so the refresh spinner kept spinning.
+                newsErrorLive.postValue(message != null ? message : "Network error");
+            }
         });
     }
 

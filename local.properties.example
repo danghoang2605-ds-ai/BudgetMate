@@ -1,0 +1,5 @@
+# Copy to local.properties (git-ignored) and fill in your own keys.
+sdk.dir=/path/to/Android/sdk
+openrouter.api.key=
+gnews.api.key=
+alphavantage.api.key=

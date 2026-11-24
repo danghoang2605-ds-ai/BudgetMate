@@ -10,7 +10,7 @@ public class RetrofitClient {
     private static final String GNEWS_BASE_URL = "https://gnews.io/api/v4/";
     private static Retrofit instance = null;
 
-    public static Retrofit getInstance() {
+    public static synchronized Retrofit getInstance() {
         if (instance == null) {
             OkHttpClient client = new OkHttpClient.Builder()
                     .connectTimeout(15, TimeUnit.SECONDS)
