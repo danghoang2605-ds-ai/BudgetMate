@@ -1,5 +1,6 @@
 package com.example.savemoneytime.MainApplication;
 
+import com.example.savemoneytime.util.MonthChange;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -125,6 +126,14 @@ public class HomeFragment extends Fragment {
             if (expense != null) tvTotalExpenses.setText("$" + formatter.format(expense));
         });
 
+        viewModel.getNetComparison().observe(getViewLifecycleOwner(), nets -> {
+            TextView pill = getView() != null ? getView().findViewById(R.id.tv_delta_pct) : null;
+            if (nets == null || pill == null) return;
+            pill.setText(MonthChange.label(nets[0], nets[1]));
+            boolean down = nets[1] != 0 && nets[0] < nets[1];
+            pill.setTextColor(ContextCompat.getColor(requireContext(), down ? R.color.bm_expense : R.color.bm_income));
+        });
+
         viewModel.getSaveStatus().observe(getViewLifecycleOwner(), status -> {
             if (status == null) return;
             if (status.startsWith("✅")) {
@@ -203,6 +212,14 @@ public class HomeFragment extends Fragment {
                 updateAmountDisplay();
             });
         }
+
+        // Amounts are whole dollars, so the old "." key did nothing. It now adds "00" for round amounts.
+        view.findViewById(R.id.btn_dot).setOnClickListener(v -> {
+            if (!currentAmountInput.isEmpty() && !currentAmountInput.equals("0") && currentAmountInput.length() <= 10) {
+                currentAmountInput = currentAmountInput + "00";
+                updateAmountDisplay();
+            }
+        });
 
         view.findViewById(R.id.btn_clear).setOnClickListener(v -> {
             if (!currentAmountInput.isEmpty()) {

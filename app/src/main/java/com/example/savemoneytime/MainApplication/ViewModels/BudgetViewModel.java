@@ -11,6 +11,7 @@ import com.example.savemoneytime.model.RevenueEntity;
 import com.example.savemoneytime.model.TransactionItem;
 import com.example.savemoneytime.network.NewsArticle;
 import com.example.savemoneytime.network.NewsResponse;
+import com.example.savemoneytime.util.MonthChange;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +34,8 @@ public class BudgetViewModel extends AndroidViewModel {
     private final MutableLiveData<Boolean> newsLoadingLive = new MutableLiveData<>(false);
     private final MutableLiveData<String>  newsErrorLive   = new MutableLiveData<>();
     private final MutableLiveData<String>  saveStatusLive  = new MutableLiveData<>();
+    // {current month net, previous month net}, for the "vs last month" pill
+    private final MutableLiveData<long[]>  netComparisonLive = new MutableLiveData<>();
 
     public BudgetViewModel(@NonNull Application application) {
         super(application);
@@ -51,6 +54,7 @@ public class BudgetViewModel extends AndroidViewModel {
     public LiveData<Boolean>               getNewsLoading()     { return newsLoadingLive; }
     public LiveData<String>                getNewsError()       { return newsErrorLive; }
     public LiveData<String>                getSaveStatus()      { return saveStatusLive; }
+    public LiveData<long[]>                getNetComparison()   { return netComparisonLive; }
 
     public void saveExpense(ExpenseEntity expense) {
         repository.insertExpense(expense, new AppRepository.DataCallback<Void>() {
@@ -102,8 +106,8 @@ public class BudgetViewModel extends AndroidViewModel {
                         totalExpenseLive.postValue(calculatedExpense);
                         balanceLive.postValue(calculatedIncome - calculatedExpense);
 
-                        // Kích hoạt tính toán All-Time song song
                         calculateAllTimeStats();
+                        comparePreviousMonth(month, year, calculatedIncome - calculatedExpense);
                     }
                     @Override public void onError(String msg) {}
                 });
@@ -120,6 +124,28 @@ public class BudgetViewModel extends AndroidViewModel {
             public void onSuccess(long[] totals) {
                 allTimeIncomeLive.postValue(totals[0]);
                 allTimeExpenseLive.postValue(totals[1]);
+            }
+            @Override public void onError(String msg) {}
+        });
+    }
+
+    private void comparePreviousMonth(String month, String year, long currentNet) {
+        String[] prev;
+        try {
+            prev = MonthChange.previous(month, year);
+        } catch (NumberFormatException e) {
+            return;
+        }
+        repository.getTotalRevenueByMonth(prev[0], prev[1], new AppRepository.DataCallback<Long>() {
+            @Override
+            public void onSuccess(Long income) {
+                repository.getTotalExpenseByMonth(prev[0], prev[1], new AppRepository.DataCallback<Long>() {
+                    @Override
+                    public void onSuccess(Long expense) {
+                        netComparisonLive.postValue(new long[]{ currentNet, income - expense });
+                    }
+                    @Override public void onError(String msg) {}
+                });
             }
             @Override public void onError(String msg) {}
         });

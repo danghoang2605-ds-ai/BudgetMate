@@ -24,9 +24,12 @@ jobs:
         run: ./gradlew --no-daemon assembleDebug
       - name: Room schema is committed
         run: |
+          # A schema change without a committed schema file means an unreviewed migration.
           if [ -n "$(git status --porcelain app/schemas)" ]; then
-            for f in app/schemas/*/*.json; do echo "== $f"; cat "$f"; done
-            echo "::warning::Commit the exported Room schema in app/schemas"
+            git status --porcelain app/schemas
+            git diff -- app/schemas || true
+            echo "::error::Room schema changed: commit the exported file in app/schemas and add a Migration"
+            exit 1
           fi
       - uses: actions/upload-artifact@v4
         with:

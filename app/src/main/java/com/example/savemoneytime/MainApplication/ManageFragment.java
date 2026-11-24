@@ -347,13 +347,12 @@ public class ManageFragment extends Fragment {
                 dvh.tvNetFlow.setText((netFlow >= 0 ? "+$" : "-$") + formatter.format(Math.abs(netFlow)));
                 dvh.tvNetFlow.setTextColor(netFlow >= 0 ? Color.parseColor("#FF34D399") : Color.parseColor("#FFF87171"));
 
-                // 2. 🔥 ÉP HIỂN THỊ THÔNG SỐ TOÀN BỘ HỆ THỐNG (ALL-TIME) VÀO MỤC PHỤ
-                // Tận dụng các trường có sẵn để gán dữ liệu tổng lịch sử siêu tối ưu
+                // 2. Lifetime totals. The labels used to read "Avg / day", "Burn rate" and "Saved",
+                // which did not match these values.
                 long allTimeNet = db.allTimeIncome - db.allTimeExpense;
-                dvh.tvAvgPerDay.setText("Inc: $" + formatter.format(db.allTimeIncome)); // Tổng Thu All-time
-                dvh.tvBurnRate.setText("Exp: $" + formatter.format(db.allTimeExpense));   // Tổng Chi All-time
-
-                dvh.tvSaved.setText("Net: " + (allTimeNet >= 0 ? "+$" : "-$") + formatter.format(Math.abs(allTimeNet)));
+                dvh.tvAvgPerDay.setText("$" + formatter.format(db.allTimeIncome));
+                dvh.tvBurnRate.setText("$" + formatter.format(db.allTimeExpense));
+                dvh.tvSaved.setText((allTimeNet >= 0 ? "+$" : "-$") + formatter.format(Math.abs(allTimeNet)));
                 dvh.tvSaved.setTextColor(allTimeNet >= 0 ? Color.parseColor("#FF34D399") : Color.parseColor("#FFF87171"));
 
             } else if (holder instanceof DateHeaderVH) {

@@ -78,7 +78,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="AVG / DAY"
+                android:text="ALL-TIME IN"
                 android:textColor="@color/bm_muted"
                 android:textSize="10sp"
                 android:textStyle="bold" />
@@ -108,7 +108,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="BURN RATE"
+                android:text="ALL-TIME OUT"
                 android:textColor="@color/bm_muted"
                 android:textSize="10sp"
                 android:textStyle="bold" />
@@ -116,7 +116,7 @@
                 android:id="@+id/tv_burn_rate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0%"
+                android:text="$0"
                 android:textColor="@color/bm_expense_hi"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -138,7 +138,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SAVED"
+                android:text="ALL-TIME NET"
                 android:textColor="@color/bm_muted"
                 android:textSize="10sp"
                 android:textStyle="bold" />

@@ -107,7 +107,7 @@
                     android:id="@+id/tv_delta_pct"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="↑ 0.0%"
+                    android:text="—"
                     android:textColor="@color/bm_income"
                     android:textSize="11sp"
                     android:textStyle="bold"
@@ -518,7 +518,7 @@
             <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_8" android:text="8" style="@style/BMKeypadDigit" android:backgroundTint="@null" />
             <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_9" android:text="9" style="@style/BMKeypadDigit" android:backgroundTint="@null" />
 
-            <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_dot" android:text="." style="@style/BMKeypadDigit" android:backgroundTint="@null" />
+            <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_dot" android:text="00" android:contentDescription="Add two zeros" style="@style/BMKeypadDigit" android:backgroundTint="@null" />
             <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_0" android:text="0" style="@style/BMKeypadDigit" android:backgroundTint="@null" />
             <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_clear" android:text="⌫" style="@style/BMKeypadDigit" android:backgroundTint="@null" />
         </GridLayout>
