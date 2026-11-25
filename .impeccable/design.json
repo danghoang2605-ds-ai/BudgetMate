@@ -1,0 +1,593 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-25T02:34:13Z",
+  "title": "Design System: BudgetMate",
+  "extensions": {
+    "colorMeta": {
+      "gold": {
+        "role": "primary",
+        "displayName": "Metallic Gold",
+        "canonical": "#D4AF37",
+        "oklch": "oklch(76.7% 0.139 91)",
+        "tonalRamp": [
+          "#0D0B05",
+          "#2D2407",
+          "#4F4011",
+          "#745F1B",
+          "#9B7F27",
+          "#C3A132",
+          "#E8C661",
+          "#FEEEBF"
+        ]
+      },
+      "gold-hi": {
+        "role": "primary",
+        "displayName": "Gold Highlight",
+        "canonical": "#EBCB6B",
+        "oklch": "oklch(85.0% 0.121 91)",
+        "tonalRamp": [
+          "#0D0B06",
+          "#2A2516",
+          "#4B4125",
+          "#6F6035",
+          "#948146",
+          "#BCA357",
+          "#E6C669",
+          "#FEEEBF"
+        ]
+      },
+      "gold-hover-top": {
+        "role": "primary",
+        "displayName": "Lit Gold (top)",
+        "canonical": "#F3D885",
+        "oklch": "oklch(88.7% 0.107 92)",
+        "tonalRamp": [
+          "#0D0B07",
+          "#28251B",
+          "#48422D",
+          "#6C613F",
+          "#918153",
+          "#B8A467",
+          "#E0C87C",
+          "#FDEEC2"
+        ]
+      },
+      "gold-hover": {
+        "role": "primary",
+        "displayName": "Lit Gold",
+        "canonical": "#DDB943",
+        "oklch": "oklch(79.7% 0.139 92)",
+        "tonalRamp": [
+          "#0D0B06",
+          "#2C240C",
+          "#4E4117",
+          "#725F22",
+          "#99802E",
+          "#C1A23B",
+          "#E8C65B",
+          "#FFEEBC"
+        ]
+      },
+      "gold-ink": {
+        "role": "primary",
+        "displayName": "Gold Ink",
+        "canonical": "#241A02",
+        "oklch": "oklch(22.4% 0.042 87)",
+        "tonalRamp": [
+          "#0F0A02",
+          "#2D240C",
+          "#4A412D",
+          "#686150",
+          "#888275",
+          "#A9A59B",
+          "#CBC9C3",
+          "#EFEEEC"
+        ]
+      },
+      "income": {
+        "role": "secondary",
+        "displayName": "Income Mint",
+        "canonical": "#34D399",
+        "oklch": "oklch(77.3% 0.153 163)",
+        "tonalRamp": [
+          "#060D09",
+          "#082C1E",
+          "#114E37",
+          "#1B7251",
+          "#25986E",
+          "#2FC08B",
+          "#62E6AF",
+          "#C4FEE1"
+        ]
+      },
+      "income-ink": {
+        "role": "secondary",
+        "displayName": "Mint Ink",
+        "canonical": "#04261A",
+        "oklch": "oklch(24.0% 0.046 165)",
+        "tonalRamp": [
+          "#020E09",
+          "#0C2C20",
+          "#2F483D",
+          "#51675D",
+          "#76877F",
+          "#9CA8A2",
+          "#C4CBC8",
+          "#ECEFEE"
+        ]
+      },
+      "expense": {
+        "role": "tertiary",
+        "displayName": "Expense Coral",
+        "canonical": "#F87171",
+        "oklch": "oklch(71.1% 0.166 22)",
+        "tonalRamp": [
+          "#140707",
+          "#401515",
+          "#6B2A2B",
+          "#994142",
+          "#CA5A5A",
+          "#FB7575",
+          "#FDB3AF",
+          "#FFE9E7"
+        ]
+      },
+      "expense-ink": {
+        "role": "tertiary",
+        "displayName": "Coral Ink",
+        "canonical": "#2A0606",
+        "oklch": "oklch(19.3% 0.061 25)",
+        "tonalRamp": [
+          "#170505",
+          "#3C1917",
+          "#583836",
+          "#755A57",
+          "#927C7A",
+          "#B0A19F",
+          "#CFC7C6",
+          "#F2EDED"
+        ]
+      },
+      "midnight": {
+        "role": "neutral",
+        "displayName": "Midnight Ground",
+        "canonical": "#0A1128",
+        "oklch": "oklch(18.6% 0.048 269)",
+        "tonalRamp": [
+          "#070A17",
+          "#1C243A",
+          "#3A4155",
+          "#5A6172",
+          "#7D828F",
+          "#A1A5AE",
+          "#C7C9CE",
+          "#EDEEF1"
+        ]
+      },
+      "midnight-deep": {
+        "role": "neutral",
+        "displayName": "Night Well",
+        "canonical": "#070C1E",
+        "oklch": "oklch(16.1% 0.039 269)",
+        "tonalRamp": [
+          "#070B15",
+          "#1E2436",
+          "#3C4251",
+          "#5C616E",
+          "#7E828C",
+          "#A2A5AB",
+          "#C7C9CD",
+          "#EDEEF1"
+        ]
+      },
+      "navy-surface": {
+        "role": "neutral",
+        "displayName": "Raised Navy",
+        "canonical": "#111827",
+        "oklch": "oklch(21.0% 0.032 265)",
+        "tonalRamp": [
+          "#080B13",
+          "#1E2534",
+          "#3B424F",
+          "#5C616D",
+          "#7E828C",
+          "#A2A5AC",
+          "#C7C9CD",
+          "#EDEEF0"
+        ]
+      },
+      "navy-raised": {
+        "role": "neutral",
+        "displayName": "Key Navy",
+        "canonical": "#172033",
+        "oklch": "oklch(24.5% 0.039 264)",
+        "tonalRamp": [
+          "#070B14",
+          "#1C2538",
+          "#394253",
+          "#5A6170",
+          "#7C828F",
+          "#A1A5AE",
+          "#C6C9CF",
+          "#EDEEF1"
+        ]
+      },
+      "navy-hover": {
+        "role": "neutral",
+        "displayName": "Pressed Slate",
+        "canonical": "#1E293B",
+        "oklch": "oklch(27.9% 0.037 260)",
+        "tonalRamp": [
+          "#070B13",
+          "#1B2537",
+          "#384253",
+          "#596271",
+          "#7B838F",
+          "#A0A5AF",
+          "#C6C9CF",
+          "#EDEEF1"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Ledger Rule",
+        "canonical": "#1F2A44",
+        "oklch": "oklch(28.8% 0.050 266)",
+        "tonalRamp": [
+          "#070B16",
+          "#1A243D",
+          "#37425A",
+          "#576177",
+          "#7A8294",
+          "#9FA5B3",
+          "#C5C9D2",
+          "#EDEEF2"
+        ]
+      },
+      "hairline-strong": {
+        "role": "neutral",
+        "displayName": "Strong Rule",
+        "canonical": "#2A3A5A",
+        "oklch": "oklch(35.0% 0.060 263)",
+        "tonalRamp": [
+          "#060B16",
+          "#17243F",
+          "#324261",
+          "#53617D",
+          "#76839B",
+          "#9BA5B9",
+          "#C2C9D7",
+          "#ECEEF3"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "Headline White",
+        "canonical": "#FFFFFF",
+        "oklch": "oklch(100.0% 0.000 90)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#A5A5A5",
+          "#C9C9C9",
+          "#EEEEEE"
+        ]
+      },
+      "text-dim": {
+        "role": "neutral",
+        "displayName": "Soft White",
+        "canonical": "#E5E7EB",
+        "oklch": "oklch(92.8% 0.006 265)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#252525",
+          "#414243",
+          "#606163",
+          "#818284",
+          "#A4A5A8",
+          "#C7C9CC",
+          "#EDEEF1"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Fog Grey",
+        "canonical": "#A3ACBD",
+        "oklch": "oklch(74.3% 0.027 263)",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#23252A",
+          "#3E4249",
+          "#5C616C",
+          "#7C8390",
+          "#9DA5B6",
+          "#C1C9D9",
+          "#EAEFF6"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The hero headline only, in two lines, with one phrase in Metallic Gold. 38px under 760px."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings; the closing call runs clamp(30px, 3.2vw, 44px)."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Headings inside wide cards; lead terms 22px, card headings 20px, secondary terms 18px."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text in Soft White; intros at 62ch in Fog Grey. 16px under 760px."
+      },
+      "body-sm": {
+        "displayName": "Body Small",
+        "purpose": "Fine print, captions, provenance notes; meta lines at 13px."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Chips and field labels; nav links 15px, tags 12px, segments 700 13px."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Button text, sentence case as in the app."
+      },
+      "caps": {
+        "displayName": "Caps",
+        "purpose": "Uppercase ledger day headers only, never an eyebrow above a heading."
+      },
+      "figure-hero": {
+        "displayName": "Figure / Hero",
+        "purpose": "The keypad amount, colored by entry type. 44px on mobile."
+      },
+      "figure-total": {
+        "displayName": "Figure / Total",
+        "purpose": "The ledger net, in Metallic Gold."
+      },
+      "figure-md": {
+        "displayName": "Figure / Split",
+        "purpose": "Income and expense totals in the ledger split."
+      },
+      "figure": {
+        "displayName": "Figure",
+        "purpose": "Entry amounts and day subtotals."
+      },
+      "figure-key": {
+        "displayName": "Figure / Key",
+        "purpose": "Keypad digits (the app sets them 24sp bold Manrope tnum)."
+      },
+      "figure-mono": {
+        "displayName": "Figure / Mono (website holdover)",
+        "purpose": "site/index.html still sets every figure in JetBrains Mono (700; keys 500) at the figure sizes, plus the sentence demo input (500 16px) and JSON readout (500 14px/1.5). Use only on the existing website until it moves to Manrope tnum."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card",
+        "value": "0 1px 0 rgba(255,255,255,.04) inset, 0 24px 48px -28px rgba(0,0,0,.9)",
+        "purpose": "Every card: a 4% top highlight and a long drop that sits mostly hidden below."
+      },
+      {
+        "name": "key",
+        "value": "0 1px 0 rgba(255,255,255,.10) inset, 0 2px 0 rgba(0,0,0,.35)",
+        "purpose": "Keypad keys only: 10% top highlight and the 2px key-cap lip."
+      },
+      {
+        "name": "gold",
+        "value": "0 1px 0 rgba(255,255,255,.35) inset, 0 8px 20px -10px rgba(0,0,0,.8)",
+        "purpose": "Gold buttons: a bright top highlight and a tight drop."
+      },
+      {
+        "name": "focus-ring",
+        "value": "outline: 2px solid #EBCB6B; outline-offset: 3px",
+        "purpose": "Every focusable element."
+      },
+      {
+        "name": "top-bar",
+        "value": "background: rgba(10,17,40,.92); backdrop-filter: saturate(140%) blur(10px)",
+        "purpose": "The sticky top bar, over a 1px Ledger Rule lower edge."
+      },
+      {
+        "name": "new-entry-wash",
+        "value": "linear-gradient(90deg, rgba(212,175,55,.12), transparent 70%)",
+        "purpose": "The 12% gold wash on a just-saved ledger row."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Default easing for transforms, the entry drop and the shake."
+      },
+      {
+        "name": "duration-state",
+        "value": "200ms",
+        "purpose": "Button transforms and fills, the amount color change on type switch."
+      },
+      {
+        "name": "duration-key",
+        "value": "150ms fill, 100ms press (scale .96)",
+        "purpose": "Keypad key hover and press."
+      },
+      {
+        "name": "entry-drop",
+        "value": "600ms, translateY(-10px) to none, opacity 0 to 1",
+        "purpose": "A saved entry dropping into the ledger."
+      },
+      {
+        "name": "shake",
+        "value": "350ms, translateX(+/-6px)",
+        "purpose": "Saving with no amount shakes the amount display."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animation and transition durations 1ms; smooth scroll off",
+        "purpose": "Under prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile",
+        "value": "760px",
+        "purpose": "max-width: one column, 16px gutters, nav links hidden, 64px sections."
+      },
+      {
+        "name": "tablet",
+        "value": "1180px",
+        "purpose": "max-width: hero cards in two equal columns, copy stacks, gallery scrolls."
+      },
+      {
+        "name": "desktop-container",
+        "value": "1280px",
+        "purpose": "Max content width with 32px gutters."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Gold Button",
+      "kind": "button",
+      "refersTo": "button-gold",
+      "description": "The primary action (Download APK): top-lit gold, Gold Ink text, brightens on hover.",
+      "html": "<a class=\"ds-btn-gold\" href=\"#\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 4v11m0 0 4.5-4.5M12 15l-4.5-4.5M5 20h14\"/></svg>Download APK</a>",
+      "css": ".ds-btn-gold { display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 20px; border: 0; border-radius: 14px; font: 700 16px/1 var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); text-decoration: none; cursor: pointer; background-color: var(--gold, #D4AF37); background-image: linear-gradient(180deg, var(--gold-hi, #EBCB6B), var(--gold, #D4AF37)); color: var(--gold-ink, #241A02); box-shadow: 0 1px 0 rgba(255,255,255,.35) inset, 0 8px 20px -10px rgba(0,0,0,.8); transition: transform .2s cubic-bezier(.16,1,.3,1), background-color .2s; } .ds-btn-gold svg { width: 18px; height: 18px; flex: none; } .ds-btn-gold:hover { background-image: linear-gradient(180deg, #F3D885, #DDB943); } .ds-btn-gold:focus-visible { outline: 2px solid var(--gold-hi, #EBCB6B); outline-offset: 3px; } .ds-btn-gold:active { transform: translateY(1px); }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "The secondary action (source, all releases): transparent with a Strong Rule border on Midnight Ground.",
+      "html": "<div class=\"ds-ghost-ground\"><a class=\"ds-btn-ghost\" href=\"#\">All releases</a></div>",
+      "css": ".ds-ghost-ground { background: var(--ink, #0A1128); padding: 20px; display: inline-block; border-radius: 14px; } .ds-btn-ghost { display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 20px; border-radius: 14px; border: 1px solid var(--line-2, #2A3A5A); background: transparent; color: var(--text, #FFFFFF); font: 700 16px/1 var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); text-decoration: none; cursor: pointer; transition: transform .2s cubic-bezier(.16,1,.3,1), background-color .2s; } .ds-btn-ghost:hover { background: var(--surface-2, #172033); } .ds-btn-ghost:focus-visible { outline: 2px solid var(--gold-hi, #EBCB6B); outline-offset: 3px; } .ds-btn-ghost:active { transform: translateY(1px); }"
+    },
+    {
+      "name": "Category Chips",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Single-select category pills; the selected one fills gold.",
+      "html": "<div class=\"ds-chips\" role=\"group\" aria-label=\"Category\"><button type=\"button\" class=\"ds-chip\" aria-pressed=\"true\">Food</button><button type=\"button\" class=\"ds-chip\" aria-pressed=\"false\">Transport</button><button type=\"button\" class=\"ds-chip\" aria-pressed=\"false\">Housing</button><button type=\"button\" class=\"ds-chip\" aria-pressed=\"false\">Health</button></div>",
+      "css": ".ds-chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px; background: var(--surface, #111827); border-radius: 18px; } .ds-chip { border: 1px solid var(--line-2, #2A3A5A); background: var(--surface-2, #172033); color: var(--text-dim, #E5E7EB); font: 600 14px/1 var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); padding: 9px 13px; border-radius: 999px; cursor: pointer; transition: background-color .2s; } .ds-chip:hover { background: var(--surface-3, #1E293B); } .ds-chip:focus-visible { outline: 2px solid var(--gold-hi, #EBCB6B); outline-offset: 3px; } .ds-chip[aria-pressed=\"true\"] { background: var(--gold, #D4AF37); color: var(--gold-ink, #241A02); border-color: var(--gold, #D4AF37); }"
+    },
+    {
+      "name": "Expense / Income Switch",
+      "kind": "custom",
+      "refersTo": "segment-track",
+      "description": "Segmented control that sets the sign: coral with Coral Ink for Expense, mint with Mint Ink for Income.",
+      "html": "<div class=\"ds-seg\" role=\"group\" aria-label=\"Entry type\"><button type=\"button\" class=\"ds-seg-exp\" aria-pressed=\"true\">Expense</button><button type=\"button\" class=\"ds-seg-inc\" aria-pressed=\"false\">Income</button></div>",
+      "css": ".ds-seg { display: inline-flex; background: var(--ink-deep, #070C1E); border: 1px solid var(--line, #1F2A44); border-radius: 999px; padding: 3px; } .ds-seg button { border: 0; background: transparent; color: var(--muted, #A3ACBD); font: 700 13px/1 var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); padding: 8px 14px; border-radius: 999px; cursor: pointer; transition: background-color .2s, color .2s; } .ds-seg button:hover { color: var(--text, #FFFFFF); } .ds-seg button:focus-visible { outline: 2px solid var(--gold-hi, #EBCB6B); outline-offset: 3px; } .ds-seg .ds-seg-exp[aria-pressed=\"true\"] { background: var(--expense, #F87171); color: #2A0606; } .ds-seg .ds-seg-inc[aria-pressed=\"true\"] { background: var(--income, #34D399); color: #04261A; }"
+    },
+    {
+      "name": "Keypad",
+      "kind": "custom",
+      "refersTo": "key",
+      "description": "Signature: the app's Home keypad. Signed amount over a hairline, 3x4 Key Navy keys with the inner highlight and 2px lip, and a tall gold SAVE spanning four rows. Figures here use Manrope tnum; the website currently renders them in JetBrains Mono.",
+      "html": "<div class=\"ds-pad\"><div class=\"ds-pad-amount\"><output>−$12</output><span>Sample entry · Wed, Nov 25</span></div><div class=\"ds-keys\"><button type=\"button\" class=\"ds-key\">1</button><button type=\"button\" class=\"ds-key\">2</button><button type=\"button\" class=\"ds-key\">3</button><button type=\"button\" class=\"ds-key ds-key-save\" aria-label=\"Save entry\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m5 12.5 4.5 4.5L19 7.5\"/></svg>SAVE</button><button type=\"button\" class=\"ds-key\">4</button><button type=\"button\" class=\"ds-key\">5</button><button type=\"button\" class=\"ds-key\">6</button><button type=\"button\" class=\"ds-key\">7</button><button type=\"button\" class=\"ds-key\">8</button><button type=\"button\" class=\"ds-key\">9</button><button type=\"button\" class=\"ds-key\" aria-label=\"Add two zeros\">00</button><button type=\"button\" class=\"ds-key\">0</button><button type=\"button\" class=\"ds-key\" aria-label=\"Delete last digit\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M9 5h11v14H9l-6-7 6-7Z\"/><path d=\"m12.5 9.5 5 5m0-5-5 5\"/></svg></button></div></div>",
+      "css": ".ds-pad { width: 420px; max-width: 100%; padding: 20px; background: var(--surface, #111827); border: 1px solid var(--line, #1F2A44); border-radius: 18px; box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 24px 48px -28px rgba(0,0,0,.9); } .ds-pad-amount { display: flex; flex-direction: column; gap: 6px; padding: 6px 4px 12px; margin-bottom: 14px; border-bottom: 1px solid var(--line, #1F2A44); } .ds-pad-amount output { font: 700 52px/1 var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); font-variant-numeric: tabular-nums; font-feature-settings: \"tnum\"; letter-spacing: -0.03em; color: var(--expense, #F87171); } .ds-pad-amount span { color: var(--muted, #A3ACBD); font: 400 13px/1.4 var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); } .ds-keys { display: grid; grid-template-columns: repeat(3, 1fr) 1.1fr; gap: 10px; } .ds-key { height: 58px; border-radius: 14px; border: 1px solid var(--line, #1F2A44); background: var(--surface-2, #172033); color: var(--text, #FFFFFF); font: 700 22px/1 var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); font-variant-numeric: tabular-nums; font-feature-settings: \"tnum\"; cursor: pointer; box-shadow: 0 1px 0 rgba(255,255,255,.10) inset, 0 2px 0 rgba(0,0,0,.35); transition: background-color .15s, transform .1s; } .ds-key svg { width: 24px; height: 24px; vertical-align: middle; } .ds-key:hover { background: var(--surface-3, #1E293B); } .ds-key:focus-visible { outline: 2px solid var(--gold-hi, #EBCB6B); outline-offset: 3px; } .ds-key:active { transform: scale(.96); } .ds-key-save { grid-column: 4; grid-row: 1 / span 4; height: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background-color: var(--gold, #D4AF37); background-image: linear-gradient(180deg, var(--gold-hi, #EBCB6B), var(--gold, #D4AF37)); color: var(--gold-ink, #241A02); border-color: transparent; font: 800 15px/1 var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); letter-spacing: .12em; } .ds-key-save svg { width: 22px; height: 22px; } .ds-key-save:hover { background-image: linear-gradient(180deg, #F3D885, #DDB943); }"
+    },
+    {
+      "name": "Sample Ledger",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Signature: the month ledger card. Gold net, mint and coral split, entries grouped under caps day headers, a Sample data tag. Figures use Manrope tnum here; the website currently renders them in JetBrains Mono.",
+      "html": "<div class=\"ds-ledger\"><div class=\"ds-ledger-head\"><h3>Sample month</h3><span class=\"ds-tag\">Sample data</span></div><div class=\"ds-net\">+$1,505</div><div class=\"ds-split\"><div><div class=\"ds-k\">Income · sample</div><div class=\"ds-v ds-inc\">$2,792</div></div><div><div class=\"ds-k\">Expenses · sample</div><div class=\"ds-v ds-exp\">$1,287</div></div></div><ul class=\"ds-entries\"><li class=\"ds-day\"><span>TODAY</span><span>−$15</span></li><li class=\"ds-new\"><span class=\"ds-t\">Pho Thin</span><span class=\"ds-a ds-exp\">−$9</span><span class=\"ds-m\">Food · sample</span></li><li><span class=\"ds-t\">Grab to campus</span><span class=\"ds-a ds-exp\">−$6</span><span class=\"ds-m\">Transport · sample</span></li><li class=\"ds-day\"><span>YESTERDAY</span><span>+$2,400</span></li><li><span class=\"ds-t\">Salary</span><span class=\"ds-a ds-inc\">+$2,400</span><span class=\"ds-m\">Salary · sample</span></li></ul></div>",
+      "css": ".ds-ledger { width: 420px; max-width: 100%; padding: 20px 20px 8px; background: var(--surface, #111827); border: 1px solid var(--line, #1F2A44); border-radius: 18px; box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 24px 48px -28px rgba(0,0,0,.9); font-family: var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); } .ds-ledger-head { display: flex; align-items: center; justify-content: space-between; } .ds-ledger-head h3 { margin: 0; font: 700 16px/1.3 var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); color: var(--muted, #A3ACBD); } .ds-tag { font: 600 12px/1 var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); color: var(--muted, #A3ACBD); border: 1px solid var(--line-2, #2A3A5A); border-radius: 6px; padding: 5px 8px; } .ds-net { font: 700 44px/1.1 var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); font-variant-numeric: tabular-nums; font-feature-settings: \"tnum\"; letter-spacing: -0.03em; color: var(--gold, #D4AF37); margin: 10px 0 14px; } .ds-split { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line, #1F2A44); border-bottom: 1px solid var(--line, #1F2A44); } .ds-split > div { padding: 12px 0; } .ds-split > div + div { border-left: 1px solid var(--line, #1F2A44); padding-left: 14px; } .ds-k { font-size: 13px; color: var(--muted, #A3ACBD); } .ds-v { font: 700 20px/1.3 var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); font-variant-numeric: tabular-nums; font-feature-settings: \"tnum\"; } .ds-inc { color: var(--income, #34D399); } .ds-exp { color: var(--expense, #F87171); } .ds-entries { list-style: none; margin: 0; padding: 0; } .ds-entries li { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 12px 0; border-bottom: 1px solid var(--line, #1F2A44); } .ds-entries li:last-child { border-bottom: 0; } .ds-entries li.ds-day { display: flex; justify-content: space-between; padding: 14px 0 4px; border-bottom: 0; font: 700 12px/1.2 var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); letter-spacing: .06em; color: var(--muted, #A3ACBD); } .ds-entries li.ds-day span:last-child { letter-spacing: 0; font-variant-numeric: tabular-nums; font-feature-settings: \"tnum\"; } .ds-t { grid-column: 1; color: var(--text, #FFFFFF); font-weight: 700; font-size: 15px; } .ds-m { grid-column: 1; color: var(--muted, #A3ACBD); font-size: 13px; } .ds-a { grid-column: 2; grid-row: 1 / span 2; align-self: center; font: 700 16px/1 var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); font-variant-numeric: tabular-nums; font-feature-settings: \"tnum\"; } .ds-entries li.ds-new { background: linear-gradient(90deg, rgba(212,175,55,.12), transparent 70%); animation: ds-drop .6s cubic-bezier(.16,1,.3,1); } @keyframes ds-drop { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } } @media (prefers-reduced-motion: reduce) { .ds-entries li.ds-new { animation: none; } }"
+    },
+    {
+      "name": "Sentence Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "A recessed Night Well field with its readout below; the website sets both in JetBrains Mono (the figure-mono holdover).",
+      "html": "<form class=\"ds-parse\" onsubmit=\"return false\"><label for=\"ds-sentence\">Try a sentence</label><input id=\"ds-sentence\" value=\"Lunch with team 15$\" autocomplete=\"off\" spellcheck=\"false\"><output aria-live=\"polite\">{ \"type\": \"EXPENSE\", \"amount\": 15, \"category\": \"Food\", \"note\": \"Lunch with team\" }</output></form>",
+      "css": ".ds-parse { width: 460px; max-width: 100%; padding: 28px; background: var(--surface, #111827); border: 1px solid var(--line, #1F2A44); border-radius: 18px; } .ds-parse label { display: block; margin-bottom: 6px; font: 600 14px/1.6 var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); color: var(--text-dim, #E5E7EB); } .ds-parse input { width: 100%; box-sizing: border-box; height: 46px; border-radius: 12px; border: 1px solid var(--line-2, #2A3A5A); background: var(--ink-deep, #070C1E); color: var(--text, #FFFFFF); font: 500 16px var(--mono, \"JetBrains Mono\", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace); padding: 0 14px; transition: border-color .2s; } .ds-parse input:hover { border-color: #3A4D73; } .ds-parse input:focus-visible { outline: 2px solid var(--gold-hi, #EBCB6B); outline-offset: 3px; } .ds-parse output { display: block; margin-top: 10px; min-height: 44px; box-sizing: border-box; padding: 10px 14px; border: 1px solid var(--line, #1F2A44); border-radius: 12px; background: var(--ink-deep, #070C1E); color: var(--text-dim, #E5E7EB); font: 500 14px/1.5 var(--mono, \"JetBrains Mono\", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace); }"
+    },
+    {
+      "name": "Top Bar",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Sticky 64px bar on translucent Midnight Ground: brand, section links in Fog Grey, the gold Download pushed right.",
+      "html": "<header class=\"ds-bar\"><a class=\"ds-brand\" href=\"#\"><span class=\"ds-brand-mark\" aria-hidden=\"true\"></span>BudgetMate</a><nav class=\"ds-nav\" aria-label=\"Sections\"><a href=\"#\">Screens</a><a href=\"#\">Ways to log</a><a href=\"#\">Privacy</a><a href=\"#\">How it's built</a></nav><a class=\"ds-bar-cta\" href=\"#\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 4v11m0 0 4.5-4.5M12 15l-4.5-4.5M5 20h14\"/></svg>Download APK</a></header>",
+      "css": ".ds-bar { display: flex; align-items: center; gap: 28px; height: 64px; padding: 0 32px; background: rgba(10,17,40,.92); backdrop-filter: saturate(140%) blur(10px); border-bottom: 1px solid var(--line, #1F2A44); font-family: var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); } .ds-brand { display: flex; align-items: center; gap: 10px; color: var(--text, #FFFFFF); text-decoration: none; font-weight: 800; font-size: 18px; letter-spacing: -0.01em; } .ds-brand-mark { width: 32px; height: 32px; border-radius: 9px; background: radial-gradient(circle at 50% 40%, #EBCB6B, #D4AF37 45%, #172033 47%); border: 1px solid var(--line-2, #2A3A5A); } .ds-nav { display: flex; gap: 22px; margin-left: 8px; } .ds-nav a { color: var(--muted, #A3ACBD); text-decoration: none; font-size: 15px; font-weight: 600; transition: color .2s; } .ds-nav a:hover { color: var(--text, #FFFFFF); } .ds-nav a:focus-visible, .ds-brand:focus-visible, .ds-bar-cta:focus-visible { outline: 2px solid var(--gold-hi, #EBCB6B); outline-offset: 3px; border-radius: 6px; } .ds-bar-cta { margin-left: auto; display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 20px; border-radius: 14px; font: 700 16px/1 var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); text-decoration: none; background-color: var(--gold, #D4AF37); background-image: linear-gradient(180deg, var(--gold-hi, #EBCB6B), var(--gold, #D4AF37)); color: var(--gold-ink, #241A02); box-shadow: 0 1px 0 rgba(255,255,255,.35) inset, 0 8px 20px -10px rgba(0,0,0,.8); } .ds-bar-cta svg { width: 18px; height: 18px; } .ds-bar-cta:hover { background-image: linear-gradient(180deg, #F3D885, #DDB943); } @media (max-width: 760px) { .ds-bar { padding: 0 16px; } .ds-nav { display: none; } .ds-bar-cta { height: 40px; padding: 0 14px; font-size: 14px; } }"
+    },
+    {
+      "name": "Definition Rows",
+      "kind": "custom",
+      "description": "Facts as hairline-ruled rows (term column + description) instead of feature cards.",
+      "html": "<dl class=\"ds-rows\"><div><dt>Storage</dt><dd>Transactions live in an on-device SQLite database (Room).</dd></div><div><dt>AI</dt><dd>Optional. Requests go through a small proxy you deploy.</dd></div><div><dt>Network</dt><dd>HTTPS only. News and stock data load only with your own API keys.</dd></div></dl>",
+      "css": ".ds-rows { margin: 0; padding: 0 24px; background: var(--ink, #0A1128); border-top: 1px solid var(--line-2, #2A3A5A); font: 400 17px/1.6 var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); color: var(--text-dim, #E5E7EB); max-width: 720px; } .ds-rows div { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--line, #1F2A44); } .ds-rows dt { font: 700 16px/1.5 var(--sans, Manrope, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif); color: var(--gold, #D4AF37); } .ds-rows dd { margin: 0; } @media (max-width: 760px) { .ds-rows div { grid-template-columns: 1fr; gap: 4px; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Midnight Ledger",
+    "overview": "BudgetMate is a ledger kept at night. A midnight-blue ground, navy surfaces raised by a single tone step and a hairline, and one metallic gold that marks the thing you press. Money speaks in two colors only, mint for what comes in and coral for what goes out, and every figure sits in tabular columns so totals line up and digits hold still while you type. The Android app established this world; the website inherits it rather than inventing a marketing skin, and its hero is the app's own keypad and ledger at app scale.\n\nDensity is calm outside and tight inside. Sections breathe (88px of padding above and below, each opened by a hairline), but the interactive objects keep app spacing, 10px between keys and 8px between chips, because they are tools a visitor uses, not illustrations of one. Depth comes from tone and from a 1px highlight along the top edge of anything raised, with one long, soft shadow under cards. The world is dark only (`color-scheme: dark`).\n\nFacts are set as rows divided by hairlines; cards are kept for objects you can use. The app is shown through real, frameless screenshots, never a drawn phone.",
+    "keyCharacteristics": [
+      "Midnight ground with navy surfaces stepped by tone, a 1px hairline on every raised edge.",
+      "Metallic gold as the single action color, run as a top-lit gradient on everything you press.",
+      "Mint and coral reserved for signed money: in and out, up and down.",
+      "Manrope for every word; tabular figures for every amount.",
+      "The keypad and the day-grouped ledger, at app scale, as the signature objects.",
+      "Hairline-ruled definition rows in place of feature-card grids."
+    ],
+    "rules": [
+      {
+        "name": "The Gold Means Press Rule",
+        "body": "Solid gold fills only what you press or have selected: Download APK, SAVE, the selected chip. Everywhere else gold is text (the net total, the hero's emphasis, links, row terms) or a low-alpha wash (the 12% gold that marks a just-saved ledger row). No gold panels, bands or section backgrounds.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sign Color Rule",
+        "body": "Mint means in or up and coral means out or down, and they color only signed figures and the control that sets the sign. Every signed amount carries its sign (+, or the true minus − rather than a hyphen) and the color that matches it.",
+        "section": "colors"
+      },
+      {
+        "name": "The Own Ink Rule",
+        "body": "Text on a colored fill uses that color's ink (Gold Ink, Mint Ink, Coral Ink), never white.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "Every money figure is tabular: amounts, totals, day subtotals, keypad digits, market changes. Digits keep their width while you type and amounts align on the right. In Manrope that means `tnum` (`font-variant-numeric: tabular-nums` on the web); never proportional figures for an amount.",
+        "section": "typography"
+      },
+      {
+        "name": "The Ledger Caps Rule",
+        "body": "Uppercase with tracking appears in two places, both inherited from the app: ledger day headers (0.06em) and the SAVE key (0.12em). It is never an eyebrow or kicker above a heading.",
+        "section": "typography"
+      },
+      {
+        "name": "The Rows Not Cards Rule",
+        "body": "Facts are definition rows: a term column (140 to 180px, or stacked on mobile) and a description, divided by Ledger Rule hairlines under a Strong Rule top rule. Cards hold only things you use or that reproduce the app: the keypad, the ledger, the sentence demo.",
+        "section": "layout"
+      },
+      {
+        "name": "The Inner Highlight Rule",
+        "body": "Raised things are lit from above by a 1px white inset on the top edge: 4% on cards, 10% on keys, 35% on gold. That highlight, not a bigger shadow, is what lifts a surface.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** set every amount in tabular figures, signed (+, or − U+2212), in Income Mint (#34D399) or Expense Coral (#F87171) to match the sign.",
+      "**Do** put each fill's own ink on it: Gold Ink (#241A02), Mint Ink (#04261A), Coral Ink (#2A0606).",
+      "**Do** run gold fills as a top-lit gradient (#EBCB6B to #D4AF37) that brightens on hover (#F3D885 to #DDB943).",
+      "**Do** give every raised surface a 1px hairline (#1F2A44, or #2A3A5A for pressables and objects) and a 1px white inset highlight on its top edge.",
+      "**Do** set facts as hairline-ruled definition rows and keep cards for the keypad, the ledger and other objects people use.",
+      "**Do** show the app through real, frameless screenshots at 22px radius with a 1px #2A3A5A border, and label demo data where it appears.",
+      "**Do** keep the 2px #EBCB6B focus ring at 3px offset on everything focusable, and collapse motion under `prefers-reduced-motion`."
+    ],
+    "donts": [
+      "**Don't** fill panels, bands or section backgrounds with solid gold; solid gold is for pressables and selection, and low-alpha gold only washes a highlight.",
+      "**Don't** use mint or coral for decoration, links or anything other than a signed figure and the control that sets its sign.",
+      "**Don't** set an amount in proportional figures.",
+      "**Don't** put tracked uppercase eyebrows or kickers above headings; caps belong to ledger day headers and the SAVE key.",
+      "**Don't** lay facts out as grids of icon feature cards.",
+      "**Don't** draw phone frames or mockups around screenshots.",
+      "**Don't** add hard offset shadows to cards or buttons; the 2px lip belongs to keypad keys alone.",
+      "**Don't** put white text on gold, mint or coral fills."
+    ]
+  }
+}
