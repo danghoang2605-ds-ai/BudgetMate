@@ -25,7 +25,7 @@
                 android:textColor="@color/bm_muted"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:letterSpacing="0.14" />
+                android:letterSpacing="0.01" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -115,7 +115,8 @@
                         android:textColor="@color/bm_ink"
                         android:alpha="0.7"
                         android:textSize="10sp"
-                        android:fontFamily="monospace"
+                        android:fontFamily="@font/manrope"
+                    android:fontFeatureSettings="tnum"
                         android:layout_marginStart="4dp" />
                 </LinearLayout>
 
@@ -145,7 +146,8 @@
                         android:text="0"
                         android:textColor="@color/bm_muted_2"
                         android:textSize="10sp"
-                        android:fontFamily="monospace"
+                        android:fontFamily="@font/manrope"
+                    android:fontFeatureSettings="tnum"
                         android:layout_marginStart="4dp" />
                 </LinearLayout>
 
@@ -174,7 +176,8 @@
                         android:text="0"
                         android:textColor="@color/bm_muted_2"
                         android:textSize="10sp"
-                        android:fontFamily="monospace"
+                        android:fontFamily="@font/manrope"
+                    android:fontFeatureSettings="tnum"
                         android:layout_marginStart="4dp" />
                 </LinearLayout>
             </LinearLayout>

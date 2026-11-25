@@ -31,7 +31,7 @@
                 android:textColor="@color/bm_muted_2"
                 android:textSize="9sp"
                 android:textStyle="bold"
-                android:letterSpacing="0.06" />
+                android:letterSpacing="0.01" />
 
             <View
                 android:layout_width="2.5dp"

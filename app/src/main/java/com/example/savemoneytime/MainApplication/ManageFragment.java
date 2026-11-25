@@ -1,5 +1,7 @@
 package com.example.savemoneytime.MainApplication;
 
+import com.example.savemoneytime.util.CategoryIcons;
+import android.widget.ImageView;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -269,7 +271,7 @@ public class ManageFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd MMM yyyy", Locale.US);
 
         for (TransactionItem item : filteredList) {
-            String dateKey = sdf.format(new Date(item.getDate())).toUpperCase();
+            String dateKey = sdf.format(new Date(item.getDate()));
             if (!groupedMap.containsKey(dateKey)) {
                 groupedMap.put(dateKey, new ArrayList<>());
             }
@@ -373,7 +375,8 @@ public class ManageFragment extends Fragment {
 
                 SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.US);
                 tvh.tvDate.setText(timeFormat.format(new Date(t.getDate())));
-                tvh.tvIcon.setText(getEmojiForCategory(t.getCategoryName() != null ? t.getCategoryName() : t.getTitle()));
+                tvh.tvIcon.setImageResource(CategoryIcons.forCategory(t.getCategoryName() != null ? t.getCategoryName() : t.getTitle()));
+                tvh.tvIcon.setColorFilter(ContextCompat.getColor(tvh.itemView.getContext(), t.isExpense() ? R.color.bm_gold : R.color.bm_income));
 
                 if (t.isExpense()) {
                     tvh.tvAmount.setText("−$" + formatter.format(t.getAmount()));
@@ -445,7 +448,8 @@ public class ManageFragment extends Fragment {
         }
 
         class TransactionVH extends RecyclerView.ViewHolder {
-            TextView tvIcon, tvTitle, tvCategory, tvDate, tvAmount;
+            ImageView tvIcon;
+            TextView tvTitle, tvCategory, tvDate, tvAmount;
             TransactionVH(View v) {
                 super(v);
                 tvIcon = v.findViewById(R.id.tv_trans_icon);

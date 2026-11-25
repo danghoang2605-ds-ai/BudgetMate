@@ -40,7 +40,7 @@
                 android:textColor="@color/bm_gold"
                 android:textSize="9sp"
                 android:textStyle="bold"
-                android:letterSpacing="0.08" />
+                android:letterSpacing="0.01" />
 
             <View
                 android:layout_width="3dp"

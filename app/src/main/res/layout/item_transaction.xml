@@ -17,13 +17,14 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/bg_icon_tile">
-        <TextView
+        <ImageView
             android:id="@+id/tv_trans_icon"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="🍜"
-            android:textSize="18sp" />
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ms_restaurant"
+            android:tint="@color/bm_gold"
+            android:importantForAccessibility="no" />
     </FrameLayout>
 
     <LinearLayout
@@ -42,7 +43,7 @@
             android:textColor="@color/bm_text"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/manrope_semibold"
             android:maxLines="1"
             android:ellipsize="end" />
 
@@ -97,7 +98,8 @@
         android:textColor="@color/bm_text"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/manrope"
+                    android:fontFeatureSettings="tnum"
         android:gravity="end" />
 
 </LinearLayout>

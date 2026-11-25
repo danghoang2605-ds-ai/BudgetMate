@@ -18,8 +18,11 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="#111827"
+        android:layout_height="68dp"
+        android:background="@drawable/bg_bottom_nav"
+        app:labelVisibilityMode="labeled"
+        app:itemTextAppearanceActive="@style/BMNavText"
+        app:itemTextAppearanceInactive="@style/BMNavText"
         app:menu="@menu/bottom_nav_menu"
         app:itemIconTint="@color/nav_item_color"
         app:itemTextColor="@color/nav_item_color"
@@ -27,18 +30,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_ai_chat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_nav_chat"
-        app:backgroundTint="#D4AF37"
-        app:tint="#0A1128"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toTopOf="@id/bottom_nav"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="AI Chat Launcher" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

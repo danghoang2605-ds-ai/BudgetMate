@@ -58,7 +58,7 @@ public class ChatbotFragment extends Fragment {
 
         messageList = new ArrayList<>();
 
-        messageList.add(new ChatMessage("👋 Hi! I'm your BudgetMate AI.\n\nJust tell me what you spent or earned in English, and I'll log it for you!\n\nTry: \"Boba tea 6$\" or \"Salary 200$\"", ChatMessage.Sender.AI));
+        messageList.add(new ChatMessage("Hi, I'm the BudgetMate assistant. Tell me what you spent or earned and I'll log it, for example \"Boba tea 6$\" or \"Salary 200$\".", ChatMessage.Sender.AI));
 
         adapter = new ChatAdapter(messageList);
         rvChatMessages.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -101,7 +101,7 @@ public class ChatbotFragment extends Fragment {
 
             @Override
             public void onError(String error) {
-                runOnUi(() -> addMessage(new ChatMessage("⚠️ " + error, ChatMessage.Sender.AI)));
+                runOnUi(() -> addMessage(new ChatMessage(error, ChatMessage.Sender.AI)));
             }
         });
     }
@@ -113,10 +113,10 @@ public class ChatbotFragment extends Fragment {
 
         if (r.kind == AiReplyParser.Kind.EXPENSE) {
             viewModel.saveExpense(new ExpenseEntity(r.note, r.amount, r.category, now, "Logged by AI Chat"));
-            reply = "✅ Expense saved\n\n🔹 Amount: $" + r.amount + "\n🔹 Category: " + r.category + "\n🔹 Note: " + r.note;
+            reply = "Saved an expense of $" + r.amount + " in " + r.category + (r.note != null && !r.note.isEmpty() ? " (" + r.note + ")" : "") + ".";
         } else if (r.kind == AiReplyParser.Kind.REVENUE) {
             viewModel.saveRevenue(new RevenueEntity(r.note, r.amount, r.category, now, "Logged by AI Chat"));
-            reply = "✅ Income saved\n\n🔸 Amount: $" + r.amount + "\n🔸 Category: " + r.category + "\n🔸 Note: " + r.note;
+            reply = "Saved income of $" + r.amount + " in " + r.category + (r.note != null && !r.note.isEmpty() ? " (" + r.note + ")" : "") + ".";
         } else {
             reply = r.message;
         }

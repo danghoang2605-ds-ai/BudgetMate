@@ -12,12 +12,13 @@
         android:background="@drawable/bg_icon_tile"
         android:layout_marginEnd="8dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="🤖"
-            android:textSize="13sp" />
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ms_smart_toy"
+            android:tint="@color/bm_gold"
+            android:importantForAccessibility="no" />
     </FrameLayout>
 
     <LinearLayout

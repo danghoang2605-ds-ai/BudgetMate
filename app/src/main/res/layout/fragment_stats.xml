@@ -30,10 +30,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ANALYTICS"
+            android:visibility="gone"
                     android:textColor="@color/bm_muted"
                     android:textSize="10sp"
                     android:textStyle="bold"
-                    android:letterSpacing="0.14" />
+                    android:letterSpacing="0.01" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -48,11 +49,11 @@
                 android:id="@+id/btn_export_report"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="↓  EXPORT"
+                android:text="Export"
                 android:textColor="@color/bm_ink"
                 android:textSize="11sp"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/manrope_extrabold"
                 app:backgroundTint="@color/bm_gold"
                 app:cornerRadius="10dp"
                 android:minHeight="36dp"
@@ -128,11 +129,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="↑ INCOME"
+                    android:text="Income"
                     android:textColor="@color/bm_income"
                     android:textSize="10sp"
                     android:textStyle="bold"
-                    android:letterSpacing="0.14" />
+                    android:letterSpacing="0.01" />
                 <TextView
                     android:id="@+id/tv_total_income_stats"
                     android:layout_width="wrap_content"
@@ -141,7 +142,8 @@
                     android:textColor="@color/bm_text"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:fontFamily="monospace"
+                    android:fontFamily="@font/manrope"
+                    android:fontFeatureSettings="tnum"
                     android:layout_marginTop="6dp" />
             </LinearLayout>
             <LinearLayout
@@ -155,11 +157,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="↓ EXPENSES"
+                    android:text="Expenses"
                     android:textColor="@color/bm_expense"
                     android:textSize="10sp"
                     android:textStyle="bold"
-                    android:letterSpacing="0.14" />
+                    android:letterSpacing="0.01" />
                 <TextView
                     android:id="@+id/tv_total_expense_stats"
                     android:layout_width="wrap_content"
@@ -168,7 +170,8 @@
                     android:textColor="@color/bm_text"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:fontFamily="monospace"
+                    android:fontFamily="@font/manrope"
+                    android:fontFeatureSettings="tnum"
                     android:layout_marginTop="6dp" />
             </LinearLayout>
         </LinearLayout>
@@ -176,11 +179,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="INCOME VS EXPENSE COMPARISON"
+            android:text="Income vs expenses"
             android:textColor="@color/bm_muted"
             android:textSize="10sp"
             android:textStyle="bold"
-            android:letterSpacing="0.14"
+            android:letterSpacing="0.01"
             android:layout_marginTop="22dp"
             android:layout_marginBottom="8dp" />
         <LinearLayout
@@ -197,11 +200,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CASHFLOW TREND LINE"
+            android:text="Cash flow"
             android:textColor="@color/bm_muted"
             android:textSize="10sp"
             android:textStyle="bold"
-            android:letterSpacing="0.14"
+            android:letterSpacing="0.01"
             android:layout_marginTop="22dp"
             android:layout_marginBottom="8dp" />
         <LinearLayout
@@ -218,11 +221,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CATEGORY BREAKDOWN (EXPENSE VS INCOME)"
+            android:text="By category"
             android:textColor="@color/bm_muted"
             android:textSize="10sp"
             android:textStyle="bold"
-            android:letterSpacing="0.14"
+            android:letterSpacing="0.01"
             android:layout_marginTop="22dp"
             android:layout_marginBottom="8dp" />
         <LinearLayout
@@ -242,7 +245,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="EXPENSES"
+                    android:text="Expenses"
                     android:textColor="@color/bm_expense"
                     android:textSize="11sp"
                     android:textStyle="bold"
@@ -268,7 +271,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="INCOME"
+                    android:text="Income"
                     android:textColor="@color/bm_income"
                     android:textSize="11sp"
                     android:textStyle="bold"
@@ -283,11 +286,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SPENDING HABITS RADAR"
+            android:text="Spending pattern"
             android:textColor="@color/bm_muted"
             android:textSize="10sp"
             android:textStyle="bold"
-            android:letterSpacing="0.14"
+            android:letterSpacing="0.01"
             android:layout_marginTop="22dp"
             android:layout_marginBottom="8dp" />
         <LinearLayout
@@ -316,11 +319,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="AI FINANCIAL ADVISOR"
+                android:text="Advisor"
                 android:textColor="@color/bm_gold"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:letterSpacing="0.14" />
+                android:letterSpacing="0.01" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

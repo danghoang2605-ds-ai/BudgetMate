@@ -21,11 +21,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NET FLOW · MONTH"
+                android:text="Net this month"
                 android:textColor="@color/bm_muted"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:letterSpacing="0.14" />
+                android:letterSpacing="0.01" />
             <TextView
                 android:id="@+id/tv_net_flow"
                 android:layout_width="wrap_content"
@@ -34,7 +34,8 @@
                 android:textColor="@color/bm_text"
                 android:textSize="28sp"
                 android:textStyle="bold"
-                android:fontFamily="monospace"
+                android:fontFamily="@font/manrope"
+                    android:fontFeatureSettings="tnum"
                 android:layout_marginTop="4dp" />
         </LinearLayout>
 
@@ -78,7 +79,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ALL-TIME IN"
+                android:text="All-time in"
                 android:textColor="@color/bm_muted"
                 android:textSize="10sp"
                 android:textStyle="bold" />
@@ -90,7 +91,8 @@
                 android:textColor="@color/bm_text"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:fontFamily="monospace"
+                android:fontFamily="@font/manrope"
+                    android:fontFeatureSettings="tnum"
                 android:layout_marginTop="3dp" />
         </LinearLayout>
 
@@ -108,7 +110,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ALL-TIME OUT"
+                android:text="All-time out"
                 android:textColor="@color/bm_muted"
                 android:textSize="10sp"
                 android:textStyle="bold" />
@@ -120,7 +122,8 @@
                 android:textColor="@color/bm_expense_hi"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:fontFamily="monospace"
+                android:fontFamily="@font/manrope"
+                    android:fontFeatureSettings="tnum"
                 android:layout_marginTop="3dp" />
         </LinearLayout>
 
@@ -138,7 +141,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ALL-TIME NET"
+                android:text="All-time net"
                 android:textColor="@color/bm_muted"
                 android:textSize="10sp"
                 android:textStyle="bold" />
@@ -150,7 +153,8 @@
                 android:textColor="@color/bm_income"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:fontFamily="monospace"
+                android:fontFamily="@font/manrope"
+                    android:fontFeatureSettings="tnum"
                 android:layout_marginTop="3dp" />
         </LinearLayout>
     </LinearLayout>

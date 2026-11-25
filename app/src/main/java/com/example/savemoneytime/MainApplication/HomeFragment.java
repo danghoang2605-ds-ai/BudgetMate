@@ -1,5 +1,6 @@
 package com.example.savemoneytime.MainApplication;
 
+import com.example.savemoneytime.util.CategoryIcons;
 import com.example.savemoneytime.util.MonthChange;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -53,8 +54,8 @@ public class HomeFragment extends Fragment {
     private final String[] MONTH_LABELS = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
     // CẤU HÌNH DANH MỤC RIÊNG BIỆT CHO 2 TAB THU / CHI KHÁC NHAU
-    private final String[] EXPENSE_CATEGORIES = {"🍜  Food", "🚗  Transport", "🏠  Housing", "💊  Health", "🛍️  Shopping", "🧾  Bills"};
-    private final String[] INCOME_CATEGORIES  = {"💰  Salary", "💼  Business", "🎁  Bonus", "📈  Investment", "💵  Allowance", "🪙  Others"};
+    private final String[] EXPENSE_CATEGORIES = {"Food", "Transport", "Housing", "Health", "Shopping", "Bills"};
+    private final String[] INCOME_CATEGORIES  = {"Salary", "Business", "Bonus", "Investment", "Allowance", "Others"};
 
     @Nullable
     @Override
@@ -160,17 +161,27 @@ public class HomeFragment extends Fragment {
                     index++;
                 }
 
-                // Trả Chip đầu tiên (vị trí 0) về trạng thái Active nổi bật, các chip còn lại ở dạng Idle xám
-                if (i == 0) {
-                    chip.setBackgroundResource(R.drawable.bg_chip_active);
-                    chip.setTextColor(ContextCompat.getColor(requireContext(), R.color.bm_ink));
-                    selectedCategory = chip.getText().toString().replaceAll("[^a-zA-Z ]", "").trim();
-                } else {
-                    chip.setBackgroundResource(R.drawable.bg_chip_idle);
-                    chip.setTextColor(ContextCompat.getColor(requireContext(), R.color.bm_text_dim));
-                }
+                styleChip(chip, i == 0);
+                if (i == 0) selectedCategory = chip.getText().toString().replaceAll("[^a-zA-Z ]", "").trim();
             }
         }
+    }
+
+    /** Category chip: Material icon + name; gold fill when selected. */
+    private void styleChip(TextView chip, boolean active) {
+        int color = ContextCompat.getColor(requireContext(), active ? R.color.bm_ink : R.color.bm_text_dim);
+        chip.setBackgroundResource(active ? R.drawable.bg_chip_active : R.drawable.bg_chip_idle);
+        chip.setTextColor(color);
+        android.graphics.drawable.Drawable icon = ContextCompat.getDrawable(requireContext(),
+                CategoryIcons.forCategory(chip.getText().toString()));
+        if (icon != null) {
+            icon = icon.mutate();
+            int size = Math.round(16 * getResources().getDisplayMetrics().density);
+            icon.setBounds(0, 0, size, size);
+            icon.setTint(color);
+        }
+        chip.setCompoundDrawablesRelative(icon, null, null, null);
+        chip.setCompoundDrawablePadding(Math.round(6 * getResources().getDisplayMetrics().density));
     }
 
     private void setupSeeAllLink() {
@@ -254,7 +265,7 @@ public class HomeFragment extends Fragment {
             tabIncome.setTextColor(ContextCompat.getColor(requireContext(), R.color.bm_muted));
 
             // Đổi nhãn chữ và thay thế danh mục
-            if (tvSpendingLabel != null) tvSpendingLabel.setText("SPENDING");
+            if (tvSpendingLabel != null) tvSpendingLabel.setText("Amount");
             updateCategoryChipsUI();
             updateAmountDisplay();
         });
@@ -267,7 +278,7 @@ public class HomeFragment extends Fragment {
             tabExpenses.setTextColor(ContextCompat.getColor(requireContext(), R.color.bm_muted));
 
             // Đổi nhãn chữ và thay thế danh mục
-            if (tvSpendingLabel != null) tvSpendingLabel.setText("INCOME");
+            if (tvSpendingLabel != null) tvSpendingLabel.setText("Amount");
             updateCategoryChipsUI();
             updateAmountDisplay();
         });
@@ -281,12 +292,9 @@ public class HomeFragment extends Fragment {
                 TextView chip = (TextView) child;
                 chip.setOnClickListener(v -> {
                     for (int j = 0; j < childCount; j++) {
-                        TextView c = (TextView) layoutCategories.getChildAt(j);
-                        c.setBackgroundResource(R.drawable.bg_chip_idle);
-                        c.setTextColor(ContextCompat.getColor(requireContext(), R.color.bm_text_dim));
+                        styleChip((TextView) layoutCategories.getChildAt(j), false);
                     }
-                    chip.setBackgroundResource(R.drawable.bg_chip_active);
-                    chip.setTextColor(ContextCompat.getColor(requireContext(), R.color.bm_ink));
+                    styleChip(chip, true);
                     selectedCategory = chip.getText().toString().replaceAll("[^a-zA-Z ]", "").trim();
                 });
             }

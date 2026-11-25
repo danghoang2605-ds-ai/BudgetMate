@@ -18,15 +18,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="MARKET TRACKER"
+            android:visibility="gone"
             android:textColor="@color/bm_muted"
             android:textSize="10sp"
             android:textStyle="bold"
-            android:letterSpacing="0.14" />
+            android:letterSpacing="0.01" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Terminal"
+            android:text="Markets"
             android:textColor="@color/bm_text"
             android:textSize="22sp"
             android:textStyle="bold"
@@ -44,7 +45,7 @@
         app:tabIndicatorHeight="2dp"
         app:tabSelectedTextColor="@color/bm_text"
         app:tabTextColor="@color/bm_muted"
-        app:tabTextAppearance="@android:style/TextAppearance.Widget.TextView"
+        app:tabTextAppearance="@style/BMTabText"
         android:paddingHorizontal="8dp" />
 
     <View
