@@ -15,15 +15,12 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Khởi tạo giữ trạng thái cho 5 màn hình tab và 1 màn hình scan độc lập
-    private final Fragment homeFragment   = new HomeFragment();
-    private final Fragment manageFragment = new ManageFragment();
-    private final Fragment chatFragment   = new ChatbotFragment();
-    private final Fragment statsFragment  = new StatsFragment();
-    private final Fragment newsFragment   = new NewsFragment();
-    private final Fragment scanFragment   = new ScannerFragment(); // Chạy ngầm phục vụ nút Camera
+    // Five tabs plus the receipt scanner. After a configuration change (font size, theme,
+    // language) the FragmentManager restores these by tag, so they must not be added again.
+    private static final String KEY_ACTIVE = "active_tab";
+    private Fragment homeFragment, manageFragment, chatFragment, statsFragment, newsFragment, scanFragment;
 
-    private Fragment activeFragment = homeFragment;
+    private Fragment activeFragment;
     private FragmentManager fm;
     private BottomNavigationView bottomNav;
 
@@ -32,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         getWindow().setStatusBarColor(0xFF0A1128);
-        getWindow().setNavigationBarColor(0xFF111827);
+        getWindow().setNavigationBarColor(0xFF0B1226);
 
         setContentView(R.layout.activity_main);
 
@@ -40,15 +37,29 @@ public class MainActivity extends AppCompatActivity {
 
         fm = getSupportFragmentManager();
 
-        // Nạp sẵn toàn bộ các cấu phần vào cây Fragment ngầm bảo toàn bộ nhớ
-        fm.beginTransaction()
-                .add(R.id.fragment_container, scanFragment, "scan").hide(scanFragment).setMaxLifecycle(scanFragment, Lifecycle.State.STARTED)
-                .add(R.id.fragment_container, newsFragment, "5").hide(newsFragment).setMaxLifecycle(newsFragment, Lifecycle.State.STARTED)
-                .add(R.id.fragment_container, statsFragment, "4").hide(statsFragment).setMaxLifecycle(statsFragment, Lifecycle.State.STARTED)
-                .add(R.id.fragment_container, chatFragment, "3").hide(chatFragment).setMaxLifecycle(chatFragment, Lifecycle.State.STARTED)
-                .add(R.id.fragment_container, manageFragment, "2").hide(manageFragment).setMaxLifecycle(manageFragment, Lifecycle.State.STARTED)
-                .add(R.id.fragment_container, homeFragment, "1").setMaxLifecycle(homeFragment, Lifecycle.State.RESUMED)
-                .commit();
+        if (savedInstanceState != null) {
+            homeFragment   = fm.findFragmentByTag("1");
+            manageFragment = fm.findFragmentByTag("2");
+            chatFragment   = fm.findFragmentByTag("3");
+            statsFragment  = fm.findFragmentByTag("4");
+            newsFragment   = fm.findFragmentByTag("5");
+            scanFragment   = fm.findFragmentByTag("scan");
+        }
+        boolean restored = savedInstanceState != null && homeFragment != null && manageFragment != null
+                && chatFragment != null && statsFragment != null && newsFragment != null && scanFragment != null;
+        if (restored) {
+            Fragment active = fm.findFragmentByTag(savedInstanceState.getString(KEY_ACTIVE, "1"));
+            activeFragment = active != null ? active : homeFragment;
+        } else {
+            homeFragment   = new HomeFragment();
+            manageFragment = new ManageFragment();
+            chatFragment   = new ChatbotFragment();
+            statsFragment  = new StatsFragment();
+            newsFragment   = new NewsFragment();
+            scanFragment   = new ScannerFragment();
+            activeFragment = homeFragment;
+            addAllFragments();
+        }
 
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -75,6 +86,25 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void addAllFragments() {
+        fm.beginTransaction()
+                .add(R.id.fragment_container, scanFragment, "scan").hide(scanFragment).setMaxLifecycle(scanFragment, Lifecycle.State.STARTED)
+                .add(R.id.fragment_container, newsFragment, "5").hide(newsFragment).setMaxLifecycle(newsFragment, Lifecycle.State.STARTED)
+                .add(R.id.fragment_container, statsFragment, "4").hide(statsFragment).setMaxLifecycle(statsFragment, Lifecycle.State.STARTED)
+                .add(R.id.fragment_container, chatFragment, "3").hide(chatFragment).setMaxLifecycle(chatFragment, Lifecycle.State.STARTED)
+                .add(R.id.fragment_container, manageFragment, "2").hide(manageFragment).setMaxLifecycle(manageFragment, Lifecycle.State.STARTED)
+                .add(R.id.fragment_container, homeFragment, "1").setMaxLifecycle(homeFragment, Lifecycle.State.RESUMED)
+                .commit();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (activeFragment != null && activeFragment.getTag() != null) {
+            outState.putString(KEY_ACTIVE, activeFragment.getTag());
+        }
     }
 
     private void switchFragment(Fragment target) {
