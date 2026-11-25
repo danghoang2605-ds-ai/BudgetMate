@@ -89,7 +89,7 @@ CI builds the debug APK and runs the unit tests and proxy tests on every push (s
 ## Website and releases
 
 - `site/` is the landing page. `.github/workflows/pages.yml` builds it with WebP copies of the screenshots and deploys it to GitHub Pages on every push to `master`.
-- Push a tag such as `v1.1.0` and `.github/workflows/release.yml` builds the APK and publishes it as `BudgetMate.apk` on a GitHub Release; the website's download button always points at the latest one.
+- Raise `versionName` (and `versionCode`) in `app/build.gradle` on `master`, or push a tag such as `v1.2.0`: `.github/workflows/release.yml` builds the APK and publishes it as `BudgetMate.apk` on a GitHub Release named after the version. The website's download button always points at the latest one.
 - Release APKs are signed with `keystore/sideload.jks`, a deliberately public key that stays the same between releases so updates install over each other. For a private key, add the repository secrets `RELEASE_KEYSTORE_BASE64`, `RELEASE_KEYSTORE_PASSWORD`, `RELEASE_KEY_ALIAS` and `RELEASE_KEY_PASSWORD`; never ship to a store with the public key.
 - Online features in the published APK come from repository secrets: `AI_PROXY_URL` and `AI_APP_TOKEN` (AI chat and receipts, see `proxy/`), `GNEWS_API_KEY`, `ALPHAVANTAGE_API_KEY`. Without them the APK works offline and says so.
 
