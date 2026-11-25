@@ -51,4 +51,6 @@ jobs:
           git add docs/screenshots
           git diff --cached --quiet && exit 0
           git commit -m "Update app screenshots"
-          git push
+          # The branch may have moved while the emulator ran; replay the screenshot commit on top.
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
