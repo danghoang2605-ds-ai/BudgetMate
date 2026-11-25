@@ -97,8 +97,8 @@ typography:
     fontWeight: 700
     lineHeight: 1
     fontFeature: "tnum"
-  figure-mono:
-    fontFamily: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+  code-readout:
+    fontFamily: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
     fontSize: "16px"
     fontWeight: 700
     lineHeight: 1
@@ -262,7 +262,7 @@ A night-blue tonal stack, one metal, and two money colors.
 
 **Display Font:** Manrope (with ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto)
 **Body Font:** Manrope (same stack)
-**Figure Font:** Manrope with tabular figures (`tnum`). The website still sets its figures in JetBrains Mono (with ui-monospace, SFMono-Regular, Menlo, Consolas), recorded below as the figure-mono holdover.
+**Figure Font:** Manrope with tabular figures (`tnum`), in the app and on the website. A system monospace stack appears only in the website's sentence-demo JSON readout.
 
 **Character:** One family carries the product, the same face in the app (res/font/manrope*.ttf, weights 400 to 800) and on the website. Words are heavy and tightly tracked in headings, plain at 400 in body; figures are the second voice, set tabular so a column of amounts reads like a ledger.
 
@@ -279,7 +279,7 @@ A night-blue tonal stack, one metal, and two money colors.
 
 ### Figure faces in use
 - **App:** Manrope with `tnum` on every figure (`fontFeatureSettings="tnum"`; keypad digits through BMKeypadDigit, 24sp bold). This is the system default.
-- **Website holdover:** site/index.html sets every figure in JetBrains Mono at the sizes above (700; key digits at 500), loaded from Google Fonts at 500 and 700. It is tabular by construction, so it satisfies the rule below. JetBrains Mono appears nowhere else on the site except the sentence demo, where the typed sentence (500, 16px) and its JSON readout (500, 14px, 1.5) are set in it. New work on the site matches JetBrains Mono for figures until the site moves to Manrope; new work anywhere else uses Manrope `tnum`.
+- **Code readout:** the website's sentence demo shows its parsed JSON in the system monospace stack (500, 14px, 1.5). That is code, not a figure; every amount on the site uses Manrope with tabular numerals.
 
 ### Named Rules
 **The Tabular Rule.** Every money figure is tabular: amounts, totals, day subtotals, keypad digits, market changes. Digits keep their width while you type and amounts align on the right. In Manrope that means `tnum` (`font-variant-numeric: tabular-nums` on the web); never proportional figures for an amount.

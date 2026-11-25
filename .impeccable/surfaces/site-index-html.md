@@ -15,7 +15,7 @@ Memorable moment: the visitor logs a purchase on the page's own keypad in three 
 
 THESIS: The page is the app's keypad. The first thing a visitor does is log a purchase themselves, because speed of logging is the product. It refuses the phone-mockup-beside-headline landing page and its row of feature cards.
 
-OWN-WORLD: The app's own world, inherited: midnight blue ground (#0A1128), raised navy surfaces, metallic gold for the primary key and action, mint for income, coral for expenses, monospace figures for every amount, rounded keypad keys with an inner highlight.
+OWN-WORLD: The app's own world, inherited: midnight blue ground (#0A1128), raised navy surfaces, metallic gold for the primary key and action, mint for income, coral for expenses, tabular Manrope figures for every amount (moved from monospace with the app redesign, Nov 2026), rounded keypad keys with an inner highlight.
 
 STORY: The visitor taps an amount, picks a category and saves; the entry drops into a live ledger. Then sees the real app, its three ways to log, its month view, why data stays on the phone, how it is built, and downloads the APK.
 
