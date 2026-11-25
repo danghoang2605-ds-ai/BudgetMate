@@ -15,7 +15,7 @@ shutil.rmtree(OUT, ignore_errors=True)
 shutil.copytree(ROOT / "site", OUT)
 screens = OUT / "screens"
 screens.mkdir(exist_ok=True)
-for png in sorted((ROOT / "docs" / "screenshots").glob("*.png")):
+for png in sorted(p for p in (ROOT / "docs" / "screenshots").glob("*.png") if "-font" not in p.stem):
     im = Image.open(png).convert("RGB")
     for width in (360, 720):
         h = round(im.height * width / im.width)

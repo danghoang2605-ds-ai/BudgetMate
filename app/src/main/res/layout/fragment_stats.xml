@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:text="Insights"
                     android:textColor="@color/bm_text"
-                    android:textSize="22sp"
+                    android:textSize="26sp"
                     android:textStyle="bold"
                     android:letterSpacing="-0.025"
                     android:layout_marginTop="2dp" />
@@ -50,8 +50,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Export"
+                app:icon="@drawable/ms_file_download"
+                app:iconTint="@color/bm_ink"
+                app:iconSize="18dp"
+                app:iconPadding="6dp"
                 android:textColor="@color/bm_ink"
-                android:textSize="11sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/manrope_extrabold"
                 app:backgroundTint="@color/bm_gold"
@@ -78,19 +82,29 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_monthly"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:text="Monthly"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    app:strokeColor="@color/bm_hairline"
-                    android:textColor="@color/bm_gold" />
+                    app:strokeColor="@color/bm_hairline_2"
+                    app:backgroundTint="@color/seg_bg"
+                    app:cornerRadius="12dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/seg_text" />
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_annually"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:text="Annual"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    app:strokeColor="@color/bm_hairline"
-                    android:textColor="@color/bm_gold" />
+                    app:strokeColor="@color/bm_hairline_2"
+                    app:backgroundTint="@color/seg_bg"
+                    app:cornerRadius="12dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/seg_text" />
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
             <View
@@ -101,15 +115,21 @@
             <Spinner
                 android:id="@+id/spinner_month_stats"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/bm_gold"
-                android:layout_marginEnd="6dp" />
+                android:layout_height="48dp"
+                android:background="@drawable/bg_spinner_pill"
+                android:paddingStart="14dp"
+                android:paddingEnd="34dp"
+                android:popupBackground="@color/bm_surface"
+                android:layout_marginEnd="8dp" />
 
             <Spinner
                 android:id="@+id/spinner_year_stats"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/bm_gold" />
+                android:layout_height="48dp"
+                android:background="@drawable/bg_spinner_pill"
+                android:paddingStart="14dp"
+                android:paddingEnd="34dp"
+                android:popupBackground="@color/bm_surface" />
         </LinearLayout>
 
         <LinearLayout
@@ -200,7 +220,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cash flow"
+            android:text="Running totals"
             android:textColor="@color/bm_muted"
             android:textSize="10sp"
             android:textStyle="bold"

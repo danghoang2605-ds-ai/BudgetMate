@@ -26,32 +26,23 @@
                 android:layout_height="wrap_content"
                 android:text="Log an entry"
                 android:textColor="@color/bm_text"
-                android:textSize="22sp"
+                android:textSize="26sp"
                 android:textStyle="bold"
                 android:letterSpacing="-0.025"
                 android:layout_marginTop="2dp" />
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/btn_theme"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:padding="10dp"
-            android:src="@android:drawable/ic_menu_day"
+            android:id="@+id/btn_scan_receipt"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            android:src="@drawable/ms_photo_camera"
             android:background="@drawable/bg_chip_idle"
-            app:tint="@color/bm_muted"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="Toggle theme" />
-
-        <ImageView
-            android:id="@+id/btn_notifications"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:padding="10dp"
-            android:src="@android:drawable/ic_popup_reminder"
-            android:background="@drawable/bg_chip_idle"
-            app:tint="@color/bm_muted"
-            android:contentDescription="Notifications" />
+            app:tint="@color/bm_gold"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Scan a receipt" />
     </LinearLayout>
 
     <LinearLayout
@@ -121,7 +112,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="vs Last Month"
+                    android:text="vs last month"
                     android:textColor="@color/bm_muted_2"
                     android:textSize="10sp"
                     android:letterSpacing="0.03"
@@ -323,7 +314,7 @@
 
             <ImageView
                 android:layout_width="14dp"
-                android:layout_height="14dp"
+                android:layout_height="16dp"
                 android:src="@android:drawable/ic_menu_my_calendar"
                 app:tint="@color/bm_gold"
                 android:layout_marginEnd="6dp" />
@@ -346,7 +337,8 @@
         android:gravity="center_vertical"
         android:background="@drawable/bg_input_field"
         android:paddingHorizontal="14dp"
-        android:paddingVertical="2dp"
+        android:paddingVertical="4dp"
+        android:minHeight="48dp"
         android:layout_marginTop="14dp">
 
         <ImageView
@@ -534,9 +526,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1.2"
             android:text="Save"
-            android:drawableTop="@drawable/ms_check"
-            android:drawableTint="@color/bm_ink"
-            android:drawablePadding="4dp"
+            android:textAllCaps="false"
             android:textColor="@color/bm_ink"
             android:textSize="15sp"
             android:textStyle="bold"
