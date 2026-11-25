@@ -18,10 +18,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ONLINE · RECEIPT SCANNER READY"
+            android:visibility="gone"
             android:textColor="@color/bm_teal"
             android:textSize="10sp"
             android:textStyle="bold"
-            android:letterSpacing="0.14" />
+            android:letterSpacing="0.01" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,10 +70,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <Button android:id="@+id/chip_boba" android:layout_width="wrap_content" android:layout_height="36dp" android:text="🧋 Boba $5" android:textAllCaps="false" android:textColor="@color/bm_text_dim" android:textSize="12sp" android:background="@drawable/bg_chip_idle" android:layout_marginEnd="8dp" />
-                <Button android:id="@+id/chip_lunch" android:layout_width="wrap_content" android:layout_height="36dp" android:text="🍜 Lunch $15" android:textAllCaps="false" android:textColor="@color/bm_text_dim" android:textSize="12sp" android:background="@drawable/bg_chip_idle" android:layout_marginEnd="8dp" />
-                <Button android:id="@+id/chip_uber" android:layout_width="wrap_content" android:layout_height="36dp" android:text="🚗 Uber $20" android:textAllCaps="false" android:textColor="@color/bm_text_dim" android:textSize="12sp" android:background="@drawable/bg_chip_idle" android:layout_marginEnd="8dp" />
-                <Button android:id="@+id/chip_salary" android:layout_width="wrap_content" android:layout_height="36dp" android:text="💰 Salary $200" android:textAllCaps="false" android:textColor="@color/bm_text_dim" android:textSize="12sp" android:background="@drawable/bg_chip_idle" />
+                <Button android:id="@+id/chip_boba" android:layout_width="wrap_content" android:layout_height="36dp" android:text="Boba $5" android:textAllCaps="false" android:textColor="@color/bm_text_dim" android:textSize="12sp" android:background="@drawable/bg_chip_idle" android:layout_marginEnd="8dp" />
+                <Button android:id="@+id/chip_lunch" android:layout_width="wrap_content" android:layout_height="36dp" android:text="Lunch $15" android:textAllCaps="false" android:textColor="@color/bm_text_dim" android:textSize="12sp" android:background="@drawable/bg_chip_idle" android:layout_marginEnd="8dp" />
+                <Button android:id="@+id/chip_uber" android:layout_width="wrap_content" android:layout_height="36dp" android:text="Uber $20" android:textAllCaps="false" android:textColor="@color/bm_text_dim" android:textSize="12sp" android:background="@drawable/bg_chip_idle" android:layout_marginEnd="8dp" />
+                <Button android:id="@+id/chip_salary" android:layout_width="wrap_content" android:layout_height="36dp" android:text="Salary $200" android:textAllCaps="false" android:textColor="@color/bm_text_dim" android:textSize="12sp" android:background="@drawable/bg_chip_idle" />
             </LinearLayout>
         </HorizontalScrollView>
 

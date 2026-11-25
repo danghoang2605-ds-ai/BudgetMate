@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private Fragment activeFragment = homeFragment;
     private FragmentManager fm;
     private BottomNavigationView bottomNav;
-    private FloatingActionButton fabAi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bottomNav = findViewById(R.id.bottom_nav);
-        fabAi     = findViewById(R.id.fab_ai_chat);
 
         fm = getSupportFragmentManager();
 
@@ -52,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.fragment_container, homeFragment, "1").setMaxLifecycle(homeFragment, Lifecycle.State.RESUMED)
                 .commit();
 
-        fabAi.setOnClickListener(v -> bottomNav.setSelectedItemId(R.id.nav_chat));
-
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -62,19 +58,14 @@ public class MainActivity extends AppCompatActivity {
 
                 if (id == R.id.nav_home) {
                     selectedFragment = homeFragment;
-                    fabAi.setVisibility(View.VISIBLE);
                 } else if (id == R.id.nav_manage) {
                     selectedFragment = manageFragment;
-                    fabAi.setVisibility(View.VISIBLE);
                 } else if (id == R.id.nav_chat) {
                     selectedFragment = chatFragment;
-                    fabAi.setVisibility(View.GONE);
                 } else if (id == R.id.nav_stats) {
                     selectedFragment = statsFragment;
-                    fabAi.setVisibility(View.VISIBLE);
                 } else if (id == R.id.nav_news) {
                     selectedFragment = newsFragment;
-                    fabAi.setVisibility(View.VISIBLE);
                 }
 
                 if (selectedFragment != null && selectedFragment != activeFragment) {

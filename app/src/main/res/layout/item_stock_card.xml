@@ -31,7 +31,8 @@
             android:textColor="@color/bm_income"
             android:textSize="10sp"
             android:textStyle="bold"
-            android:fontFamily="monospace"
+            android:fontFamily="@font/manrope"
+                    android:fontFeatureSettings="tnum"
             android:background="@drawable/bg_stock_trend_up"
             android:paddingHorizontal="6dp"
             android:paddingVertical="2dp" />
@@ -68,6 +69,7 @@
         android:textColor="@color/bm_text"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:fontFamily="monospace" />
+        android:fontFamily="@font/manrope"
+                    android:fontFeatureSettings="tnum" />
 
 </LinearLayout>

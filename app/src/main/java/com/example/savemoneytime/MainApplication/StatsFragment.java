@@ -282,11 +282,11 @@ public class StatsFragment extends Fragment {
                 if (totalRev > 0) {
                     float savingsRate = ((totalRev - totalExp) * 100f) / totalRev;
                     if (savingsRate > 20) {
-                        recommendation = "\n\n💡 Recommendation: Great job! Your savings rate is " + String.format(Locale.US, "%.1f%%", savingsRate) + ". Consider investing the surplus into low-risk Index Funds (like S&P 500) to combat inflation.";
+                        recommendation = "\n\nRecommendation: Great job! Your savings rate is " + String.format(Locale.US, "%.1f%%", savingsRate) + ". Consider investing the surplus into low-risk Index Funds (like S&P 500) to combat inflation.";
                     } else if (savingsRate > 0) {
-                        recommendation = "\n\n💡 Recommendation: You are saving " + String.format(Locale.US, "%.1f%%", savingsRate) + " of your income. Try the 50/30/20 rule to boost your savings rate up to 20%.";
+                        recommendation = "\n\nRecommendation: You are saving " + String.format(Locale.US, "%.1f%%", savingsRate) + " of your income. Try the 50/30/20 rule to boost your savings rate up to 20%.";
                     } else {
-                        recommendation = "\n\n💡 Recommendation: Warning! You are operating at a deficit. Review your discretionary spending immediately to balance your cash flow.";
+                        recommendation = "\n\nRecommendation: Warning! You are operating at a deficit. Review your discretionary spending immediately to balance your cash flow.";
                     }
                 }
 
@@ -485,22 +485,22 @@ public class StatsFragment extends Fragment {
         revSet.setCircleColor(Color.parseColor("#34D399"));
         revSet.setLineWidth(2.5f);
         revSet.setCircleRadius(3.5f);
-        revSet.setDrawValues(true);
+        revSet.setDrawValues(false);
         revSet.setValueTextColor(Color.WHITE);
         revSet.setValueTextSize(8f);
         revSet.setValueFormatter(getCompactFormatter());
-        revSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        revSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
 
         LineDataSet expSet = new LineDataSet(expEntries, "Expense Trend");
         expSet.setColor(Color.parseColor("#F87171"));
         expSet.setCircleColor(Color.parseColor("#F87171"));
         expSet.setLineWidth(2.5f);
         expSet.setCircleRadius(3.5f);
-        expSet.setDrawValues(true);
+        expSet.setDrawValues(false);
         expSet.setValueTextColor(Color.WHITE);
         expSet.setValueTextSize(8f);
         expSet.setValueFormatter(getCompactFormatter());
-        expSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        expSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
 
         List<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(revSet);

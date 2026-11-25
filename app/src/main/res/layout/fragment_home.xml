@@ -78,11 +78,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="THIS MONTH · NET"
+                    android:text="Net this month"
                     android:textColor="@color/bm_muted"
                     android:textSize="10sp"
                     android:textStyle="bold"
-                    android:letterSpacing="0.14" />
+                    android:letterSpacing="0.01" />
 
                 <TextView
                     android:id="@+id/tv_total_balance"
@@ -92,7 +92,8 @@
                     android:textColor="@color/bm_gold"
                     android:textSize="32sp"
                     android:textStyle="bold"
-                    android:fontFamily="monospace"
+                    android:fontFamily="@font/manrope"
+                    android:fontFeatureSettings="tnum"
                     android:letterSpacing="-0.02"
                     android:layout_marginTop="4dp" />
             </LinearLayout>
@@ -111,7 +112,8 @@
                     android:textColor="@color/bm_income"
                     android:textSize="11sp"
                     android:textStyle="bold"
-                    android:fontFamily="monospace"
+                    android:fontFamily="@font/manrope"
+                    android:fontFeatureSettings="tnum"
                     android:background="@drawable/bg_income_change_pill"
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="3dp" />
@@ -160,11 +162,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="INCOME"
+                        android:text="Income"
                         android:textColor="@color/bm_muted"
                         android:textSize="10sp"
                         android:textStyle="bold"
-                        android:letterSpacing="0.08" />
+                        android:letterSpacing="0.01" />
                 </LinearLayout>
 
                 <TextView
@@ -175,7 +177,8 @@
                     android:textColor="@color/bm_text"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:fontFamily="monospace"
+                    android:fontFamily="@font/manrope"
+                    android:fontFeatureSettings="tnum"
                     android:layout_marginTop="3dp" />
             </LinearLayout>
 
@@ -206,11 +209,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="EXPENSES"
+                        android:text="Expenses"
                         android:textColor="@color/bm_muted"
                         android:textSize="10sp"
                         android:textStyle="bold"
-                        android:letterSpacing="0.08" />
+                        android:letterSpacing="0.01" />
                 </LinearLayout>
 
                 <TextView
@@ -221,7 +224,8 @@
                     android:textColor="@color/bm_text"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:fontFamily="monospace"
+                    android:fontFamily="@font/manrope"
+                    android:fontFeatureSettings="tnum"
                     android:layout_marginTop="3dp" />
             </LinearLayout>
         </LinearLayout>
@@ -240,7 +244,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="EXPENSE"
+            android:text="Expense"
             android:textColor="@color/bm_ink"
             android:textSize="13sp"
             android:textStyle="bold"
@@ -256,7 +260,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="INCOME"
+            android:text="Income"
             android:textColor="@color/bm_muted"
             android:textSize="13sp"
             android:textStyle="bold"
@@ -285,11 +289,11 @@
                 android:id="@+id/tv_spending_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SPENDING"
+                android:text="Amount"
                 android:textColor="@color/bm_muted"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:letterSpacing="0.14" />
+                android:letterSpacing="0.01" />
 
             <TextView
                 android:id="@+id/tv_amount_display"
@@ -299,7 +303,8 @@
                 android:textColor="@color/bm_text"
                 android:textSize="44sp"
                 android:textStyle="bold"
-                android:fontFamily="monospace"
+                android:fontFamily="@font/manrope"
+                    android:fontFeatureSettings="tnum"
                 android:letterSpacing="-0.025"
                 android:layout_marginTop="2dp" />
         </LinearLayout>
@@ -376,11 +381,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="CATEGORY"
+            android:text="Category"
             android:textColor="@color/bm_gold"
             android:textSize="10sp"
             android:textStyle="bold"
-            android:letterSpacing="0.14" />
+            android:letterSpacing="0.01" />
 
         <TextView
             android:id="@+id/tv_see_all"
@@ -528,12 +533,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.2"
-            android:text="✓\nSAVE"
+            android:text="Save"
+            android:drawableTop="@drawable/ms_check"
+            android:drawableTint="@color/bm_ink"
+            android:drawablePadding="4dp"
             android:textColor="@color/bm_ink"
-            android:textSize="13sp"
+            android:textSize="15sp"
             android:textStyle="bold"
-            android:letterSpacing="0.06"
-            android:fontFamily="sans-serif-black"
+            android:letterSpacing="0.01"
+            android:fontFamily="@font/manrope_extrabold"
             android:lineSpacingExtra="4dp"
             android:background="@drawable/bg_save_btn"
             android:backgroundTint="@null"

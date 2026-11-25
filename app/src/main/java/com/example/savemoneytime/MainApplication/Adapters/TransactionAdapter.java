@@ -1,5 +1,7 @@
 package com.example.savemoneytime.MainApplication.Adapters;
 
+import com.example.savemoneytime.util.CategoryIcons;
+import android.widget.ImageView;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,8 +65,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             tHolder.tvCategory.setText(item.getCategoryName());
             tHolder.tvDate.setText(timeFormat.format(new Date(item.getDate())));
 
-            // 🔥 Tự động gán Emoji xịn sò dựa theo tên danh mục
-            tHolder.tvIcon.setText(getEmojiForCategory(item.getCategoryName()));
+            tHolder.tvIcon.setImageResource(CategoryIcons.forCategory(item.getCategoryName()));
+            tHolder.tvIcon.setColorFilter(item.isExpense() ? Color.parseColor("#D4AF37") : Color.parseColor("#34D399"));
 
             String amountStr = String.format(Locale.US, "%,d", item.getAmount());
             if (item.isExpense()) {
@@ -116,7 +118,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     static class TransactionViewHolder extends RecyclerView.ViewHolder {
         // 🔥 FIXED: Đã xóa cái tvTypeIndicator gây lỗi, thêm biến tvIcon cho khung Emoji
-        TextView tvIcon;
+        ImageView tvIcon;
         TextView tvTitle;
         TextView tvCategory;
         TextView tvDate;
