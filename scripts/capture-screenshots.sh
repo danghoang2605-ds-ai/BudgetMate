@@ -6,10 +6,19 @@ set -euo pipefail
 PKG=com.example.savemoneytime
 OUT=${1:-docs/screenshots}
 mkdir -p "$OUT"
+# Start clean so a failed capture can never leave a stale screenshot behind.
+rm -f "$OUT"/*.png
 
 adb wait-for-device
 adb shell 'while [ "$(getprop sys.boot_completed)" != "1" ]; do sleep 1; done'
 adb install -r -g app/build/outputs/apk/debug/app-debug.apk
+
+# Emulators on CI often raise "Pixel Launcher isn't responding"; never let a system dialog
+# land in a screenshot or swallow a tap.
+adb shell settings put global hide_error_dialogs 1 || true
+adb shell settings put global anr_show_background 0 || true
+sleep 15
+adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS >/dev/null || true
 
 # Clean status bar (fixed clock, full battery, no notifications).
 adb shell settings put global sysui_demo_allowed 1
@@ -24,6 +33,8 @@ sleep 6
 
 shot() {
   sleep 3
+  adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS >/dev/null || true
+  sleep 1
   adb exec-out screencap -p > "$OUT/$1.png"
   echo "captured $1"
 }
@@ -34,17 +45,28 @@ tap_id() {
   local bounds
   bounds=$(adb shell cat /sdcard/ui.xml | tr '>' '\n' | grep "resource-id=\"$PKG:id/$1\"" | head -1 \
     | sed -E 's/.*bounds="\[([0-9]+),([0-9]+)\]\[([0-9]+),([0-9]+)\]".*/\1 \2 \3 \4/')
-  if [ -z "$bounds" ]; then echo "view $1 not found"; return 1; fi
+  if [ -z "$bounds" ]; then
+    # One retry after closing any system dialog that may cover the app.
+    adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS >/dev/null || true
+    sleep 2
+    adb shell uiautomator dump /sdcard/ui.xml >/dev/null
+    bounds=$(adb shell cat /sdcard/ui.xml | tr '>' '\n' | grep "resource-id=\"$PKG:id/$1\"" | head -1 \
+      | sed -E 's/.*bounds="\[([0-9]+),([0-9]+)\]\[([0-9]+),([0-9]+)\]".*/\1 \2 \3 \4/')
+  fi
+  if [ -z "$bounds" ]; then echo "::error::view $1 not found"; exit 1; fi
   read -r x1 y1 x2 y2 <<<"$bounds"
   adb shell input tap $(((x1 + x2) / 2)) $(((y1 + y2) / 2))
 }
 
 shot home
 for tab in manage stats chat news; do
-  tap_id "nav_$tab" && shot "$tab"
+  tap_id "nav_$tab"
+  shot "$tab"
 done
 
 # Accessibility check: Home at 130% system font size (not used on the website).
 adb shell settings put system font_scale 1.3
-tap_id nav_home && shot home-font130
+sleep 3
+tap_id nav_home
+shot home-font130
 adb shell settings put system font_scale 1.0
