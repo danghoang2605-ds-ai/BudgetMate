@@ -33,7 +33,7 @@ GitHub Pages; the APK comes from GitHub Releases built by CI.
 
 ## Brand Commitments
 - Name: BudgetMate. Visual identity already in the app: deep midnight blue (#0A1128) with metallic gold
-  (#D4AF37), green for income (#34D399), red for expenses (#F87171), monospace figures.
+  (#D4AF37), green for income (#34D399), red for expenses (#F87171), figures in Manrope with tabular numerals (the app and the website share the face).
 
 ## Evidence on Hand
 - Real screenshots captured by CI on an Android 14 emulator with seeded demo data: docs/screenshots/
