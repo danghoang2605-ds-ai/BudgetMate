@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Closed state of the month / year pickers on Insights. -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/bm_text"
+    android:textSize="14sp"
+    android:textStyle="bold"
+    android:fontFamily="@font/manrope"
+    android:fontFeatureSettings="tnum"
+    android:maxLines="1" />

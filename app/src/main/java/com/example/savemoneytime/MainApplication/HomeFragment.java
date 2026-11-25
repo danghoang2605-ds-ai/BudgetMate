@@ -102,6 +102,11 @@ public class HomeFragment extends Fragment {
 
         // Cập nhật danh sách chip danh mục ban đầu (Mặc định là Expense)
         updateCategoryChipsUI();
+
+        View scan = view.findViewById(R.id.btn_scan_receipt);
+        if (scan != null) scan.setOnClickListener(v -> {
+            if (getActivity() instanceof MainActivity) ((MainActivity) getActivity()).openScannerFromChat();
+        });
     }
 
     private void updateCurrentDateQueryStrings() {

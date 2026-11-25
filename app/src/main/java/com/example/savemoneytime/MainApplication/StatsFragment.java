@@ -1,5 +1,7 @@
 package com.example.savemoneytime.MainApplication;
 
+import androidx.core.content.res.ResourcesCompat;
+import android.graphics.Typeface;
 import com.example.savemoneytime.util.Csv;
 import com.example.savemoneytime.util.UiThread;
 import android.graphics.Color;
@@ -53,6 +55,7 @@ public class StatsFragment extends Fragment {
     private LineChart lineChart;
     private PieChart pieChartExpense, pieChartIncome;
     private RadarChart radarChart;
+    private Typeface chartTypeface;
 
     private AppDatabase db;
     private boolean isMonthly = true;
@@ -102,36 +105,15 @@ public class StatsFragment extends Fragment {
         selectedYear = cal.get(Calendar.YEAR);
 
         String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-        ArrayAdapter<String> monthAdapter = new ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, months) {
-            @NonNull @Override public View getView(int pos, @Nullable View conv, @NonNull ViewGroup par) {
-                View v = super.getView(pos, conv, par);
-                if (v instanceof TextView) { ((TextView) v).setTextColor(Color.parseColor("#FFD4AF37")); ((TextView) v).setTextSize(14f); }
-                return v;
-            }
-            @Override public View getDropDownView(int pos, @Nullable View conv, @NonNull ViewGroup par) {
-                View v = super.getDropDownView(pos, conv, par);
-                if (v instanceof TextView) { ((TextView) v).setTextColor(Color.parseColor("#FFD4AF37")); ((TextView) v).setBackgroundColor(Color.parseColor("#FF111827")); }
-                return v;
-            }
-        };
-        monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> monthAdapter = new ArrayAdapter<>(requireContext(), R.layout.item_spinner_pill, months);
+        monthAdapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
         spinnerMonth.setAdapter(monthAdapter);
         spinnerMonth.setSelection(selectedMonth - 1);
 
-        String[] years = {"2024", "2025", "2026"};
-        ArrayAdapter<String> yearAdapter = new ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, years) {
-            @NonNull @Override public View getView(int pos, @Nullable View conv, @NonNull ViewGroup par) {
-                View v = super.getView(pos, conv, par);
-                if (v instanceof TextView) { ((TextView) v).setTextColor(Color.parseColor("#FFD4AF37")); ((TextView) v).setTextSize(14f); }
-                return v;
-            }
-            @Override public View getDropDownView(int pos, @Nullable View conv, @NonNull ViewGroup par) {
-                View v = super.getDropDownView(pos, conv, par);
-                if (v instanceof TextView) { ((TextView) v).setTextColor(Color.parseColor("#FFD4AF37")); ((TextView) v).setBackgroundColor(Color.parseColor("#FF111827")); }
-                return v;
-            }
-        };
-        yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // The last three years, ending with the current one (was a fixed 2024-2026 list).
+        String[] years = { String.valueOf(selectedYear - 2), String.valueOf(selectedYear - 1), String.valueOf(selectedYear) };
+        ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(requireContext(), R.layout.item_spinner_pill, years);
+        yearAdapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
         spinnerYear.setAdapter(yearAdapter);
         spinnerYear.setSelection(2);
 
@@ -200,6 +182,26 @@ public class StatsFragment extends Fragment {
         radarChart.getXAxis().setTextColor(Color.parseColor("#E0E6ED"));
         radarChart.getYAxis().setDrawLabels(false);
         radarChart.getLegend().setTextColor(Color.WHITE);
+
+        // Charts draw their own text; give them the app font instead of the platform default.
+        Typeface tf = ResourcesCompat.getFont(requireContext(), R.font.manrope);
+        if (tf != null) {
+            for (com.github.mikephil.charting.components.AxisBase axis : new com.github.mikephil.charting.components.AxisBase[]{
+                    barChart.getXAxis(), barChart.getAxisLeft(), lineChart.getXAxis(), lineChart.getAxisLeft(), radarChart.getXAxis()}) {
+                axis.setTypeface(tf);
+                axis.setTextSize(11f);
+            }
+            barChart.getLegend().setTypeface(tf);
+            lineChart.getLegend().setTypeface(tf);
+            radarChart.getLegend().setTypeface(tf);
+            pieChartExpense.getLegend().setTypeface(tf);
+            pieChartIncome.getLegend().setTypeface(tf);
+            pieChartExpense.setCenterTextTypeface(tf);
+            pieChartIncome.setCenterTextTypeface(tf);
+            chartTypeface = tf;
+        }
+        barChart.getLegend().setTextColor(Color.parseColor("#E5E7EB"));
+        lineChart.getLegend().setTextColor(Color.parseColor("#E5E7EB"));
     }
 
     private void configurePieChartStructure(PieChart chart) {
@@ -348,6 +350,7 @@ public class StatsFragment extends Fragment {
         data.setValueTextSize(11f);
         data.setValueTextColor(Color.WHITE);
 
+        if (chartTypeface != null) data.setValueTypeface(chartTypeface);
         chart.setData(data);
         chart.animateY(800);
         chart.invalidate();
@@ -417,6 +420,7 @@ public class StatsFragment extends Fragment {
 
         BarData data = new BarData(set1, set2);
         data.setBarWidth(0.30f);
+        if (chartTypeface != null) data.setValueTypeface(chartTypeface);
         barChart.setData(data);
         XAxis xAxis = barChart.getXAxis();
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
@@ -445,9 +449,13 @@ public class StatsFragment extends Fragment {
             for (RevenueEntity r : revenues) {
                 try { int day = Integer.parseInt(df.format(new Date(r.getDate()))) - 1; if (day >= 0 && day < 31) dailyRev[day] += r.getAmount(); } catch (Exception ignored) {}
             }
+            // Running totals: daily values are mostly zero with one payday spike, which reads as noise.
+            float runExp = 0, runRev = 0;
             for (int i = 0; i < 31; i++) {
-                expEntries.add(new Entry(i + 1, dailyExp[i]));
-                revEntries.add(new Entry(i + 1, dailyRev[i]));
+                runExp += dailyExp[i];
+                runRev += dailyRev[i];
+                expEntries.add(new Entry(i + 1, runExp));
+                revEntries.add(new Entry(i + 1, runRev));
             }
             xAxis.setValueFormatter(new ValueFormatter() {
                 @Override public String getFormattedValue(float value) { return String.valueOf((int) value); }
@@ -466,9 +474,12 @@ public class StatsFragment extends Fragment {
             for (RevenueEntity r : revenues) {
                 try { int m = Integer.parseInt(df.format(new Date(r.getDate()))) - 1; if (m >= 0 && m < 12) monthlyRev[m] += r.getAmount(); } catch (Exception ignored) {}
             }
+            float runExp = 0, runRev = 0;
             for (int i = 0; i < 12; i++) {
-                expEntries.add(new Entry(i, monthlyExp[i]));
-                revEntries.add(new Entry(i, monthlyRev[i]));
+                runExp += monthlyExp[i];
+                runRev += monthlyRev[i];
+                expEntries.add(new Entry(i, runExp));
+                revEntries.add(new Entry(i, runRev));
             }
             String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
             xAxis.setValueFormatter(new IndexAxisValueFormatter(months));
@@ -480,7 +491,7 @@ public class StatsFragment extends Fragment {
             xAxis.setGranularity(1f);
         }
 
-        LineDataSet revSet = new LineDataSet(revEntries, "Income Trend");
+        LineDataSet revSet = new LineDataSet(revEntries, "Income");
         revSet.setColor(Color.parseColor("#34D399"));
         revSet.setCircleColor(Color.parseColor("#34D399"));
         revSet.setLineWidth(2.5f);
@@ -489,9 +500,13 @@ public class StatsFragment extends Fragment {
         revSet.setValueTextColor(Color.WHITE);
         revSet.setValueTextSize(8f);
         revSet.setValueFormatter(getCompactFormatter());
-        revSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        revSet.setMode(LineDataSet.Mode.LINEAR);
+        revSet.setDrawCircles(false);
+        revSet.setDrawFilled(true);
+        revSet.setFillColor(Color.parseColor("#34D399"));
+        revSet.setFillAlpha(28);
 
-        LineDataSet expSet = new LineDataSet(expEntries, "Expense Trend");
+        LineDataSet expSet = new LineDataSet(expEntries, "Expenses");
         expSet.setColor(Color.parseColor("#F87171"));
         expSet.setCircleColor(Color.parseColor("#F87171"));
         expSet.setLineWidth(2.5f);
@@ -500,7 +515,11 @@ public class StatsFragment extends Fragment {
         expSet.setValueTextColor(Color.WHITE);
         expSet.setValueTextSize(8f);
         expSet.setValueFormatter(getCompactFormatter());
-        expSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        expSet.setMode(LineDataSet.Mode.LINEAR);
+        expSet.setDrawCircles(false);
+        expSet.setDrawFilled(true);
+        expSet.setFillColor(Color.parseColor("#F87171"));
+        expSet.setFillAlpha(28);
 
         List<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(revSet);

@@ -41,7 +41,7 @@ public class NewsFragment extends Fragment {
             viewPager.setAdapter(adapter);
 
             mediator = new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-                tab.setText(position == 0 ? "STOCKS" : "FINANCIAL NEWS");
+                tab.setText(position == 0 ? "Stocks" : "News");
             });
             mediator.attach();
         }

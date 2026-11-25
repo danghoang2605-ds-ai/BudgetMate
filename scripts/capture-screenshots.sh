@@ -43,3 +43,8 @@ shot home
 for tab in manage stats chat news; do
   tap_id "nav_$tab" && shot "$tab"
 done
+
+# Accessibility check: Home at 130% system font size (not used on the website).
+adb shell settings put system font_scale 1.3
+tap_id nav_home && shot home-font130
+adb shell settings put system font_scale 1.0
