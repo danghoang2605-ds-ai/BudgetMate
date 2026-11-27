@@ -55,7 +55,9 @@ public class IntroViewPager extends AppCompatActivity {
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                setupDots(position);
+                // ViewPager2 reports page 0 during its first layout pass; swapping the dot views
+                // right then drops their layout request and the dots stay invisible on slide 1.
+                dotsContainer.post(() -> setupDots(position));
                 if (position == TOTAL_SLIDES - 1) {
                     btnNext.setText("Get started");
                     tvSkip.setVisibility(View.INVISIBLE);
