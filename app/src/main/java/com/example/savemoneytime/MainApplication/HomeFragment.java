@@ -147,6 +147,8 @@ public class HomeFragment extends Fragment {
             pill.setText(MonthChange.label(nets[0], nets[1]));
             boolean down = nets[1] != 0 && nets[0] < nets[1];
             pill.setTextColor(ContextCompat.getColor(requireContext(), down ? R.color.bm_expense : R.color.bm_income));
+            // Background follows the text, otherwise a drop shows red text on a green pill.
+            pill.setBackgroundResource(down ? R.drawable.bg_expense_change_pill : R.drawable.bg_income_change_pill);
         });
 
         viewModel.getSaveStatus().observe(getViewLifecycleOwner(), status -> {
