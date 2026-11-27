@@ -103,7 +103,7 @@ public class IntroViewPager extends AppCompatActivity {
                 R.drawable.ic_onboard_chart,
                 "3 of 4",
                 "See where it goes",
-                "Weekly, monthly and yearly charts\nshow your month at a glance.",
+                "Monthly and annual charts show\nwhere the money went.",
                 0xFF0C1220,
                 NAVY_SLIDE
         ));

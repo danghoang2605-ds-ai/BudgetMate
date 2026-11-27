@@ -1,0 +1,10 @@
+version: 2
+updates:
+  # One grouped PR a month for the remaining action versions (setup-java, setup-gradle, ...).
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]

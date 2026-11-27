@@ -13,42 +13,37 @@
 <sub>Screenshots are captured by CI on an Android 14 emulator with generated demo data (`scripts/capture-screenshots.sh`).</sub>
 
 
-BudgetMate is a native Android financial tracking application engineered with a high-end, dark-themed user interface (Deep Midnight Blue and Specular Metallic Gold). It blends double-entry ledger controls with real-time AI automation, camera OCR scanning, and live market telemetry.
+BudgetMate is an Android expense tracker written in Java. You log spending on a keypad, by typing a sentence to the AI assistant, or by photographing a receipt; everything is stored on the phone in a Room database.
 
----
+## What it does
 
-## Core Features
+- **Keypad logging (Home).** Amount, category, optional note and date, then Save. The month's balance, income and spending sit above the keypad.
+- **AI assistant (AI Chat).** "Boba tea 6$" or "Salary 200$" becomes a categorised entry. Replies go through `AiReplyParser`, which copes with fenced JSON and amounts such as `"$6.50"`; questions get a short text answer instead.
+- **Receipt scanner.** CameraX plus ML Kit read the receipt on the device, then the model picks out the total. You confirm, edit it on the keypad, or cancel.
+- **Insights.** Monthly and annual views: income against spending per period, a running total, spending and income by category, and a radar of the six main spending categories.
+- **Export.** CSV and a one-page PDF summary of the selected period, written to the app's Downloads folder.
+- **Markets.** Index summary and six Vietnamese large caps (VIC, VCB, FPT, HPG, MWG, TCB) shown with sample prices; tapping one loads daily candles from Alpha Vantage. A News tab lists finance headlines from GNews.
+- **Offline by default.** Without API keys the app still works: AI features say they are not configured, and Markets shows its sample data.
 
-* **Smart AI Chatbot & Logger**: Driven by the Google Gemini API. Parses natural language inputs (e.g., "Boba tea $5" or "Salary $2000") to automatically extract the amount, notes, and map the correct categories without manual form filling.
-* **AI Receipt Scanner**: Built-in Optical Character Recognition (OCR) infrastructure deployed via the camera module to intercept, analyze, and pre-populate transaction data from physical bills.
-* **Advanced Twin-Chart Analytics**:
-    * *Grouped Bar Charts*: Custom layout configuration optimized to display 24 separate columns cleanly without viewport distortion.
-    * *Cubic Bezier Line Charts*: Renders fluid cashflow velocity trendlines with real-time scalar node point values.
-    * *Dual High-Contrast Pie Charts*: Discrete, mutually exclusive color palettes separating asset inflows and outflows for immediate readability.
-    * *Behavioral Radar Charts*: Maps multivariate focus areas across core lifecycle categories (Food, Transport, Housing, Health, Entertainment, Shopping).
-* **Live Market Telemetry**: Background workers polling live REST nodes to track top tech equities (FPT, VIC, VCB) and global indexes (S&P 500, NASDAQ, DOW JONES) using compact vector sparklines.
-* **Local-First Security Layout**: Powered by a secure local SQLite sandboxed architecture via Room Persistence Library, ensuring all personal transactional records remain isolated on the device.
-* **Document Export Engine**: Multi-threaded binary compilation of active time-series datasets into structured CSV and PDF documents saved directly to the system Downloads path.
-
----
-
-## Project Directory Structure
+## Project structure
 
 ```text
 app/src/main/java/com/example/savemoneytime/
-├── Intro/                           # Bootstrapping, Splash Screen & Onboarding
-├── MainApplication/                 # Primary Core App Context
-│   ├── Adapters/                    # Multi-view RecyclerView Binders (Chat, News, Transaction)
-│   ├── FragmentInFragment/          # Sub-view tab structures (Expenses & Revenue Fragments)
-│   ├── ViewModels/                  # LiveData state preservation layer
-│   ├── HomeFragment.java            # US Format currency keypad logger
-│   ├── ManageFragment.java          # Grouped historical data ledger with filtering pills
-│   ├── StatsFragment.java           # Quad-Chart manager layout
-│   └── MainActivity.java            # Root ViewPager2 Controller
-├── database/                        # Room Persistence Tier (AppDatabase, ExpenseDao, RevenueDao)
-├── model/                           # Primitive Schemas (TransactionItem, ExpenseEntity, RevenueEntity)
-└── network/                         # Remote API REST Integration (Gemini, NewsApi, StockApi Nodes)
+├── Intro/                 # Splash screen and four-step onboarding
+├── MainApplication/       # MainActivity (bottom nav, keeps each tab alive) and the tab fragments
+│   ├── Adapters/          # RecyclerView adapters: chat, news, transactions, categories
+│   ├── Repository/        # AppRepository: one entry point over both DAOs
+│   ├── ViewModels/        # BudgetViewModel (LiveData for every tab)
+│   ├── HomeFragment.java     # Keypad logger
+│   ├── ManageFragment.java   # Transactions grouped by day, with filters
+│   ├── StatsFragment.java    # Charts and CSV/PDF export
+│   └── ScannerFragment.java  # Receipt camera + OCR
+├── database/              # Room: AppDatabase, ExpenseDao, RevenueDao, Migrations
+├── model/                 # Entities and view models for rows
+├── network/               # AI (OpenRouter or the proxy), GNews, Alpha Vantage
+└── util/                  # AiReplyParser, CSV writer, icons, small helpers (unit-tested)
 ```
+
 ## Tech stack
 
 | Area | Choice |
