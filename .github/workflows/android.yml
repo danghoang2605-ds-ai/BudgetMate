@@ -12,11 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: "17"
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       # API keys are optional for CI: the app falls back to sample data without them.
       - name: Unit tests (JVM + Robolectric Room tests)
         run: ./gradlew --no-daemon testDebugUnitTest
@@ -31,7 +31,7 @@ jobs:
             echo "::error::Room schema changed: commit the exported file in app/schemas and add a Migration"
             exit 1
           fi
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: budgetmate-debug-apk
           path: app/build/outputs/apk/debug/*.apk
@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
       - run: npm test
