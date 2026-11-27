@@ -1,5 +1,6 @@
 package com.example.savemoneytime.MainApplication;
 
+import com.example.savemoneytime.util.AiReplyParser;
 import com.example.savemoneytime.util.UiThread;
 import android.Manifest;
 import android.animation.ObjectAnimator;
@@ -123,10 +124,10 @@ public class ScannerFragment extends Fragment {
     private void setupButtons() {
         btnCapture.setOnClickListener(v -> captureAndScan());
 
-        // 🔥 ĐÃ CẬP NHẬT: Nhấn Hủy quét sẽ trả sếp về đúng màn hình Chatbot thông qua MainActivity
+        // Cancel returns to whichever tab opened the scanner (Home or AI Chat).
         btnCancelScan.setOnClickListener(v -> {
             if (getActivity() instanceof MainActivity) {
-                ((MainActivity) getActivity()).returnToChatFromScanner();
+                ((MainActivity) getActivity()).closeScanner();
             }
         });
 
@@ -197,9 +198,9 @@ public class ScannerFragment extends Fragment {
         final String rawText = ocrText.length() > MAX_OCR_CHARS
                 ? ocrText.substring(ocrText.length() - MAX_OCR_CHARS) : ocrText;
         String prompt = "Receipt scan text: \"" + rawText.replace("\"", "'") + "\"\n\n"
-                + "Extract the TOTAL amount from this receipt text.\n"
+                + "Extract the TOTAL amount from this receipt text, in US dollars rounded to a whole number.\n"
                 + "Return ONLY this JSON: "
-                + "{\"amount\": TOTAL_IN_VND, \"category\": \"BEST_CATEGORY\", "
+                + "{\"amount\": TOTAL_IN_DOLLARS, \"category\": \"BEST_CATEGORY\", "
                 + "\"note\": \"SHORT_DESCRIPTION\", \"type\": \"EXPENSE\"}\n"
                 + "If you cannot find a total amount, return: "
                 + "{\"intent\": \"error\", \"message\": \"Could not read receipt total\"}";
@@ -226,47 +227,34 @@ public class ScannerFragment extends Fragment {
     }
 
     private void handleScanResult(String jsonResponse, String rawText) {
-        try {
-            String cleaned = jsonResponse.replace("```json", "").replace("```", "").trim();
-            com.google.gson.JsonObject json = com.google.gson.JsonParser.parseString(cleaned).getAsJsonObject();
-
-            if (json.has("intent")) {
-                Toast.makeText(requireContext(), "Could not read total. Please enter manually.", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            long   amount   = json.get("amount").getAsLong();
-            String category = json.get("category").getAsString();
-            String note     = json.has("note") ? json.get("note").getAsString() : "Receipt";
-
-            showConfirmDialog(amount, category, note);
-
-        } catch (Exception e) {
-            Toast.makeText(requireContext(), "Parse error. Amount: try manual entry.", Toast.LENGTH_LONG).show();
+        // Same parser as the chat, so fenced JSON and amounts like "$23.40" are handled alike.
+        AiReplyParser.Result result = AiReplyParser.parse(jsonResponse);
+        if (result.kind != AiReplyParser.Kind.EXPENSE || result.amount <= 0) {
+            Toast.makeText(requireContext(), "Couldn't read the total. Enter it on the keypad instead.", Toast.LENGTH_LONG).show();
+            return;
         }
+        String note = result.note == null || result.note.isEmpty() || "AI Log".equals(result.note)
+                ? "Receipt" : result.note;
+        showConfirmDialog(result.amount, result.category, note);
     }
 
     private void showConfirmDialog(long amount, String category, String note) {
         new android.app.AlertDialog.Builder(requireContext())
-                .setTitle("📄 Receipt Scanned!")
-                .setMessage("Amount: " + String.format("%,d", amount) + " VND"
-                        + "\nCategory: " + category
-                        + "\nNote: " + note
-                        + "\n\nSave this expense?")
-                .setPositiveButton("✅ Save", (dialog, which) -> {
+                .setTitle("Save this receipt?")
+                .setMessage("$" + String.format(java.util.Locale.US, "%,d", amount) + " \u00b7 " + category
+                        + "\n" + note)
+                .setPositiveButton("Save", (dialog, which) -> {
                     ExpenseEntity expense = new ExpenseEntity(note, amount, category, Calendar.getInstance().getTimeInMillis(), "Scanned receipt");
                     viewModel.saveExpense(expense);
-                    Toast.makeText(requireContext(), "✅ Expense saved from receipt!", Toast.LENGTH_SHORT).show();
-
-                    // 🔥 ĐÃ CẬP NHẬT: Lưu xong sẽ nhảy hẳn về màn hình Home cập nhật dòng tiền tức thì
+                    Toast.makeText(requireContext(), "Expense saved", Toast.LENGTH_SHORT).show();
                     if (getActivity() instanceof MainActivity) {
                         ((MainActivity) getActivity()).returnToHomeFromScanner();
                     }
                 })
-                .setNeutralButton("✏️ Edit", (dialog, which) -> {
-                    // 🔥 ĐÃ CẬP NHẬT: Nhấn Sửa sẽ đưa sếp về lại màn hình AI Chatbot để bổ sung thông tin
+                .setNeutralButton("Edit", (dialog, which) -> {
+                    // Opens the amount on Home's keypad, where it can be corrected before saving.
                     if (getActivity() instanceof MainActivity) {
-                        ((MainActivity) getActivity()).returnToChatFromScanner();
+                        ((MainActivity) getActivity()).editScannedExpenseOnHome(amount, note);
                     }
                 })
                 .setNegativeButton("Cancel", null)

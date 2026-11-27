@@ -7,7 +7,9 @@ PKG=com.example.savemoneytime
 OUT=${1:-docs/screenshots}
 mkdir -p "$OUT"
 # Start clean so a failed capture can never leave a stale screenshot behind.
-rm -f "$OUT"/*.png
+# qa/ holds review-only shots (first run, scanner); the website only uses the top level.
+mkdir -p "$OUT/qa"
+rm -f "$OUT"/*.png "$OUT"/qa/*.png
 
 adb wait-for-device
 adb shell 'while [ "$(getprop sys.boot_completed)" != "1" ]; do sleep 1; done'
@@ -28,8 +30,6 @@ adb shell am broadcast -a com.android.systemui.demo -e command battery -e level 
 adb shell am broadcast -a com.android.systemui.demo -e command notifications -e visible false >/dev/null
 adb shell am broadcast -a com.android.systemui.demo -e command network -e wifi show -e level 4 >/dev/null
 
-adb shell am start -W -n "$PKG/.debug.DemoSeedActivity" >/dev/null
-sleep 6
 
 shot() {
   sleep 3
@@ -58,6 +58,19 @@ tap_id() {
   adb shell input tap $(((x1 + x2) / 2)) $(((y1 + y2) / 2))
 }
 
+# First run, as a new user sees it: splash, then onboarding (nothing seeded yet).
+adb shell am start -W -n "$PKG/.Intro.SplashScreen" >/dev/null
+adb exec-out screencap -p > "$OUT/qa/splash.png"
+echo "captured qa/splash"
+sleep 3
+shot qa/onboarding-1
+for _ in 1 2 3; do tap_id btn_next; sleep 1; done
+shot qa/onboarding-4
+adb shell am force-stop "$PKG"
+
+adb shell am start -W -n "$PKG/.debug.DemoSeedActivity" >/dev/null
+sleep 6
+
 shot home
 for tab in manage stats chat news; do
   tap_id "nav_$tab"
@@ -70,3 +83,28 @@ sleep 3
 tap_id nav_home
 shot home-font130
 adb shell settings put system font_scale 1.0
+
+# Receipt scanner: Back and Cancel must return to the tab that opened it, not close the app.
+expect_view() {
+  adb shell uiautomator dump /sdcard/ui.xml >/dev/null
+  if ! adb shell cat /sdcard/ui.xml | grep -q "resource-id=\"$PKG:id/$1\""; then
+    echo "::error::expected $1 on screen after $2"; exit 1
+  fi
+  echo "ok: $2"
+}
+tap_id nav_home
+tap_id btn_scan_receipt
+shot qa/scanner
+adb shell input keyevent KEYCODE_BACK
+sleep 2
+expect_view btn_scan_receipt "Back from scanner opened on Home"
+tap_id nav_chat
+tap_id btn_chat_camera_scan
+sleep 2
+tap_id btn_cancel_scan
+sleep 2
+expect_view btn_chat_camera_scan "Cancel from scanner opened in AI Chat"
+# Back from a tab goes to Home before it leaves the app.
+adb shell input keyevent KEYCODE_BACK
+sleep 2
+expect_view btn_scan_receipt "Back from AI Chat"

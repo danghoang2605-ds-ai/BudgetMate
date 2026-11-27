@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import com.example.savemoneytime.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.activity.OnBackPressedCallback;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private Fragment homeFragment, manageFragment, chatFragment, statsFragment, newsFragment, scanFragment;
 
     private Fragment activeFragment;
+    private Fragment tabBeforeScanner;
     private FragmentManager fm;
     private BottomNavigationView bottomNav;
 
@@ -60,6 +61,23 @@ public class MainActivity extends AppCompatActivity {
             activeFragment = homeFragment;
             addAllFragments();
         }
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (fm.getBackStackEntryCount() > 0) {
+                    fm.popBackStack();
+                } else if (activeFragment == scanFragment) {
+                    // Back from the receipt scanner used to close the whole app.
+                    closeScanner();
+                } else if (activeFragment != homeFragment) {
+                    bottomNav.setSelectedItemId(R.id.nav_home);
+                } else {
+                    setEnabled(false);
+                    getOnBackPressedDispatcher().onBackPressed();
+                }
+            }
+        });
 
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -118,26 +136,34 @@ public class MainActivity extends AppCompatActivity {
         activeFragment = target;
     }
 
-    /**
-     * Hàm điều hướng mở màn hình Camera Quét hóa đơn được kích hoạt từ icon trong đoạn chat
-     */
+    /** Opens the receipt scanner over the current tab (Home or AI Chat). */
     public void openScannerFromChat() {
+        if (activeFragment != scanFragment) tabBeforeScanner = activeFragment;
         switchFragment(scanFragment);
     }
 
     /**
-     * Hàm quay trở lại màn hình Chatbot sau khi người dùng nhấn Hủy/Cancel quét hóa đơn
+     * Leaves the scanner for the tab that opened it. The bottom bar never changed while the
+     * scanner was up, so it still highlights that tab. Used by Cancel and the Back gesture.
      */
-    public void returnToChatFromScanner() {
-        bottomNav.setSelectedItemId(R.id.nav_chat);
-        switchFragment(chatFragment);
+    public void closeScanner() {
+        Fragment back = tabBeforeScanner != null ? tabBeforeScanner : homeFragment;
+        if (activeFragment != back) switchFragment(back);
     }
 
-    /**
-     * Hàm điều hướng nhảy hẳn về màn hình Home sau khi lưu thành công hóa đơn đã quét
-     */
+    /** After a scan is saved, show Home so the new balance is visible. */
     public void returnToHomeFromScanner() {
-        bottomNav.setSelectedItemId(R.id.nav_home);
-        switchFragment(homeFragment);
+        // Selecting the item runs the nav listener, which performs the switch.
+        if (bottomNav.getSelectedItemId() == R.id.nav_home) {
+            if (activeFragment != homeFragment) switchFragment(homeFragment);
+        } else {
+            bottomNav.setSelectedItemId(R.id.nav_home);
+        }
+    }
+
+    /** "Edit" on a scanned receipt: open Home with the amount and note on the keypad. */
+    public void editScannedExpenseOnHome(long amount, String note) {
+        returnToHomeFromScanner();
+        if (homeFragment instanceof HomeFragment) ((HomeFragment) homeFragment).prefillExpense(amount, note);
     }
 }

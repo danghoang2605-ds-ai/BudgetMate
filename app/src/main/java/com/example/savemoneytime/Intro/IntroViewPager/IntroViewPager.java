@@ -57,7 +57,7 @@ public class IntroViewPager extends AppCompatActivity {
             public void onPageSelected(int position) {
                 setupDots(position);
                 if (position == TOTAL_SLIDES - 1) {
-                    btnNext.setText("Get Started");
+                    btnNext.setText("Get started");
                     tvSkip.setVisibility(View.INVISIBLE);
                 } else {
                     btnNext.setText("Next");
@@ -83,36 +83,36 @@ public class IntroViewPager extends AppCompatActivity {
 
         items.add(new OnBoardingItem(
                 R.drawable.ic_onboard_track,
-                "EXPENSES",
-                "Track Spending",
-                "Log every purchase in seconds.\nSee exactly where your money goes.",
+                "1 of 4",
+                "Log in three taps",
+                "Amount, category, save.\nEvery entry stays on your phone.",
                 NAVY_DEEP,
                 NAVY_MID
         ));
 
         items.add(new OnBoardingItem(
                 R.drawable.ic_onboard_budget,
-                "BUDGETING",
-                "Save More",
-                "Set monthly budgets per category.\nGet alerts before you overspend.",
+                "2 of 4",
+                "Or just say it",
+                "Type \u201cBoba tea 6$\u201d or snap a receipt\nand the assistant fills it in.",
                 0xFF0B1829,
                 0xFF152238
         ));
 
         items.add(new OnBoardingItem(
                 R.drawable.ic_onboard_chart,
-                "ANALYTICS",
-                "See Insights",
-                "Visual charts reveal your financial\nhealth at a glance, every month.",
+                "3 of 4",
+                "See where it goes",
+                "Weekly, monthly and yearly charts\nshow your month at a glance.",
                 0xFF0C1220,
                 NAVY_SLIDE
         ));
 
         items.add(new OnBoardingItem(
                 R.drawable.ic_onboard_news,
-                "MARKET NEWS",
-                "Stay Informed",
-                "Live stock prices and curated\nfinancial news, all in one place.",
+                "4 of 4",
+                "Markets and news",
+                "Indexes, stocks and finance headlines\nnext to your budget.",
                 0xFF080E1A,
                 0xFF101C30
         ));

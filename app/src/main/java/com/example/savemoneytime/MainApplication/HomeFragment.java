@@ -109,6 +109,15 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    /** Puts a scanned receipt on the keypad as an expense so it can be checked before saving. */
+    public void prefillExpense(long amount, String note) {
+        if (getView() == null || amount <= 0) return;
+        if (!isExpenseTab) tabExpenses.performClick();
+        currentAmountInput = String.valueOf(amount);
+        updateAmountDisplay();
+        if (note != null) etDescription.setText(note);
+    }
+
     private void updateCurrentDateQueryStrings() {
         int monthNumerical = selectedCalendar.get(Calendar.MONTH) + 1;
         currentMonth = String.format(Locale.US, "%02d", monthNumerical);

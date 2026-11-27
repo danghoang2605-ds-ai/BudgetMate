@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.savemoneytime.Intro.IntroViewPager.IntroViewPager;
@@ -24,8 +25,8 @@ public class SplashScreen extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash_screen);
 
-        // Chờ 2.5 giây điều hướng thông minh sang Intro hoặc Trang chủ
-        new Handler().postDelayed(() -> {
+        // A short brand moment, then onboarding (first run) or the app. Was a fixed 2.5 s wait.
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
             SharedPreferences prefs = getSharedPreferences("BudgetMatePrefs", MODE_PRIVATE);
             boolean introSeen = prefs.getBoolean("introSeen", false);
 
@@ -38,6 +39,6 @@ public class SplashScreen extends AppCompatActivity {
             startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             finish();
-        }, 2500);
+        }, 900);
     }
 }

@@ -1,42 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Brief brand moment: the app icon, the wordmark and one honest line. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0A1128"
-    android:gravity="center">
+    android:background="@color/bm_bg"
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/iv_splash_icon"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@mipmap/ic_launcher"
+        android:importantForAccessibility="no" />
+
+    <TextView
+        android:id="@+id/tv_splash_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_marginTop="20dp"
+        android:text="BudgetMate"
+        android:textColor="@color/bm_text"
+        android:textSize="34sp"
+        android:fontFamily="@font/manrope_extrabold"
+        android:letterSpacing="-0.02" />
 
-        <TextView
-            android:id="@+id/tv_splash_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BudgetMate"
-            android:textColor="#D4AF37"
-            android:textSize="42sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.05" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Your money, logged in seconds"
+        android:textColor="@color/bm_muted"
+        android:textSize="15sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Your Premium Finance Assistant"
-            android:textColor="#3D4F6B"
-            android:textSize="14sp"
-            android:layout_marginTop="8dp" />
-
-        <ProgressBar
-            android:id="@+id/splash_progress"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="160dp"
-            android:layout_height="4dp"
-            android:layout_marginTop="48dp"
-            android:indeterminate="true"
-            android:indeterminateTint="#D4AF37" />
-
-    </LinearLayout>
-</RelativeLayout>
+</LinearLayout>
