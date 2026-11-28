@@ -523,8 +523,8 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
   <div class="wrap">
     <h2 id="month-title">See the whole month at a glance</h2>
     <div class="month">
-      <figure><img src="screens/stats-chart-720.webp" width="720" height="560" loading="lazy" alt="Detail of the Insights tab: weekly bars comparing income with expenses, with the totals on top of each bar."><figcaption>Insights: each week's income beside its spending, with the figure on every bar, so a payday week or a heavy one stands out.</figcaption></figure>
-      <figure><img src="screens/manage-days-720.webp" width="720" height="933" loading="lazy" alt="Detail of the Manage tab: the month's net flow with all-time income, expenses and net, then entries grouped by day with daily totals."><figcaption>Manage: the month's net and the all-time row, then each day closing on its own total, so a rent day reads differently from a lunch day.</figcaption></figure>
+      <figure><img src="screens/stats-chart-720.webp" srcset="screens/stats-chart-720.webp 720w, screens/stats-chart-1080.webp 1080w" sizes="(max-width: 760px) calc(100vw - 32px), (max-width: 1180px) calc(50vw - 48px), 584px" width="720" height="560" loading="lazy" alt="Detail of the Insights tab: weekly bars comparing income with expenses, with the totals on top of each bar."><figcaption>Insights: each week's income beside its spending, with the figure on every bar, so a payday week or a heavy one stands out.</figcaption></figure>
+      <figure><img src="screens/manage-days-720.webp" srcset="screens/manage-days-720.webp 720w, screens/manage-days-1080.webp 1080w" sizes="(max-width: 760px) calc(100vw - 32px), (max-width: 1180px) calc(50vw - 48px), 584px" width="720" height="653" loading="lazy" alt="Detail of the Manage tab: two days of entries, each day headed by its date and its own total."><figcaption>Manage: every day carries its own total, so a rent day reads differently from a lunch day.</figcaption></figure>
     </div>
   </div>
 </section>
@@ -768,10 +768,17 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
   }
   function parseAmount(v) {
     if (v === undefined || v === null || typeof v === 'object') return 0;
-    const str = String(v).replace(/[^0-9.\-]/g, '');
-    if (str === '') return 0;
-    const n = Number(str);
-    return Number.isFinite(n) ? Math.max(0, Math.round(n)) : 0;
+    let n;
+    if (typeof v === 'number') {
+      n = v; // a JSON number keeps its value; only text gets cleaned
+    } else {
+      const str = String(v).replace(/[^0-9.\-]/g, '');
+      if (str === '') return 0;
+      n = Number(str);
+    }
+    // Same cap as the app: not finite, or past 2^53, is unreadable.
+    if (!Number.isFinite(n) || n > Number.MAX_SAFE_INTEGER) return 0;
+    return Math.max(0, Math.round(n));
   }
   function parseReply(raw) {
     const checks = [];

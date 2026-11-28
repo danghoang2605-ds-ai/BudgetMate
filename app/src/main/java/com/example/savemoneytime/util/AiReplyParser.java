@@ -39,6 +39,9 @@ public final class AiReplyParser {
     /** Chat reply when the model tried to log something but gave no usable amount. */
     public static final String NO_AMOUNT = "I couldn't find an amount in that. Try something like \"Coffee 4$\".";
 
+    /** Largest amount read from a reply: 2^53 - 1, the last whole number a double holds exactly. */
+    static final double MAX_AMOUNT = 9_007_199_254_740_991d;
+
     private AiReplyParser() {}
 
     public static Result parse(String raw) {
@@ -67,11 +70,18 @@ public final class AiReplyParser {
     static long parseAmount(JsonElement el) {
         if (el == null || el.isJsonNull() || !el.isJsonPrimitive()) return 0;
         try {
-            // A JSON number keeps its value ("1e6" is a million, not 16); only text gets cleaned.
-            if (el.getAsJsonPrimitive().isNumber()) return Math.max(0, Math.round(el.getAsDouble()));
-            String s = el.getAsString().replaceAll("[^0-9.\\-]", "");
-            if (s.isEmpty()) return 0;
-            return Math.max(0, Math.round(Double.parseDouble(s)));
+            double value;
+            if (el.getAsJsonPrimitive().isNumber()) {
+                // A JSON number keeps its value ("1e6" is a million, not 16); only text gets cleaned.
+                value = el.getAsDouble();
+            } else {
+                String s = el.getAsString().replaceAll("[^0-9.\\-]", "");
+                if (s.isEmpty()) return 0;
+                value = Double.parseDouble(s);
+            }
+            // "1e400" is Infinity and Math.round would clamp it to Long.MAX_VALUE; treat it as unreadable.
+            if (!Double.isFinite(value) || value > MAX_AMOUNT) return 0;
+            return Math.max(0, Math.round(value));
         } catch (NumberFormatException e) {
             return 0;
         }

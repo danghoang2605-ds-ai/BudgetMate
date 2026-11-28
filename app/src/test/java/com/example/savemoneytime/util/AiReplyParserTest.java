@@ -74,4 +74,12 @@ public class AiReplyParserTest {
         assertEquals(1_000_000, r.amount);
         assertEquals(13, AiReplyParser.parse("{\"amount\": 12.5, \"type\": \"EXPENSE\"}").amount);
     }
+
+    @Test
+    public void absurdAmountsAreNotSaved() {
+        // Infinity would round to Long.MAX_VALUE and overflow every total.
+        assertFalse(AiReplyParser.parse("{\"amount\": 1e400, \"type\": \"EXPENSE\"}").isTransaction());
+        assertFalse(AiReplyParser.parse("{\"amount\": 1e21, \"type\": \"EXPENSE\"}").isTransaction());
+        assertFalse(AiReplyParser.parse("{\"amount\": \"99999999999999999999\", \"type\": \"EXPENSE\"}").isTransaction());
+    }
 }

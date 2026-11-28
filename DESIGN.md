@@ -292,9 +292,9 @@ A single 1280px column with 32px side gutters (16px under 760px), under a 64px s
 
 - **Hero:** a headline row across the full width (headline left at 1.15fr, lede and buttons right at 1fr, bottom-aligned), then the keypad card at a fixed 460px beside the ledger card, tops aligned, 28px row gap and 32px column gap. Under 1180px the two cards share equal columns and the copy stacks; under 760px everything is one column with 20px gaps.
 - **Sections:** 88px top and bottom (64px under 760px), each opened by a 1px Ledger Rule top border. A headline, an optional Fog Grey intro at 62ch, then content 40px below. The closing band is 96px and sits on Night Well with the footer.
-- **Grids:** asymmetric two-column splits at 5:7 (ways to log, privacy), a 1 : 1 : 0.9 three-column month view, 32px gaps, widening to 48px in the privacy split and the two-column build list. Under 1180px they fall to one column, or two with facts spanning.
+- **Grids:** asymmetric two-column splits at 5:7 (ways to log, privacy), an equal two-column month view, 32px gaps, widening to 48px in the privacy split, the month view and the two-column build list. Under 1180px the splits fall to one column; the month view keeps two columns until 760px.
 - **App tour:** a 260px tab column beside a 330px screenshot and its notes; 220px and 280px under 1180px; under 760px a five-up tab bar above a centred screenshot of up to 320px.
-- **Month view:** the two crops side by side with a caption each saying what to read; one column on mobile.
+- **Month view:** the two crops side by side at equal width with a caption each saying what to read, served at 720 and 1080px so they stay sharp on 2x screens; one column on mobile.
 - **Rhythm:** 8, 10, 12 and 14px inside objects; 20px card padding (28px for wide cards, 22px on mobile); 16 to 22px row padding; 32 and 48px grid gaps; 40px from heading to content; 88 to 96px between sections.
 
 ### Named Rules
@@ -356,7 +356,7 @@ The app's Home keypad, usable on the page.
 - **Amount display:** the amount at hero figure size in the color of the entry type, signed, over a Fog Grey 13px date line and a 1px Ledger Rule.
 - **Keys:** a 3 by 4 grid of digits (with 00 and delete) plus a fourth column at 1.1fr where SAVE spans all four rows; 10px gaps. Keys are Key Navy, 1px Ledger Rule, 14px radius, the key shadow, Headline White digits at 22px. 58px tall (50px on mobile). Hover goes to Pressed Slate; press scales to 0.96 over 100ms.
 - **SAVE:** the gold gradient, a check icon above SAVE in Manrope 800 15px at 0.12em, Gold Ink.
-- **Behavior:** saving an empty amount shakes the display (6px, 350ms) and says why in the hint line below. Digits, Backspace and Enter work from the keyboard.
+- **Behavior:** saving an empty amount shakes the display (6px, 350ms) and says why in the hint line below. Digits, Backspace and Enter work from the keyboard when the page itself or the keypad has focus, never from a focused tab, chip or button elsewhere.
 
 ### Ledger (signature)
 The app's month view in miniature.
@@ -374,7 +374,7 @@ The app's five tabs as a tab list, one real screenshot at a time.
 - **Tabs:** a vertical list (260px; 220px under 1180px) in the app's bottom-nav order, each a 24px icon traced from the app's own nav vectors beside the tab name (700 16px Headline White) and a one-line Fog Grey 14px caption. Rows are 14px radius with 14px by 16px padding. Hover fills Raised Navy; the selected tab fills Key Navy with a 1px Strong Rule border, its icon in Metallic Gold and its name in Gold Highlight, the way the app marks its active tab.
 - **Panel:** the screenshot at 330px (280px under 1180px), 9:20, 22px radius, 1px Strong Rule border, Raised Navy behind while loading, beside three notes set as hairline-divided rows (800 18px Headline White over Fog Grey). Switching swaps the image from 35% opacity and a 6px blur over 450ms.
 - **Mobile:** the list becomes a five-up bar on Night Well (18px radius, 4px inset) with icons over 12px names, like the app's own bottom bar; the screenshot centres at up to 320px with the notes below.
-- **Behavior:** WAI-ARIA tabs: arrow keys move and wrap, Home and End jump, one tab in the tab order. A tab's screenshot starts loading on hover or focus. A provenance note closes the section.
+- **Behavior:** WAI-ARIA tabs: arrow keys move and wrap, Home and End jump, one tab in the tab order. All five screenshots start loading once the section is within 800px of the viewport, so no tab opens on an empty box. A provenance note closes the section.
 
 ### Sentence Pipeline
 The AI chat's logging path, step by step, inside a wide card.
