@@ -262,7 +262,7 @@ A night-blue tonal stack, one metal, and two money colors.
 
 **Display Font:** Manrope (with ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto)
 **Body Font:** Manrope (same stack)
-**Figure Font:** Manrope with tabular figures (`tnum`), in the app and on the website. A system monospace stack appears only in the website's sentence-demo JSON readout.
+**Figure Font:** Manrope with tabular figures (`tnum`), in the app and on the website. A system monospace stack appears only in the website's sentence pipeline: the model reply box and the field names in its checks.
 
 **Character:** One family carries the product, the same face in the app (res/font/manrope*.ttf, weights 400 to 800) and on the website. Words are heavy and tightly tracked in headings, plain at 400 in body; figures are the second voice, set tabular so a column of amounts reads like a ledger.
 
@@ -293,7 +293,8 @@ A single 1280px column with 32px side gutters (16px under 760px), under a 64px s
 - **Hero:** a headline row across the full width (headline left at 1.15fr, lede and buttons right at 1fr, bottom-aligned), then the keypad card at a fixed 460px beside the ledger card, tops aligned, 28px row gap and 32px column gap. Under 1180px the two cards share equal columns and the copy stacks; under 760px everything is one column with 20px gaps.
 - **Sections:** 88px top and bottom (64px under 760px), each opened by a 1px Ledger Rule top border. A headline, an optional Fog Grey intro at 62ch, then content 40px below. The closing band is 96px and sits on Night Well with the footer.
 - **Grids:** asymmetric two-column splits at 5:7 (ways to log, privacy), a 1 : 1 : 0.9 three-column month view, 32px gaps, widening to 48px in the privacy split and the two-column build list. Under 1180px they fall to one column, or two with facts spanning.
-- **Gallery:** five equal columns at desktop; under 1180px a horizontal scroll-snap strip of 240px screenshots, 72vw on mobile.
+- **App tour:** a 260px tab column beside a 330px screenshot and its notes; 220px and 280px under 1180px; under 760px a five-up tab bar above a centred screenshot of up to 320px.
+- **Month view:** the two crops side by side with a caption each saying what to read; one column on mobile.
 - **Rhythm:** 8, 10, 12 and 14px inside objects; 20px card padding (28px for wide cards, 22px on mobile); 16 to 22px row padding; 32 and 48px grid gaps; 40px from heading to content; 88 to 96px between sections.
 
 ### Named Rules
@@ -315,7 +316,7 @@ A hybrid that leans on tone. The stack runs Night Well, Midnight Ground, Raised 
 
 ## Shapes
 
-Soft, consistent corners scaled to the object: 6px tags, 12px fields and readouts, 14px buttons and keys (the app keys run 12dp), 18px cards and month-view images, 22px screenshots, full pills for chips and the segmented control. Every raised or pressable shape carries a 1px border. Screenshots are shown frameless: the image itself, rounded and bordered, with no drawn device. Icons are inline SVG strokes in currentColor, 18 to 24px, stroke 2 to 2.6 with round caps and joins.
+Soft, consistent corners scaled to the object: 6px tags, 12px fields and readouts, 14px buttons and keys (the app keys run 12dp), 18px cards and month-view images, 22px screenshots, full pills for chips and the segmented control. Every raised or pressable shape carries a 1px border. Screenshots are shown frameless: the image itself, rounded and bordered, with no drawn device. Icons are inline SVG strokes in currentColor, 18 to 24px, stroke 2 to 2.6 with round caps and joins. The one exception is the app tour's tab icons, traced from the app's own bottom-nav vectors: filled shapes, with 1.5px strokes where the app draws lines.
 
 ## Components
 

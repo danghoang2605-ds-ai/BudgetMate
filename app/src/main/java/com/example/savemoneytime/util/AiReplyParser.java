@@ -67,6 +67,8 @@ public final class AiReplyParser {
     static long parseAmount(JsonElement el) {
         if (el == null || el.isJsonNull() || !el.isJsonPrimitive()) return 0;
         try {
+            // A JSON number keeps its value ("1e6" is a million, not 16); only text gets cleaned.
+            if (el.getAsJsonPrimitive().isNumber()) return Math.max(0, Math.round(el.getAsDouble()));
             String s = el.getAsString().replaceAll("[^0-9.\\-]", "");
             if (s.isEmpty()) return 0;
             return Math.max(0, Math.round(Double.parseDouble(s)));

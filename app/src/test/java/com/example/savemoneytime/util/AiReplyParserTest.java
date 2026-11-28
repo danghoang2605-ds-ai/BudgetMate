@@ -66,4 +66,12 @@ public class AiReplyParserTest {
         assertEquals(0, AiReplyParser.parseAmount(new JsonPrimitive(-5)));
         assertTrue(AiReplyParser.parseAmount(new JsonPrimitive(1e6)) == 1_000_000);
     }
+
+    @Test
+    public void exponentInReplyTextIsANumber() {
+        // Gson keeps "1e6" as written; stripping letters from that text would save $16.
+        AiReplyParser.Result r = AiReplyParser.parse("{\"amount\": 1e6, \"type\": \"EXPENSE\"}");
+        assertEquals(1_000_000, r.amount);
+        assertEquals(13, AiReplyParser.parse("{\"amount\": 12.5, \"type\": \"EXPENSE\"}").amount);
+    }
 }

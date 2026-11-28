@@ -48,6 +48,7 @@ body {
 }
 ::selection { background: var(--gold); color: var(--gold-ink); }
 html { scrollbar-color: var(--line-2) var(--ink-deep); }
+#pad, #ledger, #try-ai { scroll-margin-top: 80px; }
 a { color: var(--gold-hi); text-underline-offset: 3px; }
 :focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 3px; border-radius: 6px; }
 h1, h2, h3 { color: var(--text); font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
@@ -231,15 +232,10 @@ section.block { padding: 88px 0; border-top: 1px solid var(--line); }
 .ai .note { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 
 /* Month view */
-.month { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr); gap: 32px; align-items: start; margin-top: 40px; }
+.month { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: start; margin-top: 40px; }
 .month figure { margin: 0; }
 .month img { display: block; width: 100%; height: auto; border-radius: 18px; border: 1px solid var(--line-2); }
-.month figcaption { color: var(--muted); font-size: 14px; margin-top: 10px; }
-.facts { display: grid; gap: 0; margin: 0; }
-.facts div { padding: 18px 0; border-bottom: 1px solid var(--line); }
-.facts div:first-child { padding-top: 0; }
-.facts dt { color: var(--text); font-weight: 800; font-size: 18px; }
-.facts dd { margin: 4px 0 0; color: var(--muted); }
+.month figcaption { color: var(--muted); font-size: 15px; margin-top: 12px; max-width: 56ch; }
 
 /* Privacy */
 .privacy { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; align-items: start; }
@@ -269,8 +265,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
   .tour { grid-template-columns: 220px minmax(0, 1fr); gap: 32px; }
   .tour-panel { grid-template-columns: 280px minmax(0, 1fr); gap: 32px; }
   .ways { grid-template-columns: minmax(0, 1fr); }
-  .month { grid-template-columns: 1fr 1fr; }
-  .month .facts { grid-column: 1 / -1; }
+  .month { gap: 32px; }
   .privacy { grid-template-columns: 1fr; gap: 28px; }
 }
 @media (max-width: 760px) {
@@ -314,7 +309,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
     <a class="brand" href="#top"><img src="icon.svg" alt="" width="32" height="32">BudgetMate</a>
     <nav class="nav" aria-label="Sections">
       <a href="#screens">Screens</a>
-      <a href="#ways">Try the AI</a>
+      <a href="#try-ai">Try the AI</a>
       <a href="#privacy">Privacy</a>
       <a href="#build">How it's built</a>
     </nav>
@@ -481,7 +476,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
       </dl>
       <p class="note-ai">The sentence and receipt features need an AI connection. Builds on GitHub Releases include it when the maintainer has configured the proxy; otherwise the app says the AI is off and the keypad works as usual.</p>
       </div>
-      <article class="card way wide ai" aria-labelledby="ai-title">
+      <article class="card way wide ai" id="try-ai" aria-labelledby="ai-title">
         <h3 id="ai-title">From sentence to saved entry</h3>
         <form id="ai" class="ai-form" novalidate>
           <div class="step">
@@ -528,13 +523,8 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
   <div class="wrap">
     <h2 id="month-title">See the whole month at a glance</h2>
     <div class="month">
-      <figure><img src="screens/stats-chart-720.webp" width="720" height="560" loading="lazy" alt="Detail of the Insights tab: weekly bars comparing income with expenses, with the totals on top of each bar."><figcaption>Insights: income against expenses, week by week.</figcaption></figure>
-      <figure><img src="screens/manage-days-720.webp" width="720" height="933" loading="lazy" alt="Detail of the Manage tab: the month's net flow with all-time income, expenses and net, then entries grouped by day with daily totals."><figcaption>Manage: all-time totals, then every entry by day.</figcaption></figure>
-      <dl class="facts">
-        <div><dt>Month or year</dt><dd>Bars for income against expenses week by week, a running total, and pie and radar charts by category.</dd></div>
-        <div><dt>All-time totals</dt><dd>Lifetime income, expenses and net next to the month you are looking at, plus the change from last month.</dd></div>
-        <div><dt>Export</dt><dd>One tap writes a CSV for spreadsheets and a PDF summary to the phone.</dd></div>
-      </dl>
+      <figure><img src="screens/stats-chart-720.webp" width="720" height="560" loading="lazy" alt="Detail of the Insights tab: weekly bars comparing income with expenses, with the totals on top of each bar."><figcaption>Insights: each week's income beside its spending, with the figure on every bar, so a payday week or a heavy one stands out.</figcaption></figure>
+      <figure><img src="screens/manage-days-720.webp" width="720" height="933" loading="lazy" alt="Detail of the Manage tab: the month's net flow with all-time income, expenses and net, then entries grouped by day with daily totals."><figcaption>Manage: the month's net and the all-time row, then each day closing on its own total, so a rent day reads differently from a lunch day.</figcaption></figure>
     </div>
   </div>
 </section>
@@ -689,8 +679,9 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
     renderAmount(); renderChips();
   }));
   document.addEventListener('keydown', (e) => {
-    const tag = (e.target.tagName || '').toLowerCase();
-    if (tag === 'input' || tag === 'textarea' || e.metaKey || e.ctrlKey || e.altKey) return;
+    // Only from the page itself or the keypad: a focused tab, chip or button keeps its own keys.
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (!(e.target === document.body || $('pad').contains(e.target))) return;
     if (/^[0-9]$/.test(e.key)) { press(e.key); e.preventDefault(); }
     else if (e.key === 'Backspace') { press('del'); e.preventDefault(); }
     else if (e.key === 'Enter' && document.activeElement === document.body) { save(); e.preventDefault(); }
@@ -722,6 +713,20 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
     t.addEventListener('pointerenter', warm);
     t.addEventListener('focus', warm);
   });
+  const eagerTour = () => document.querySelectorAll('.tour-panel img').forEach((img) => { img.loading = 'eager'; });
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((seen) => {
+      if (seen.some((x) => x.isIntersecting)) { eagerTour(); io.disconnect(); }
+    }, { rootMargin: '800px 0px' });
+    io.observe($('screens'));
+  } else {
+    eagerTour();
+  }
+  // Fix the announced orientation to the layout: a vertical list, or the five-up bar on phones.
+  const phone = window.matchMedia('(max-width: 760px)');
+  const orient = () => document.querySelector('.tour-tabs').setAttribute('aria-orientation', phone.matches ? 'horizontal' : 'vertical');
+  orient();
+  if (phone.addEventListener) phone.addEventListener('change', orient);
 
   // ---- Sentence demo ----
   // 1) A stand-in for the model: produces the JSON shape the app's system prompt asks for.
