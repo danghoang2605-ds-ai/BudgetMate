@@ -84,7 +84,7 @@ public class ChatbotFragment extends Fragment {
             }
         });
 
-        chipBoba.setOnClickListener(v -> performChatAction("Boba tea 6$"));
+        chipBoba.setOnClickListener(v -> performChatAction("Boba tea 5$")); // matches the "Boba $5" label
         chipLunch.setOnClickListener(v -> performChatAction("Lunch 15$"));
         chipUber.setOnClickListener(v -> performChatAction("Uber 20$"));
         chipSalary.setOnClickListener(v -> performChatAction("Salary 200$"));
@@ -113,17 +113,24 @@ public class ChatbotFragment extends Fragment {
 
         if (r.kind == AiReplyParser.Kind.EXPENSE) {
             viewModel.saveExpense(new ExpenseEntity(r.note, r.amount, r.category, now, "Logged by AI Chat"));
-            reply = "Saved an expense of $" + r.amount + " in " + r.category + (r.note != null && !r.note.isEmpty() ? " (" + r.note + ")" : "") + ".";
+            reply = "Saved an expense of " + savedSummary(r);
         } else if (r.kind == AiReplyParser.Kind.REVENUE) {
             viewModel.saveRevenue(new RevenueEntity(r.note, r.amount, r.category, now, "Logged by AI Chat"));
-            reply = "Saved income of $" + r.amount + " in " + r.category + (r.note != null && !r.note.isEmpty() ? " (" + r.note + ")" : "") + ".";
+            reply = "Saved income of " + savedSummary(r);
         } else {
             reply = r.message;
         }
         addMessage(new ChatMessage(reply, ChatMessage.Sender.AI));
     }
 
-    private void addMessage(ChatMessage message) {
+    /** "$2,000 in Salary (June paycheck)." The default note is left out. */
+    private static String savedSummary(AiReplyParser.Result r) {
+        boolean hasNote = r.note != null && !r.note.isEmpty() && !AiReplyParser.DEFAULT_NOTE.equals(r.note);
+        return "$" + String.format(java.util.Locale.US, "%,d", r.amount) + " in " + r.category
+                + (hasNote ? " (" + r.note + ")" : "") + ".";
+    }
+
+        private void addMessage(ChatMessage message) {
         if (adapter == null || rvChatMessages == null) return;
         messageList.add(message);
         adapter.notifyItemInserted(messageList.size() - 1);

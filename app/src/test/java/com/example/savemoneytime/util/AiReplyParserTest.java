@@ -25,7 +25,7 @@ public class AiReplyParserTest {
                 "```json\n{\"amount\": \"$2,000\", \"category\": \"Salary\", \"type\": \"REVENUE\"}\n```");
         assertEquals(AiReplyParser.Kind.REVENUE, r.kind);
         assertEquals(2000, r.amount);
-        assertEquals("AI Log", r.note);
+        assertEquals(AiReplyParser.DEFAULT_NOTE, r.note);
     }
 
     @Test
@@ -47,6 +47,8 @@ public class AiReplyParserTest {
     public void zeroOrMissingAmountIsNotSaved() {
         assertFalse(AiReplyParser.parse("{\"amount\": 0, \"type\": \"EXPENSE\"}").isTransaction());
         assertFalse(AiReplyParser.parse("{\"type\": \"EXPENSE\"}").isTransaction());
+        // The chat explains the problem instead of showing the raw JSON.
+        assertEquals(AiReplyParser.NO_AMOUNT, AiReplyParser.parse("{\"amount\": 0, \"type\": \"EXPENSE\"}").message);
     }
 
     @Test

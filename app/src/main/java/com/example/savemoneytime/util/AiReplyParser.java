@@ -33,6 +33,12 @@ public final class AiReplyParser {
         public boolean isTransaction() { return kind != Kind.MESSAGE; }
     }
 
+    /** Note stored when the model gives none; the chat reply leaves it out. */
+    public static final String DEFAULT_NOTE = "AI Log";
+
+    /** Chat reply when the model tried to log something but gave no usable amount. */
+    public static final String NO_AMOUNT = "I couldn't find an amount in that. Try something like \"Coffee 4$\".";
+
     private AiReplyParser() {}
 
     public static Result parse(String raw) {
@@ -46,12 +52,14 @@ public final class AiReplyParser {
             long amount = parseAmount(json.get("amount"));
             if (amount > 0 && ("EXPENSE".equals(type) || "REVENUE".equals(type) || "INCOME".equals(type))) {
                 String category = asString(json, "category", "Other");
-                String note = asString(json, "note", "AI Log");
+                String note = asString(json, "note", DEFAULT_NOTE);
                 Kind kind = "EXPENSE".equals(type) ? Kind.EXPENSE : Kind.REVENUE;
                 return new Result(kind, amount, category, note, null);
             }
         }
         if (json.has("message")) return message(asString(json, "message", text));
+        // A transaction-shaped reply without a usable amount: say so instead of echoing raw JSON.
+        if (json.has("type")) return message(NO_AMOUNT);
         return message(text);
     }
 
