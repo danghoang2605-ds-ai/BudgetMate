@@ -8,7 +8,10 @@
 <meta name="theme-color" content="#0A1128">
 <meta property="og:title" content="BudgetMate · Android budget tracker">
 <meta property="og:description" content="Log a purchase in three taps. Free APK, data stays on your phone.">
-<meta property="og:image" content="screens/home-720.webp">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://danghoang2605-ds-ai.github.io/BudgetMate/">
+<meta property="og:image" content="https://danghoang2605-ds-ai.github.io/BudgetMate/screens/home-720.webp">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,6 +47,7 @@ body {
   font: 400 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased;
 }
 ::selection { background: var(--gold); color: var(--gold-ink); }
+html { scrollbar-color: var(--line-2) var(--ink-deep); }
 a { color: var(--gold-hi); text-underline-offset: 3px; }
 :focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 3px; border-radius: 6px; }
 h1, h2, h3 { color: var(--text); font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
@@ -136,7 +140,7 @@ body { font-variant-numeric: tabular-nums; }
 .v.exp { color: var(--expense); }
 .entries { list-style: none; margin: 0; padding: 0; }
 .entries li.day { display: flex; justify-content: space-between; padding: 14px 0 4px; border-bottom: 0; font: 700 12px/1.2 var(--sans); letter-spacing: .06em; color: var(--muted); }
-.entries li.day span:last-child { font-family: var(--mono); letter-spacing: 0; }
+.entries li.day span:last-child { font-family: var(--figure); letter-spacing: 0; }
 .entries li { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
 .entries li:last-child { border-bottom: 0; }
 .entries .t { grid-column: 1; color: var(--text); font-weight: 700; font-size: 15px; }
@@ -150,13 +154,34 @@ section.block { padding: 88px 0; border-top: 1px solid var(--line); }
 .block h2 { font-size: clamp(30px, 3vw, 42px); line-height: 1.1; }
 .block .intro { color: var(--muted); max-width: 62ch; margin: 14px 0 0; }
 
-/* Screens gallery */
-.gallery { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px; margin-top: 40px; }
-.gallery figure { margin: 0; }
-.gallery img { display: block; width: 100%; height: auto; aspect-ratio: 9 / 20; object-fit: cover; border-radius: 22px; border: 1px solid var(--line-2); background: var(--surface); }
-.gallery figcaption { margin-top: 12px; font-size: 15px; color: var(--muted); }
-.gallery figcaption b { display: block; color: var(--text); font-size: 16px; }
-.provenance { margin-top: 22px; color: var(--muted); font-size: 14px; }
+/* App tour: a tab list styled like the app's bottom nav, one screenshot, three notes */
+.tour { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 48px; margin-top: 40px; align-items: start; }
+.tour-tabs { display: grid; gap: 6px; }
+.tour-tabs [role="tab"] {
+  --knock: var(--ink);
+  display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 14px; align-items: center; text-align: left;
+  padding: 14px 16px; border-radius: 14px; border: 1px solid transparent; background: transparent; color: var(--muted);
+  font: 400 14px/1.35 var(--sans); cursor: pointer; transition: background-color .2s, border-color .2s, color .2s;
+}
+.tour-tabs [role="tab"]:hover { --knock: var(--surface); background: var(--surface); color: var(--text-dim); }
+.tour-tabs [role="tab"][aria-selected="true"] { --knock: var(--surface-2); background: var(--surface-2); border-color: var(--line-2); color: var(--text-dim); }
+.tour-tabs svg { width: 24px; height: 24px; }
+.tour-tabs svg .knock { fill: none; stroke: var(--knock); stroke-width: 1.5; stroke-linecap: round; }
+.tour-tabs svg .line { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
+.tour-tabs [aria-selected="true"] svg { color: var(--gold); }
+.tour-tabs b { display: block; font-size: 16px; font-weight: 700; color: var(--text); }
+.tour-tabs [aria-selected="true"] b { color: var(--gold-hi); }
+.tour-tabs .cap { display: block; }
+.tour-panel { display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 48px; align-items: start; border-radius: 22px; }
+.tour-panel[hidden] { display: none; }
+.tour-panel img { display: block; width: 100%; height: auto; aspect-ratio: 9 / 20; object-fit: cover; border-radius: 22px; border: 1px solid var(--line-2); background: var(--surface); }
+.tour-panel.enter img { animation: swap .45s var(--ease); }
+@keyframes swap { from { opacity: .35; filter: blur(6px); } to { opacity: 1; filter: none; } }
+.tour-notes { margin: 0; border-top: 1px solid var(--line-2); }
+.tour-notes div { padding: 18px 0; border-bottom: 1px solid var(--line); }
+.tour-notes dt { color: var(--text); font-weight: 800; font-size: 18px; }
+.tour-notes dd { margin: 4px 0 0; color: var(--muted); max-width: 52ch; }
+.provenance { margin-top: 28px; color: var(--muted); font-size: 14px; max-width: 80ch; }
 
 /* Three ways to log */
 .ways { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px; margin-top: 40px; align-items: start; }
@@ -165,14 +190,45 @@ section.block { padding: 88px 0; border-top: 1px solid var(--line); }
 .way-list dt { color: var(--text); font-weight: 800; font-size: 22px; letter-spacing: -0.01em; }
 .way-list dd { margin: 6px 0 0; color: var(--muted); }
 .way.wide { padding: 28px; }
-.ways .note-ai { grid-column: 1 / -1; color: var(--muted); font-size: 14px; margin: 0; }
+.ways .note-ai { color: var(--muted); font-size: 14px; margin: 22px 0 0; max-width: 52ch; }
 .way h3 { font-size: 24px; margin: 0 0 8px; }
 .way p { margin: 0; color: var(--muted); }
-.parse { margin-top: 18px; }
-.parse label { display: block; font-size: 14px; color: var(--text-dim); margin-bottom: 6px; font-weight: 600; }
-.parse input { width: 100%; height: 46px; border-radius: 12px; border: 1px solid var(--line-2); background: var(--ink-deep); color: var(--text); font: 500 16px var(--sans); padding: 0 14px; }
-.parse output { display: block; margin-top: 10px; font: 500 14px/1.5 var(--mono); color: var(--text-dim); background: var(--ink-deep); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; min-height: 44px; }
-.parse .note { font-size: 13px; color: var(--muted); margin-top: 8px; }
+.ai h3 { margin-bottom: 4px; }
+.ai-form { margin-top: 10px; }
+.step { padding: 18px 0; border-bottom: 1px solid var(--line); }
+.step:last-child { border-bottom: 0; padding-bottom: 4px; }
+.step-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.step-label { display: block; font: 700 14px/1.3 var(--sans); color: var(--text-dim); margin-bottom: 8px; }
+.step-head .step-label { margin-bottom: 0; }
+.ai input, .ai textarea {
+  width: 100%; border-radius: 12px; border: 1px solid var(--line-2); background: var(--ink-deep); color: var(--text);
+  caret-color: var(--gold-hi); transition: border-color .2s;
+}
+.ai input { height: 46px; font: 500 16px var(--sans); padding: 0 14px; }
+.ai textarea { display: block; font: 500 14px/1.55 var(--mono); padding: 10px 14px; resize: vertical; min-height: 82px; }
+.chips.ex { margin: 10px 0 0; gap: 6px; align-items: center; }
+.chips.ex .chip { font-size: 13px; padding: 7px 11px; }
+.chips.ex .chip:hover { background: var(--surface-3); color: var(--text); }
+.ex-label { font-size: 13px; color: var(--muted); margin-right: 2px; }
+.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.checks li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 10px; font-size: 15px; line-height: 1.45; color: var(--text-dim); }
+.checks li.no { color: var(--muted); }
+.checks svg { width: 18px; height: 18px; margin-top: 2px; }
+.checks code { font: 500 13px var(--mono); color: var(--text); background: var(--surface-2); border-radius: 6px; padding: 1px 6px; overflow-wrap: anywhere; }
+.verdict { margin-top: 16px; border: 1px solid var(--line-2); border-radius: 14px; background: var(--ink-deep); padding: 14px 16px; }
+.verdict .entry { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; }
+.verdict .t { color: var(--text); font-weight: 700; font-size: 15px; }
+.verdict .m { color: var(--muted); font-size: 13px; grid-column: 1; }
+.verdict .a { grid-column: 2; grid-row: 1 / span 2; align-self: center; font: 700 18px/1 var(--figure); }
+.verdict .said { margin: 10px 0 0; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+.verdict .said q { color: var(--text-dim); }
+.verdict .reply-only { margin: 0; color: var(--text-dim); font-size: 15px; }
+.ai-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 14px; }
+.ai-actions .btn { height: 42px; font-size: 15px; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn-ghost:disabled:hover { background: transparent; }
+.added { font-size: 14px; color: var(--muted); }
+.ai .note { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 
 /* Month view */
 .month { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr); gap: 32px; align-items: start; margin-top: 40px; }
@@ -210,8 +266,8 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
   .copy { grid-template-columns: minmax(0, 1fr); }
   .lede { max-width: 52ch; }
   .build-rows { grid-template-columns: 1fr; }
-  .gallery { grid-template-columns: repeat(5, 240px); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 12px; }
-  .gallery figure { scroll-snap-align: start; }
+  .tour { grid-template-columns: 220px minmax(0, 1fr); gap: 32px; }
+  .tour-panel { grid-template-columns: 280px minmax(0, 1fr); gap: 32px; }
   .ways { grid-template-columns: minmax(0, 1fr); }
   .month { grid-template-columns: 1fr 1fr; }
   .month .facts { grid-column: 1 / -1; }
@@ -227,7 +283,14 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
   .amount output { font-size: 44px; }
   .key { height: 54px; }
   section.block { padding: 64px 0; }
-  .gallery { grid-template-columns: repeat(5, 72vw); }
+  .tour { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .tour-tabs { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2px; border: 1px solid var(--line); border-radius: 18px; background: var(--ink-deep); padding: 4px; }
+  .tour-tabs [role="tab"] { --knock: var(--ink-deep); grid-template-columns: 1fr; justify-items: center; gap: 4px; padding: 10px 2px; text-align: center; border-radius: 12px; }
+  .tour-tabs b { font-size: 12px; font-weight: 600; }
+  .tour-tabs .cap { display: none; }
+  .tour-panel { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .tour-panel img { width: min(100%, 320px); margin: 0 auto; }
+  .ai .chips.ex .ex-label { flex-basis: 100%; }
   .way.wide { padding: 22px; }
   .month { grid-template-columns: 1fr; gap: 20px; }
   .rows div, .build-rows div { grid-template-columns: 1fr; gap: 4px; }
@@ -251,7 +314,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
     <a class="brand" href="#top"><img src="icon.svg" alt="" width="32" height="32">BudgetMate</a>
     <nav class="nav" aria-label="Sections">
       <a href="#screens">Screens</a>
-      <a href="#ways">Ways to log</a>
+      <a href="#ways">Try the AI</a>
       <a href="#privacy">Privacy</a>
       <a href="#build">How it's built</a>
     </nav>
@@ -317,7 +380,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
       <p class="hint" id="hint">Try it: tap 1, 2, then Save. Your keyboard works too.</p>
     </div>
 
-    <div class="card ledger" aria-labelledby="ledger-title">
+    <div class="card ledger" id="ledger" aria-labelledby="ledger-title">
       <div class="ledger-head">
         <h2 id="ledger-title">Sample month</h2>
         <span class="tag">Sample data</span>
@@ -335,28 +398,72 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
 <section class="block" id="screens" aria-labelledby="screens-title">
   <div class="wrap">
     <h2 id="screens-title">The real app, tab by tab</h2>
-    <p class="intro">Five tabs: log, review, ask, analyse, follow the markets. These are unedited screenshots.</p>
-    <div class="gallery">
-      <figure>
-        <img src="screens/home-360.webp" srcset="screens/home-360.webp 360w, screens/home-720.webp 720w" sizes="(max-width: 760px) 72vw, 240px" width="360" height="800" loading="lazy" alt="Home tab: this month's net of $1,505 with income and expenses, an amount keypad, and category chips for Food, Transport, Housing and Health.">
-        <figcaption><b>Home</b>Keypad, categories and this month's balance.</figcaption>
-      </figure>
-      <figure>
-        <img src="screens/manage-360.webp" srcset="screens/manage-360.webp 360w, screens/manage-720.webp 720w" sizes="(max-width: 760px) 72vw, 240px" width="360" height="800" loading="lazy" alt="Manage tab: transactions grouped by day with filters for all, expenses and income.">
-        <figcaption><b>Manage</b>Every entry by day, filter and delete.</figcaption>
-      </figure>
-      <figure>
-        <img src="screens/stats-360.webp" srcset="screens/stats-360.webp 360w, screens/stats-720.webp 720w" sizes="(max-width: 760px) 72vw, 240px" width="360" height="800" loading="lazy" alt="Insights tab: income and expense totals and a weekly bar chart comparing income with expenses.">
-        <figcaption><b>Insights</b>Weekly, monthly and yearly charts.</figcaption>
-      </figure>
-      <figure>
-        <img src="screens/chat-360.webp" srcset="screens/chat-360.webp 360w, screens/chat-720.webp 720w" sizes="(max-width: 760px) 72vw, 240px" width="360" height="800" loading="lazy" alt="AI chat tab: the assistant asks what you spent or earned, with quick chips such as Boba $5 and Lunch $15.">
-        <figcaption><b>AI chat</b>Log by sentence, ask about money.</figcaption>
-      </figure>
-      <figure>
-        <img src="screens/news-360.webp" srcset="screens/news-360.webp 360w, screens/news-720.webp 720w" sizes="(max-width: 760px) 72vw, 240px" width="360" height="800" loading="lazy" alt="Markets tab: index summary and cards for Vietnamese stocks with small trend lines.">
-        <figcaption><b>Markets</b>Indexes, stocks and finance news.</figcaption>
-      </figure>
+    <p class="intro">Five tabs, in the order the app shows them. Pick one to see the unedited screenshot and what to look at.</p>
+    <div class="tour">
+      <div class="tour-tabs" role="tablist" aria-label="App tabs" aria-orientation="vertical">
+        <button type="button" role="tab" id="tab-home" aria-controls="panel-home" aria-selected="true" tabindex="0">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3,11 L12,3 L21,11 L21,21 Q21,22 20,22 L15,22 L15,16 Q15,15 14,15 L10,15 Q9,15 9,16 L9,22 L4,22 Q3,22 3,21 Z"/></svg>
+          <span><b>Home</b><span class="cap">Log an entry</span></span>
+        </button>
+        <button type="button" role="tab" id="tab-manage" aria-controls="panel-manage" aria-selected="false" tabindex="-1">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3,6 Q3,5 4,5 L20,5 Q21,5 21,6 Q21,7 20,7 L4,7 Q3,7 3,6 Z M3,12 Q3,11 4,11 L20,11 Q21,11 21,12 Q21,13 20,13 L4,13 Q3,13 3,12 Z M3,18 Q3,17 4,17 L14,17 Q15,17 15,18 Q15,19 14,19 L4,19 Q3,19 3,18 Z"/></svg>
+          <span><b>Manage</b><span class="cap">Every entry, by day</span></span>
+        </button>
+        <button type="button" role="tab" id="tab-chat" aria-controls="panel-chat" aria-selected="false" tabindex="-1">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20,2 L4,2 Q2,2 2,4 L2,16 Q2,18 4,18 L8,18 L12,22 L16,18 L20,18 Q22,18 22,16 L22,4 Q22,2 20,2 Z"/><path class="knock" d="M7,8 L17,8 M7,12 L13,12"/></svg>
+          <span><b>AI Chat</b><span class="cap">Log by sentence</span></span>
+        </button>
+        <button type="button" role="tab" id="tab-stats" aria-controls="panel-stats" aria-selected="false" tabindex="-1">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4,20 L4,14 Q4,13 5,13 L7,13 Q8,13 8,14 L8,20 Z M10,20 L10,9 Q10,8 11,8 L13,8 Q14,8 14,9 L14,20 Z M16,20 L16,4 Q16,3 17,3 L19,3 Q20,3 20,4 L20,20 Z"/><path class="line" d="M2,20 L22,20"/></svg>
+          <span><b>Insights</b><span class="cap">Charts and export</span></span>
+        </button>
+        <button type="button" role="tab" id="tab-news" aria-controls="panel-news" aria-selected="false" tabindex="-1">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path class="line" d="M4,4 Q3,4 3,5 L3,19 Q3,20 4,20 L20,20 Q21,20 21,19 L21,5 Q21,4 20,4 Z M6,8 L18,8 M6,12 L18,12 M6,16 L13,16"/></svg>
+          <span><b>Markets</b><span class="cap">Stocks and news</span></span>
+        </button>
+      </div>
+      <div class="tour-panels">
+      <div class="tour-panel" role="tabpanel" id="panel-home" aria-labelledby="tab-home" tabindex="0">
+          <img src="screens/home-360.webp" srcset="screens/home-360.webp 360w, screens/home-720.webp 720w" sizes="(max-width: 760px) 72vw, 330px" width="360" height="800" loading="lazy" alt="Home tab: this month's net of $1,505 with income and expenses, an amount keypad, and category chips for Food, Transport, Housing and Health.">
+          <dl class="tour-notes">
+            <div><dt>Net this month</dt><dd>Income minus spending, with the change from last month in green or red.</dd></div>
+            <div><dt>Keypad</dt><dd>Whole dollars, a 00 key, Expense or Income, a category and a date. Save is the tall gold key.</dd></div>
+            <div><dt>Receipt camera</dt><dd>The camera button opens the scanner. ML Kit reads the receipt on the phone; you confirm the total before it is saved.</dd></div>
+          </dl>
+        </div>
+      <div class="tour-panel" role="tabpanel" id="panel-manage" aria-labelledby="tab-manage" tabindex="0" hidden>
+          <img src="screens/manage-360.webp" srcset="screens/manage-360.webp 360w, screens/manage-720.webp 720w" sizes="(max-width: 760px) 72vw, 330px" width="360" height="800" loading="lazy" alt="Manage tab: transactions grouped by day with filters for all, expenses and income.">
+          <dl class="tour-notes">
+            <div><dt>By day</dt><dd>Entries grouped under their date with each day's net, newest first.</dd></div>
+            <div><dt>Filters</dt><dd>All, Expenses or Income, with counts, for any month you pick.</dd></div>
+            <div><dt>Totals</dt><dd>All-time money in, out and net above the list. Tap an entry to delete it.</dd></div>
+          </dl>
+        </div>
+      <div class="tour-panel" role="tabpanel" id="panel-chat" aria-labelledby="tab-chat" tabindex="0" hidden>
+          <img src="screens/chat-360.webp" srcset="screens/chat-360.webp 360w, screens/chat-720.webp 720w" sizes="(max-width: 760px) 72vw, 330px" width="360" height="800" loading="lazy" alt="AI chat tab: the assistant asks what you spent or earned, with quick chips such as Boba $5 and Lunch $15.">
+          <dl class="tour-notes">
+            <div><dt>Sentences</dt><dd>“Lunch 15$” becomes an expense in Food, and the reply says exactly what was saved.</dd></div>
+            <div><dt>Quick chips</dt><dd>Boba $5, Lunch $15, Uber $20 and Salary $200 log with one tap.</dd></div>
+            <div><dt>Questions</dt><dd>Anything that is not a purchase or income gets a short answer instead of an entry.</dd></div>
+          </dl>
+        </div>
+      <div class="tour-panel" role="tabpanel" id="panel-stats" aria-labelledby="tab-stats" tabindex="0" hidden>
+          <img src="screens/stats-360.webp" srcset="screens/stats-360.webp 360w, screens/stats-720.webp 720w" sizes="(max-width: 760px) 72vw, 330px" width="360" height="800" loading="lazy" alt="Insights tab: income and expense totals and a bar chart comparing income with expenses week by week.">
+          <dl class="tour-notes">
+            <div><dt>Month or year</dt><dd>Monthly and Annual views, with month and year pickers.</dd></div>
+            <div><dt>Charts</dt><dd>Income against expenses by week, running totals, spending and income by category, and a radar of the main categories.</dd></div>
+            <div><dt>Export</dt><dd>A CSV and a one-page PDF of the selected period.</dd></div>
+          </dl>
+        </div>
+      <div class="tour-panel" role="tabpanel" id="panel-news" aria-labelledby="tab-news" tabindex="0" hidden>
+          <img src="screens/news-360.webp" srcset="screens/news-360.webp 360w, screens/news-720.webp 720w" sizes="(max-width: 760px) 72vw, 330px" width="360" height="800" loading="lazy" alt="Markets tab: index summary and cards for Vietnamese stocks with small trend lines.">
+          <dl class="tour-notes">
+            <div><dt>Indexes</dt><dd>S&P 500, Nasdaq and Dow Jones. Sample values unless an Alpha Vantage key is set.</dd></div>
+            <div><dt>Top movers</dt><dd>Six Vietnamese large caps with seven-day trend lines. Tap one for daily candles.</dd></div>
+            <div><dt>News</dt><dd>Finance headlines from GNews on the second tab.</dd></div>
+          </dl>
+        </div>
+      </div>
     </div>
     <p class="provenance">Captured automatically by CI on an Android 14 emulator after every app change. The transactions are generated demo data; market figures are sample data shown when no API key is configured.</p>
   </div>
@@ -366,21 +473,53 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
   <div class="wrap">
     <h2 id="ways-title">Three ways to log, pick the fastest</h2>
     <div class="ways">
+      <div class="way-side">
       <dl class="way-list">
         <div><dt>Keypad</dt><dd>Amount, category, save. Whole dollars, a <span class="mono">00</span> key for round numbers, and a date picker for yesterday's lunch.</dd></div>
         <div><dt>Snap the receipt</dt><dd>Point the camera at a bill. ML Kit reads the text on the phone, the AI finds the total, and you confirm before anything is saved.</dd></div>
+        <div><dt>Say it in a sentence</dt><dd>Type what happened. An AI model turns it into an entry, or answers if you asked a question. The demo shows each step, including what the app does when the model's reply is messy.</dd></div>
       </dl>
-      <article class="card way wide">
-        <h3>Say it in a sentence</h3>
-        <p>Type what happened. The AI reads the amount, picks the category and saves it, or answers if you asked a question instead.</p>
-        <form class="parse" id="parse" onsubmit="return false">
-          <label for="sentence">Try a sentence</label>
-          <input id="sentence" value="Lunch with team 15$" autocomplete="off" spellcheck="false">
-          <output id="parsed" aria-live="polite"></output>
-          <p class="note">This page parses with a simple pattern in your browser. The app sends the sentence to an AI model and validates the reply before saving.</p>
-        </form>
-      </article>
       <p class="note-ai">The sentence and receipt features need an AI connection. Builds on GitHub Releases include it when the maintainer has configured the proxy; otherwise the app says the AI is off and the keypad works as usual.</p>
+      </div>
+      <article class="card way wide ai" aria-labelledby="ai-title">
+        <h3 id="ai-title">From sentence to saved entry</h3>
+        <form id="ai" class="ai-form" novalidate>
+          <div class="step">
+            <label class="step-label" for="sentence">You type</label>
+            <input id="sentence" value="Boba tea 6$" autocomplete="off" spellcheck="false">
+            <div class="chips ex" role="group" aria-label="Example sentences">
+              <button type="button" class="chip" data-s="Boba tea 6$">Boba tea 6$</button>
+              <button type="button" class="chip" data-s="Uber home 12.50$">Uber home 12.50$</button>
+              <button type="button" class="chip" data-s="June salary 2,000$">June salary 2,000$</button>
+              <button type="button" class="chip" data-s="How much did I spend on food?">A question</button>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-head">
+              <label class="step-label" for="reply">The model replies</label>
+              <span class="tag" id="reply-src">Stand-in model</span>
+            </div>
+            <textarea id="reply" rows="3" spellcheck="false" autocomplete="off"></textarea>
+            <div class="chips ex" role="group" aria-labelledby="tests-label">
+              <span class="ex-label" id="tests-label">Messy replies from <a href="https://github.com/danghoang2605-ds-ai/BudgetMate/blob/master/app/src/test/java/com/example/savemoneytime/util/AiReplyParserTest.java">the parser's tests</a>:</span>
+              <button type="button" class="chip" data-r="```json&#10;{&quot;amount&quot;: &quot;$2,000&quot;, &quot;category&quot;: &quot;Salary&quot;, &quot;type&quot;: &quot;REVENUE&quot;}&#10;```">Code fence</button>
+              <button type="button" class="chip" data-r="Sure! {&quot;amount&quot;: 15.6, &quot;category&quot;: &quot;Food&quot;, &quot;type&quot;: &quot;expense&quot;} done">Chatty</button>
+              <button type="button" class="chip" data-r="{&quot;amount&quot;: 0, &quot;type&quot;: &quot;EXPENSE&quot;}">Zero amount</button>
+              <button type="button" class="chip" data-r="I could not understand that.">No JSON</button>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-label" id="checks-label">The app checks it</span>
+            <ul class="checks" id="checks" aria-labelledby="checks-label"></ul>
+            <div class="verdict" id="verdict" aria-live="polite"></div>
+            <div class="ai-actions">
+              <button type="button" class="btn btn-ghost" id="add">Add to the sample month</button>
+              <span class="added" id="added" aria-live="polite"></span>
+            </div>
+          </div>
+        </form>
+        <p class="note">In the app, the sentence goes to Gemini 2.5 Flash through OpenRouter with a prompt that asks for exactly this JSON. Here a short pattern stands in for the model, so you can read the reply and edit it. The checks follow <a href="https://github.com/danghoang2605-ds-ai/BudgetMate/blob/master/app/src/main/java/com/example/savemoneytime/util/AiReplyParser.java">AiReplyParser.java</a> rule for rule; the browser's JSON reader is a little stricter than Gson's.</p>
+      </article>
     </div>
   </div>
 </section>
@@ -392,7 +531,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
       <figure><img src="screens/stats-chart-720.webp" width="720" height="560" loading="lazy" alt="Detail of the Insights tab: weekly bars comparing income with expenses, with the totals on top of each bar."><figcaption>Insights: income against expenses, week by week.</figcaption></figure>
       <figure><img src="screens/manage-days-720.webp" width="720" height="933" loading="lazy" alt="Detail of the Manage tab: the month's net flow with all-time income, expenses and net, then entries grouped by day with daily totals."><figcaption>Manage: all-time totals, then every entry by day.</figcaption></figure>
       <dl class="facts">
-        <div><dt>Week, month, year</dt><dd>Grouped bars for income against expenses, a cash-flow line, and pie and radar charts by category.</dd></div>
+        <div><dt>Month or year</dt><dd>Bars for income against expenses week by week, a running total, and pie and radar charts by category.</dd></div>
         <div><dt>All-time totals</dt><dd>Lifetime income, expenses and net next to the month you are looking at, plus the change from last month.</dd></div>
         <div><dt>Export</dt><dd>One tap writes a CSV for spreadsheets and a PDF summary to the phone.</dd></div>
       </dl>
@@ -557,27 +696,188 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
     else if (e.key === 'Enter' && document.activeElement === document.body) { save(); e.preventDefault(); }
   });
 
-  // Sentence demo: a tiny local stand-in for the app's AI parser.
-  const RULES = [
-    [/salary|paycheck|wage/i, 'Salary', 'income'], [/freelance|client|gig|tutor/i, 'Freelance', 'income'],
-    [/dividend|interest|stock/i, 'Investment', 'income'], [/rent|apartment/i, 'Housing', 'expense'],
-    [/uber|grab|bus|taxi|gas|train/i, 'Transport', 'expense'], [/pharmacy|doctor|gym|medicine/i, 'Health', 'expense'],
-    [/shirt|shoes|sneakers|amazon|shop/i, 'Shopping', 'expense'], [/.*/, 'Food', 'expense'],
-  ];
-  function parseSentence() {
-    const s = $('sentence').value.trim();
-    const out = $('parsed');
-    const m = s.match(/\$?\s*(\d[\d,]*(?:\.\d+)?)\s*\$?/);
-    if (!s) { out.textContent = 'Type something like “Uber 12$”.'; return; }
-    if (!m) { out.textContent = 'No amount found, so the app would answer this as a question.'; return; }
-    const amount = Math.round(parseFloat(m[1].replace(/,/g, '')));
-    const [, category, type] = RULES.find(([re]) => re.test(s));
-    const note = s.replace(m[0], '').replace(/\s+/g, ' ').trim() || category;
-    out.textContent = `{ "type": "${type.toUpperCase()}", "amount": ${amount}, "category": "${category}", "note": "${note}" }`;
+  // ---- App tour: WAI-ARIA tabs (arrow keys, Home/End) ----
+  const tabs = [...document.querySelectorAll('.tour-tabs [role="tab"]')];
+  function selectTab(tab, focus) {
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      const panel = $(t.getAttribute('aria-controls'));
+      panel.hidden = !on;
+      if (on) { panel.classList.remove('enter'); void panel.offsetWidth; panel.classList.add('enter'); }
+    });
+    if (focus) tab.focus();
   }
-  $('sentence').addEventListener('input', parseSentence);
+  tabs.forEach((t, idx) => {
+    t.addEventListener('click', () => selectTab(t, false));
+    t.addEventListener('keydown', (e) => {
+      const step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+      if (step) { selectTab(tabs[(idx + step + tabs.length) % tabs.length], true); e.preventDefault(); }
+      else if (e.key === 'Home') { selectTab(tabs[0], true); e.preventDefault(); }
+      else if (e.key === 'End') { selectTab(tabs[tabs.length - 1], true); e.preventDefault(); }
+    });
+    // Fetch a tab's screenshot as soon as the visitor shows interest, so the swap is instant.
+    const warm = () => { const img = $(t.getAttribute('aria-controls')).querySelector('img'); if (img) img.loading = 'eager'; };
+    t.addEventListener('pointerenter', warm);
+    t.addEventListener('focus', warm);
+  });
 
-  renderAmount(); renderChips(); renderLedger(false); parseSentence();
+  // ---- Sentence demo ----
+  // 1) A stand-in for the model: produces the JSON shape the app's system prompt asks for.
+  const EXPENSE_RULES = [
+    [/rent|apartment|landlord/i, 'Housing'], [/uber|grab|lyft|bus|taxi|gas|train|metro|parking/i, 'Transport'],
+    [/pharmacy|doctor|gym|medicine|dentist/i, 'Health'], [/movie|netflix|spotify|concert|cinema/i, 'Entertainment'],
+    [/shirt|shoes|sneakers|amazon|clothes|shop/i, 'Shopping'], [/book|course|tuition|class/i, 'Education'],
+    [/flight|hotel|airbnb|trip/i, 'Travel'], [/electric|water bill|internet|wifi|utility/i, 'Utilities'],
+    [/phone|data plan/i, 'Phone'], [/gift for|present/i, 'Gifts'],
+  ];
+  const INCOME_RULES = [
+    [/salary|paycheck|wage|payday/i, 'Salary'], [/freelance|client|gig|tutor/i, 'Freelance'],
+    [/dividend|interest|stock/i, 'Investment'], [/refund|cashback/i, 'Refund'], [/gift from|birthday money/i, 'Gift'],
+  ];
+  function standInModel(sentence) {
+    const s = sentence.trim();
+    const m = s.match(/\$?\s*(\d[\d,]*(?:\.\d+)?)\s*\$?/);
+    if (!m || /\?\s*$/.test(s)) {
+      return '{"intent": "query", "message": "(In the app, the model answers your question here.)"}';
+    }
+    const amount = Number(m[1].replace(/,/g, ''));
+    const income = INCOME_RULES.find(([re]) => re.test(s));
+    const expense = EXPENSE_RULES.find(([re]) => re.test(s));
+    const type = income ? 'REVENUE' : 'EXPENSE';
+    const category = income ? income[1] : (expense ? expense[1] : 'Food');
+    const note = s.replace(m[0], ' ').replace(/\s+/g, ' ').replace(/^[\s,.-]+|[\s,.-]+$/g, '') || category;
+    return `{"amount": ${amount}, "category": ${JSON.stringify(category)}, "note": ${JSON.stringify(note)}, "type": "${type}"}`;
+  }
+
+  // 2) AiReplyParser.java, rule for rule, with each decision recorded so the page can show it.
+  const DEFAULT_NOTE = 'AI Log';
+  const NO_AMOUNT = 'I couldn\'t find an amount in that. Try something like "Coffee 4$".';
+  const esc = (str) => String(str).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  function asString(obj, key, fallback) {
+    const v = obj[key];
+    if (v === undefined || v === null || typeof v === 'object') return fallback;
+    const str = String(v).trim();
+    return str === '' ? fallback : str;
+  }
+  function parseAmount(v) {
+    if (v === undefined || v === null || typeof v === 'object') return 0;
+    const str = String(v).replace(/[^0-9.\-]/g, '');
+    if (str === '') return 0;
+    const n = Number(str);
+    return Number.isFinite(n) ? Math.max(0, Math.round(n)) : 0;
+  }
+  function parseReply(raw) {
+    const checks = [];
+    const source = String(raw || '');
+    const text = source.split('```json').join('').split('```').join('').trim();
+    if (source.includes('```')) checks.push([true, 'Removed the <code>```</code> code fence']);
+    let obj = null;
+    const a = text.indexOf('{');
+    const b = text.lastIndexOf('}');
+    if (a >= 0 && b > a) {
+      try {
+        const v = JSON.parse(text.slice(a, b + 1));
+        if (v && typeof v === 'object' && !Array.isArray(v)) obj = v;
+      } catch (e) { /* not JSON: falls through to chat text */ }
+    }
+    const msg = (m) => ({ kind: 'MESSAGE', message: m, checks });
+    if (!obj) {
+      checks.push([false, 'No JSON object found, so the reply is shown as chat text']);
+      return msg(text);
+    }
+    checks.push([true, a > 0 || b < text.length - 1 ? 'Found the JSON object inside the surrounding text' : 'Found a JSON object']);
+    if ('type' in obj) {
+      const type = asString(obj, 'type', '').toUpperCase();
+      const amount = parseAmount(obj.amount);
+      const typeOk = type === 'EXPENSE' || type === 'REVENUE' || type === 'INCOME';
+      checks.push([typeOk, typeOk
+        ? `<code>type</code> ${esc(JSON.stringify(obj.type))} means ${type === 'EXPENSE' ? 'an expense' : 'income'}`
+        : `<code>type</code> ${esc(JSON.stringify(obj.type))} is not EXPENSE or REVENUE`]);
+      const shown = 'amount' in obj ? esc(JSON.stringify(obj.amount)) : 'missing';
+      const exact = Number(String(obj.amount).replace(/[^0-9.\-]/g, ''));
+      const how = String(obj.amount) === String(amount) ? ''
+        : exact !== amount ? `, rounded to ${amount.toLocaleString('en-US')} whole dollars`
+        : `, read as ${amount.toLocaleString('en-US')}`;
+      checks.push([amount > 0, amount > 0
+        ? `<code>amount</code> ${shown}${how}`
+        : `<code>amount</code> ${shown}: nothing to save`]);
+      if (amount > 0 && typeOk) {
+        const category = asString(obj, 'category', 'Other');
+        const note = asString(obj, 'note', DEFAULT_NOTE);
+        checks.push([true, 'category' in obj ? `<code>category</code> ${esc(category)}` : '<code>category</code> missing, filed under Other']);
+        if (!('note' in obj)) checks.push([true, `<code>note</code> missing, the entry is titled ${DEFAULT_NOTE}`]);
+        return { kind: type === 'EXPENSE' ? 'EXPENSE' : 'REVENUE', amount, category, note, checks };
+      }
+    } else {
+      checks.push([true, 'No <code>type</code> field, so this is an answer, not an entry']);
+    }
+    if ('message' in obj) return msg(asString(obj, 'message', text));
+    if ('type' in obj) return msg(NO_AMOUNT);
+    return msg(text);
+  }
+
+  // 3) Show the checks and the outcome; the confirmation copies ChatbotFragment's reply.
+  const ICON_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
+  const ICON_NO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12"/></svg>';
+  let lastResult = null;
+  function fitReply() {
+    const t = $('reply');
+    t.style.height = 'auto';
+    t.style.height = t.scrollHeight + 2 + 'px';
+  }
+  window.addEventListener('resize', fitReply);
+  function runParser() {
+    fitReply();
+    const r = parseReply($('reply').value);
+    lastResult = r;
+    $('checks').innerHTML = r.checks
+      .map(([ok, html]) => `<li class="${ok ? 'ok' : 'no'}">${ok ? ICON_OK : ICON_NO}<span>${html}</span></li>`).join('');
+    const v = $('verdict');
+    if (r.kind === 'MESSAGE') {
+      v.innerHTML = `<p class="reply-only">Not saved. The chat shows <q>${esc(r.message || '(an empty reply)')}</q></p>`;
+    } else {
+      const income = r.kind === 'REVENUE';
+      const hasNote = r.note && r.note !== DEFAULT_NOTE;
+      const said = `Saved ${income ? 'income' : 'an expense'} of $${r.amount.toLocaleString('en-US')} in ${r.category}${hasNote ? ` (${r.note})` : ''}.`;
+      v.innerHTML = `<div class="entry"><span class="t">${esc(r.note)}</span>`
+        + `<span class="a v ${income ? 'inc' : 'exp'}">${income ? '+' : '−'}${money(r.amount)}</span>`
+        + `<span class="m">${esc(r.category)} · via AI chat</span></div>`
+        + `<p class="said">The chat replies <q>${esc(said)}</q></p>`;
+    }
+    $('add').disabled = r.kind === 'MESSAGE';
+    $('added').textContent = '';
+  }
+  function fromSentence() {
+    $('reply').value = standInModel($('sentence').value);
+    $('reply-src').textContent = 'Stand-in model';
+    runParser();
+  }
+  $('sentence').addEventListener('input', fromSentence);
+  $('reply').addEventListener('input', () => { $('reply-src').textContent = 'Edited by you'; runParser(); });
+  document.querySelectorAll('[data-s]').forEach((b) => b.addEventListener('click', () => {
+    $('sentence').value = b.dataset.s;
+    fromSentence();
+  }));
+  document.querySelectorAll('[data-r]').forEach((b) => b.addEventListener('click', () => {
+    $('reply').value = b.dataset.r;
+    $('reply-src').textContent = 'From AiReplyParserTest';
+    runParser();
+  }));
+  $('ai').addEventListener('submit', (e) => e.preventDefault());
+  $('add').addEventListener('click', () => {
+    const r = lastResult;
+    if (!r || r.kind === 'MESSAGE') return;
+    const signed = r.kind === 'EXPENSE' ? -r.amount : r.amount;
+    if (signed < 0) state.expense += r.amount; else state.income += r.amount;
+    state.entries.unshift({ t: r.note, c: r.category, a: signed, day: 'Today', when: 'via AI chat' });
+    renderLedger(true);
+    $('add').disabled = true;
+    $('added').innerHTML = 'Added. <a href="#ledger">See it in the sample month</a>';
+  });
+
+  renderAmount(); renderChips(); renderLedger(false); fromSentence();
 })();
 </script>
 </body>

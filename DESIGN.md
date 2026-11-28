@@ -279,7 +279,7 @@ A night-blue tonal stack, one metal, and two money colors.
 
 ### Figure faces in use
 - **App:** Manrope with `tnum` on every figure (`fontFeatureSettings="tnum"`; keypad digits through BMKeypadDigit, 24sp bold). This is the system default.
-- **Code readout:** the website's sentence demo shows its parsed JSON in the system monospace stack (500, 14px, 1.5). That is code, not a figure; every amount on the site uses Manrope with tabular numerals.
+- **Code readout:** the sentence pipeline's model reply and its inline field names use the system monospace stack (500, 14px/1.55 and 13px). That is code, not a figure; every amount on the site uses Manrope with tabular numerals.
 
 ### Named Rules
 **The Tabular Rule.** Every money figure is tabular: amounts, totals, day subtotals, keypad digits, market changes. Digits keep their width while you type and amounts align on the right. In Manrope that means `tnum` (`font-variant-numeric: tabular-nums` on the web); never proportional figures for an amount.
@@ -343,7 +343,7 @@ Confident, top-lit, and few.
 
 ### Inputs / Fields
 - **Style:** Night Well fill, 1px Strong Rule border, 12px radius, 46px tall, 14px side padding, Headline White text. The label above is 600 14px Soft White.
-- **Readout:** a Night Well block under the field with a 1px Ledger Rule border and 12px radius, at least 44px tall, announcing its result politely to assistive tech.
+- **Code field:** the sentence pipeline's reply box is the one editable field set in monospace (see Sentence Pipeline).
 - **Focus:** the global Gold Highlight ring.
 
 ### Navigation
@@ -368,8 +368,20 @@ The app's month view in miniature.
 ### Tag
 - **Style:** 600 12px Fog Grey, 1px Strong Rule border, 6px radius, 5px by 8px. Labels sample and demo data where it appears.
 
-### Screenshot Gallery
-- **Style:** real screenshots at 9:20, 22px radius, 1px Strong Rule border, Raised Navy behind while loading. Caption below: the tab name in 16px Headline White bold, then one 15px Fog Grey line. A provenance note closes the set.
+### App Tour
+The app's five tabs as a tab list, one real screenshot at a time.
+- **Tabs:** a vertical list (260px; 220px under 1180px) in the app's bottom-nav order, each a 24px icon traced from the app's own nav vectors beside the tab name (700 16px Headline White) and a one-line Fog Grey 14px caption. Rows are 14px radius with 14px by 16px padding. Hover fills Raised Navy; the selected tab fills Key Navy with a 1px Strong Rule border, its icon in Metallic Gold and its name in Gold Highlight, the way the app marks its active tab.
+- **Panel:** the screenshot at 330px (280px under 1180px), 9:20, 22px radius, 1px Strong Rule border, Raised Navy behind while loading, beside three notes set as hairline-divided rows (800 18px Headline White over Fog Grey). Switching swaps the image from 35% opacity and a 6px blur over 450ms.
+- **Mobile:** the list becomes a five-up bar on Night Well (18px radius, 4px inset) with icons over 12px names, like the app's own bottom bar; the screenshot centres at up to 320px with the notes below.
+- **Behavior:** WAI-ARIA tabs: arrow keys move and wrap, Home and End jump, one tab in the tab order. A tab's screenshot starts loading on hover or focus. A provenance note closes the section.
+
+### Sentence Pipeline
+The AI chat's logging path, step by step, inside a wide card.
+- **Steps:** You type, The model replies, The app checks it, divided by Ledger Rule; each opens with a 700 14px Soft White label. Example chips (13px, 7px by 11px) sit under the first two steps; the second step's chips load replies from the parser's unit tests and are introduced by a 13px Fog Grey line linking to that test file.
+- **Reply box:** an editable Night Well field in the system monospace stack at 14px/1.55 that grows with its content; a Tag at the step's right says where the reply came from (Stand-in model, From AiReplyParserTest, Edited by you).
+- **Checks:** a list of 15px lines, each led by an 18px stroke icon: a check for a passed rule, a dash for a rule that stops the save (that line in Fog Grey). Field names are inline code on Key Navy at 13px.
+- **Outcome:** a Night Well box with a 1px Strong Rule border and 14px radius. A saved entry shows as a ledger row (title, category and "via AI chat", the signed amount in mint or coral at 18px) above the chat's confirmation in quotes; a reply that saves nothing shows "Not saved" and the text the chat would show.
+- **Action:** a ghost button, Add to the sample month, puts the entry at the top of the hero ledger and says so with a link back up; it is disabled when nothing would be saved. Gold stays with Download APK and SAVE.
 
 ## Do's and Don'ts
 
